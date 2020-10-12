@@ -19,3 +19,6 @@ target 'FitnessFrontend' do
     flipper_post_install(installer)
   end
 end
+
+platform :ios, '8.0'
+use_frameworks!
