@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import { verifyUserData } from '../redux/actions/actionCreators'
 
 const LoginForm = props => {
-  const { exampleInfo } = props.route.params
 
   return (
     <View>
@@ -14,7 +13,6 @@ const LoginForm = props => {
         <Appbar.Content title='Login' subtitle='Submit Login Info' />
         <Appbar.Action icon='magnify' />
         <Appbar.Action icon='dots-vertical' />
-        <Text>{exampleInfo}</Text>
       </Appbar.Header>
 
       <Formik 
