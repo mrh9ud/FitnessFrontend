@@ -1,3 +1,5 @@
-const VERIFY_USER_DATA = 'verifyUserData'
+const VERIFY_USER_DATA = 'VERIFY_USER_DATA'
+const LOADING = 'LOADING'
+const LOGIN = 'LOGIN'
 
-export { VERIFY_USER_DATA }
+export { VERIFY_USER_DATA, LOADING, LOGIN }

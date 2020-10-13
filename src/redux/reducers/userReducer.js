@@ -1,8 +1,12 @@
-//we will be importing strings from actionType.js here to prevent typing error issues at scale
+import { LOGIN } from '../actions/actionType'
 
-export default function userReducer(state = [], action) {
+function userReducer(state = {}, action) {
   switch(action.type) {
+    case LOGIN:
+      return action.payload
     default:
       return state
   }
 }
+
+export default userReducer
