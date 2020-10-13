@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text } from 'react-native'
-import { Appbar, TextInput, Button } from "react-native-paper";
+import { View } from 'react-native'
+import { TextInput, Button } from "react-native-paper";
 import { Formik } from 'formik'
 
 // TODO: Create an onSubmit function
