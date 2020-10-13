@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import { Appbar, TextInput } from "react-native-paper";
 
-const LoginForm = props => {
-  const { exampleInfo } = props.route.params
+function LoginForm() {
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   return (
@@ -12,7 +12,6 @@ const LoginForm = props => {
         <Appbar.Content title='Login' subtitle='Submit Login Info' />
         <Appbar.Action icon='magnify' />
         <Appbar.Action icon='dots-vertical' />
-        <Text>{exampleInfo}</Text>
       </Appbar.Header>
 
       <View>
