@@ -3,6 +3,7 @@ import { View, Text } from 'react-native'
 import { Appbar, TextInput, Button } from "react-native-paper";
 import { Formik } from 'formik'
 
+// TODO: Create an onSubmit function
 const RegisterForm = props => {
 
   return (
@@ -29,6 +30,7 @@ const RegisterForm = props => {
             mode='outlined'
             value={values.password}
             onChangeText={handleChange('password')}
+            secureTextEntry={true}
           />
           <TextInput
             label='First Name'
