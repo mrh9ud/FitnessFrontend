@@ -19,7 +19,7 @@ const LoginForm = props => {
 
       <Formik 
         initialValues={{username: '', password: ''}}
-        onSubmit={(values) => verifyUserData(values)}
+        onSubmit={(values) => props.verifyUserData(values)}
       >
         {({ handleChange, handleSubmit, values }) => (
         <View>
@@ -57,6 +57,8 @@ const styles= StyleSheet.create({
   }
 })
 
-const mapDispatchToProps = dispatch =>  ({ verifyUserData: (userData) => dispatch(verifyUserData(userData)) })
+const mapDispatchToProps = dispatch => {
+  return ({ verifyUserData: (userData) => dispatch(verifyUserData(userData)) })
+}
 
 export default connect(null, mapDispatchToProps)(LoginForm)
