@@ -1,3 +1,1 @@
-const VERIFY_USER_DATA = 'verifyUserData'
-
-export { VERIFY_USER_DATA }
+//define all action types as const and export them
