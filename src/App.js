@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import MainContainer from './containers/MainContainer'
+import LoginForm from './components/LoginForm'
 import { Provider } from 'react-redux';
 import store from './redux/store'
 
@@ -12,8 +13,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Provider store={store}>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={MainContainer} />
+        <Stack.Navigator initialRouteName="Main">
+          <Stack.Screen name="Main" component={MainContainer} />
+          <Stack.Screen name="Login" component={LoginForm} />
         </Stack.Navigator>
       </Provider>
     </NavigationContainer>
