@@ -1,6 +1,6 @@
 import { LOGIN } from '../actions/actionType'
 
-function userReducer(state = {}, action) {
+function userReducer(state = null, action) {
   switch(action.type) {
     case LOGIN:
       return action.payload

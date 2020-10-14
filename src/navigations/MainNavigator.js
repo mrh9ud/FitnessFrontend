@@ -4,7 +4,7 @@ import RegisterForm from "../components/RegisterForm";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import React from "react";
 import {NavigationContainer} from "@react-navigation/native";
-import { connect } from 'react-redux'
+import  { connect } from 'react-redux'
 
 const MainNavigator = props => {
 
@@ -12,12 +12,12 @@ const MainNavigator = props => {
 
   return (
     <>
-      {props.currentUser 
+      {props.currentUser
       ?
       <NavigationContainer>
         <Drawer.Navigator>
           <Drawer.Screen name="Home" component={MainContainer}/>
-
+        
           <Drawer.Screen name="Login" component={LoginForm}/>
           <Drawer.Screen name="Register" component={RegisterForm}/>
         </Drawer.Navigator>
@@ -29,6 +29,6 @@ const MainNavigator = props => {
   )
 }
 
-const mapStateToProps = store => { return ({ currentUser: store.currentUser }) }
+const mapStateToProps = store => { return ({ currentUser: store.currentUser })}
 
 export default connect(mapStateToProps)(MainNavigator)
