@@ -4,20 +4,31 @@ import RegisterForm from "../components/RegisterForm";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import React from "react";
 import {NavigationContainer} from "@react-navigation/native";
+import { connect } from 'react-redux'
 
-const MainNavigator = () => {
+const MainNavigator = props => {
 
   const Drawer = createDrawerNavigator();
 
   return (
-    <NavigationContainer>
-      <Drawer.Navigator>
-        <Drawer.Screen name="Home" component={MainContainer}/>
-        <Drawer.Screen name="Login" component={LoginForm}/>
-        <Drawer.Screen name="Register" component={RegisterForm}/>
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <>
+      {props.currentUser 
+      ?
+      <NavigationContainer>
+        <Drawer.Navigator>
+          <Drawer.Screen name="Home" component={MainContainer}/>
+
+          <Drawer.Screen name="Login" component={LoginForm}/>
+          <Drawer.Screen name="Register" component={RegisterForm}/>
+        </Drawer.Navigator>
+      </NavigationContainer>
+      :
+      <LoginForm />
+      }
+    </>
   )
 }
 
-export default MainNavigator
+const mapStateToProps = store => { return ({ currentUser: store.currentUser }) }
+
+export default connect(mapStateToProps)(MainNavigator)

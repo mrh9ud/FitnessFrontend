@@ -3,7 +3,7 @@ import userReducer from "./userReducer";
 import loadingReducer from "./loadingReducer"
 
 const rootReducer = combineReducers({
-  user: userReducer,
+  currentUser: userReducer,
   loading: loadingReducer
 })
 
