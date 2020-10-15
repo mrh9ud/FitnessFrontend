@@ -2,14 +2,14 @@ import React from 'react'
 import {Text} from "react-native-paper";
 import {View} from "react-native";
 
-const StatisticsScreen = () => {
+const ProfileSettingsScreen = () => {
   return (
     <View>
       <Text>
-        This is the statistics screen
+        This is the profile settings page
       </Text>
     </View>
   )
 }
 
-export default StatisticsScreen
+export default ProfileSettingsScreen

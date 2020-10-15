@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import { verifyUserData } from '../redux/actions/actionCreators'
 
 const LoginForm = props => {
-
   return (
     <View>
       <Appbar.Header>

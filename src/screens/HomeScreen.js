@@ -1,24 +1,8 @@
 import React from 'react'
-import Menu, {Text, Card, Title, Paragraph, Button} from "react-native-paper";
-import NavBar from "../navigations/NavBar";
+import { Card, Title, Paragraph, Button } from "react-native-paper";
 import { View, StyleSheet } from 'react-native'
-import {createStackNavigator} from "@react-navigation/stack";
 
-const Stack = createStackNavigator()
-
-const HomeScreen = ({ navigation }) => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        header: () => <NavBar title='Home' drawerNavigation={navigation} />
-      }}
-    >
-      <Stack.Screen name="Home" component={Home} />
-    </Stack.Navigator>
-  )
-}
-
-function Home() {
+const HomeScreen = () => {
   return (
     <View>
       <View style={styleSheet.cards}>

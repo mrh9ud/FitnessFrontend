@@ -1,16 +1,17 @@
 import React from 'react'
-import {Text} from "react-native-paper";
+import {Text, List } from "react-native-paper";
 import {View} from "react-native";
-import NavBar from "../navigations/NavBar";
 
 const SettingsScreen = ({ navigation }) => {
   return (
-    <View>
-      <NavBar title='Settings' drawerNavigation={navigation}/>
-      <Text>
-        This is the settings screen
-      </Text>
-    </View>
+    <List.Section>
+      <List.Subheader>Some stuff</List.Subheader>
+      <List.Item
+        title="Profile"
+        left={() => <List.Icon icon="account-circle" />}
+        onPress={() => {navigation.navigate('Profile')}}
+      />
+    </List.Section>
   )
 }
 
