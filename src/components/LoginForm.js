@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { Appbar, TextInput, Button } from "react-native-paper";
 import { Formik } from 'formik'
 import { connect } from 'react-redux'

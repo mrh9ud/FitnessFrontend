@@ -2,7 +2,9 @@ import { LOADING, LOGIN } from './actionType'
 import { Alert } from 'react-native'
 import * as encryptor from '../../encryption/SecureStore.js'
 
-const userLoginUrl = "http://10.0.0.68:3000/api/v1/login"
+const ipPort = "http://10.0.0.68:3000"
+const userLoginUrl = `${ipPort}/api/v1/login`
+const tokenVerificationUrl = `${ipPort}/api/v1/profile`
 
 function loading() { return { type: LOADING } }
 
@@ -35,4 +37,18 @@ function verifyUserData(userObj) {
     }
 }
 
-export { verifyUserData }
+function verifyToken(token) {
+    return dispatch =>  {
+        dispatch(loading())
+        fetch(tokenVerificationUrl, {
+            method: "GET",
+            headers: {
+                "Authentication": token
+            }
+        }).then(res => res.json())
+            .then(data => dispatch(loginUser(data)))
+            .catch(error => console.log(error.messages))
+    }
+}
+
+export { verifyUserData, verifyToken }

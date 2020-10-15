@@ -5,7 +5,8 @@ import { Provider } from 'react-redux';
 import store from './redux/store'
 import MainNavigator from "./navigations/MainNavigator";
 
-export default function App() {
+
+const App = () => {
   return (
     <Provider store={store}>
       <PaperProvider>
@@ -14,3 +15,5 @@ export default function App() {
     </Provider>
   );
 }
+
+export default App
