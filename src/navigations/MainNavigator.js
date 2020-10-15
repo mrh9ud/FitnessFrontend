@@ -17,7 +17,6 @@ const MainNavigator = props => {
     <>
       {props.currentUser
       ?
-<<<<<<< HEAD
         <NavigationContainer>
           <Drawer.Navigator>
             <Drawer.Screen name="Home" component={HomeScreen}/>
@@ -26,13 +25,6 @@ const MainNavigator = props => {
             <Drawer.Screen name="Settings" component={SettingsScreen}/>
           </Drawer.Navigator>
         </NavigationContainer>
-=======
-      <NavigationContainer>
-        <Drawer.Navigator>
-          <Drawer.Screen name="Home" component={MainContainer}/>
-        </Drawer.Navigator>
-      </NavigationContainer>
->>>>>>> securing_account_creation
       :
       <LoginForm />
       }

@@ -2,7 +2,7 @@ import { LOADING, LOGIN } from './actionType'
 import { Alert } from 'react-native'
 import * as encryptor from '../../encryption/SecureStore.js'
 
-const userLoginUrl = "http://10.0.0.128:3000/api/v1/login"
+const userLoginUrl = "http://10.0.0.68:3000/api/v1/login"
 
 function loading() { return { type: LOADING } }
 
