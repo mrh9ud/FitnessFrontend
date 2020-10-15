@@ -7,10 +7,6 @@ const MainContainer = ({ navigation }) => {
     <View style={styles.container}>
         <Text>testing main container</Text>
         <StatusBar style="auto" />
-        <Button 
-          title="Go To Login" 
-          onPress={() => navigation.navigate("Login", { exampleInfo: "You can pass info here as params"})}
-        />
     </View>
     
   )
