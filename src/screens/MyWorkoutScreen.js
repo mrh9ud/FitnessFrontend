@@ -6,7 +6,7 @@ import NavBar from "../navigations/NavBar";
 const MyWorkoutScreen = ({ navigation }) => {
   return (
     <View>
-      <NavBar title='My Workout' navigation={navigation}/>
+      <NavBar title='My Workout' drawerNavigation={navigation}/>
       <Text>
         This is the my workout screen
       </Text>

@@ -6,7 +6,7 @@ import NavBar from "../navigations/NavBar";
 const StatisticsScreen = ({ navigation }) => {
   return (
     <View>
-      <NavBar title='Stats' navigation={navigation}/>
+      <NavBar title='Stats' drawerNavigation={navigation}/>
       <Text>
         This is the statistics screen
       </Text>

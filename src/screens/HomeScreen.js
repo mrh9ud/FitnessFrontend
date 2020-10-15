@@ -1,5 +1,5 @@
 import React from 'react'
-import {Text, Card, Title, Paragraph, Button} from "react-native-paper";
+import Menu, {Text, Card, Title, Paragraph, Button} from "react-native-paper";
 import NavBar from "../navigations/NavBar";
 import { View, StyleSheet } from 'react-native'
 import {createStackNavigator} from "@react-navigation/stack";
@@ -10,7 +10,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <Stack.Navigator
       screenOptions={{
-        header: () => <NavBar title='Home' navigation={navigation}/>
+        header: () => <NavBar title='Home' drawerNavigation={navigation} />
       }}
     >
       <Stack.Screen name="Home" component={Home} />
@@ -20,8 +20,7 @@ const HomeScreen = ({ navigation }) => {
 
 function Home() {
   return (
-  <View>
-    {/*<NavBar title='Home' navigation={navigation}/>*/}
+    <View>
       <View style={styleSheet.cards}>
         <Card elevation={2}>
           <Card.Title title="Today's Workout" subtitle="Arms, Lower Back"/>

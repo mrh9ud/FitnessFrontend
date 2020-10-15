@@ -1,19 +1,39 @@
-import React, { Component } from 'react'
-import { Appbar } from "react-native-paper";
+import React from 'react'
+import { Appbar, Menu} from "react-native-paper";
 import { View } from 'react-native';
 
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical'
 
-const NavBar = ({ title, navigation }) => {
+
+const NavBar = ({ title, drawerNavigation }) => {
+
+  // menu functionality
+  const [menuVisible, setMenuVisible] = React.useState(false)
+  const openMenu = () => setMenuVisible(true)
+  const closeMenu = () => setMenuVisible(false)
+
   return (
-    <React.Fragment>
-      <Appbar.Header dark={true}>
-        <Appbar.Action icon='menu' onPress={() => navigation.openDrawer()} />
+    <View>
+      <Appbar.Header >
+        <Appbar.Action icon='menu' onPress={() => drawerNavigation.openDrawer()} />
         <Appbar.Content title={title}/>
-        <Appbar.Action icon={MORE_ICON}/>
+        <Menu
+          visible={menuVisible}
+          onDismiss={closeMenu}
+          anchor={
+            <Appbar.Action
+              icon={MORE_ICON}
+              onPress={openMenu}
+              color="white" />
+          }>
+          <Menu.Item onPress={() => {alert("Logging out...")}}
+                     title="Logout" />
+        </Menu>
       </Appbar.Header>
-    </React.Fragment>
+     </View>
   )
 };
+
+
 
 export default NavBar;

@@ -6,7 +6,7 @@ import NavBar from "../navigations/NavBar";
 const SettingsScreen = ({ navigation }) => {
   return (
     <View>
-      <NavBar title='Settings' navigation={navigation}/>
+      <NavBar title='Settings' drawerNavigation={navigation}/>
       <Text>
         This is the settings screen
       </Text>
