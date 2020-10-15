@@ -36,11 +36,23 @@ const LoginForm = props => {
             onChangeText={handleChange('password')}
             secureTextEntry={true}
           />
-          <Button 
-            mode="contained" 
-            onPress={handleSubmit}
-            >Submit
-          </Button>
+          <View style={styles.button}>
+            <Button
+              mode="contained"
+              onPress={handleSubmit}
+            >
+              Submit
+            </Button>
+
+            <Text>Not a user?</Text>
+
+            <Button
+              mode="contained"
+              onPress={() => {alert("Registering...")}}
+            >
+              Register
+            </Button>
+          </View>
         </View>
         )}
       </Formik>
@@ -52,6 +64,10 @@ const styles= StyleSheet.create({
   inputField: {
     paddingHorizontal: '5%', 
     paddingVertical: '5%'
+  },
+
+  button: {
+    alignItems: 'center'
   }
 })
 
