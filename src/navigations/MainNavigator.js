@@ -17,9 +17,6 @@ const MainNavigator = props => {
       <NavigationContainer>
         <Drawer.Navigator>
           <Drawer.Screen name="Home" component={MainContainer}/>
-        
-          <Drawer.Screen name="Login" component={LoginForm}/>
-          <Drawer.Screen name="Register" component={RegisterForm}/>
         </Drawer.Navigator>
       </NavigationContainer>
       :

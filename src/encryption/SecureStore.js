@@ -1,6 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 
-const isSecureStorageAvailable = () => { SecureStore.isAvailableAsync() }
+const isSecureStorageAvailable = () => SecureStore.isAvailableAsync()
 
 const setCredentials = async (data) => {
     try {
