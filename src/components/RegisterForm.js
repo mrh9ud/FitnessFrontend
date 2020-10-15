@@ -2,9 +2,10 @@ import React from 'react';
 import { View } from 'react-native'
 import { TextInput, Button } from "react-native-paper";
 import { Formik } from 'formik'
+import { createNewUser } from '../redux/actions/actionCreators'
+import { connect } from 'react-redux'
 
-// TODO: Create an onSubmit function
-const RegisterForm = props => {
+const RegisterForm = ({ createNewUser }) => {
 
   return (
     <Formik
@@ -15,7 +16,7 @@ const RegisterForm = props => {
         lastName: '',
         phoneNumber: ''
       }}
-      onSubmit={values => console.log(values)}
+      onSubmit={values => createNewUser(values)}
     >
       {({handleChange, handleSubmit, values}) => (
         <View>
@@ -61,4 +62,6 @@ const RegisterForm = props => {
   )
 }
 
-export default RegisterForm
+const mapDispatchToProps = dispatch => { return { createNewUser: userData => dispatch(createNewUser(userData)) } }
+
+export default connect(null, mapDispatchToProps)(RegisterForm)
