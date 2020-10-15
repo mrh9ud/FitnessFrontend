@@ -1,21 +1,24 @@
-import { LOADING, LOGIN } from './actionType'
+import { LOADING, LOGIN, LOG_OUT_USER } from './actionType'
 import { Alert } from 'react-native'
 import * as encryptor from '../../encryption/SecureStore.js'
 
 const ipPort = "http://10.0.0.68:3000"
 const userLoginUrl = `${ipPort}/api/v1/login`
 const tokenVerificationUrl = `${ipPort}/api/v1/profile`
-const postMethodHeaders = { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" } }
+const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
 const userCreationUrl = `${ipPort}/api/v1/users`
 
 function loading() { return { type: LOADING } }
 
 function loginUser(data) { return { type: LOGIN, payload: data } }
 
+function logOutUser() { return { type: LOG_OUT_USER } }
+
 function verifyUserData(userObj) {
     return dispatch => {
         const userConfigObj = {
-            postMethodHeaders,
+            method: "POST",
+            headers: fetchHeaders,
             body: JSON.stringify(userObj)
         }
         dispatch(loading())
@@ -52,14 +55,26 @@ function verifyToken(token) {
 function createNewUser(userData) {
     return dispatch => {
         const userConfigObj = {
-            postMethodHeaders,
-            body: JSON.stringify(userData)
+            method: "POST",
+            headers: fetchHeaders,
+            body: JSON.stringify({ user: userData })
         }
         dispatch(loading())
         fetch(userCreationUrl, userConfigObj).then(resp => resp.json())
-            .then(data => console.log(data))
+            .then(data => {
+                if (!data.error) {
+                    if (encryptor.isSecureStorageAvailable()) {
+                        encryptor.setCredentials(data.jwt)
+                        dispatch(loginUser(data.currentUser))
+                    } else {
+                        Alert.alert('Cannot store credentials on this device')
+                    }
+                } else {
+                    Alert.alert(data.error)
+                }
+            })
             .catch(error => console.log(error.messages))
     }
 }
 
-export { verifyUserData, verifyToken, createNewUser }
+export { verifyUserData, verifyToken, createNewUser, logOutUser }

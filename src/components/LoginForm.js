@@ -5,19 +5,12 @@ import { Formik } from 'formik'
 import { connect } from 'react-redux'
 import { verifyUserData } from '../redux/actions/actionCreators'
 
-const LoginForm = props => {
-
+const LoginForm = ({ verifyUserData, navigation }) => {
   return (
     <View>
-      <Appbar.Header>
-        <Appbar.Content title='Login' subtitle='Submit Login Info' />
-        <Appbar.Action icon='magnify' />
-        <Appbar.Action icon='dots-vertical' />
-      </Appbar.Header>
-
       <Formik 
         initialValues={{username: '', password: ''}}
-        onSubmit={(values) => props.verifyUserData(values)}
+        onSubmit={(values) => verifyUserData(values)}
       >
         {({ handleChange, handleSubmit, values }) => (
         <View>
@@ -44,13 +37,12 @@ const LoginForm = props => {
               Submit
             </Button>
 
-            <Text>Not a user?</Text>
+            <Text>Don't have an account?</Text>
 
-            <Button
-              mode="contained"
-              onPress={() => {alert("Registering...")}}
-            >
-              Register
+            <Button 
+              mode="contained" 
+              onPress={() => navigation.navigate("New Account")}
+              >Register
             </Button>
           </View>
         </View>
@@ -65,14 +57,11 @@ const styles= StyleSheet.create({
     paddingHorizontal: '5%', 
     paddingVertical: '5%'
   },
-
   button: {
     alignItems: 'center'
   }
 })
 
-const mapDispatchToProps = dispatch => {
-  return ({ verifyUserData: (userData) => dispatch(verifyUserData(userData)) })
-}
+const mapDispatchToProps = dispatch => { return ({ verifyUserData: (userData) => dispatch(verifyUserData(userData)) }) }
 
 export default connect(null, mapDispatchToProps)(LoginForm)

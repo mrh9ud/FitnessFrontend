@@ -1,11 +1,14 @@
 import React from 'react'
 import { Appbar, Menu} from "react-native-paper";
 import { View } from 'react-native';
+import { logOutUser } from '../redux/actions/actionCreators'
+import { connect } from 'react-redux'
+import { deleteCredentials } from '../encryption/SecureStore'
 
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical'
 
 
-const NavBar = ({ title, drawerNavigation }) => {
+const NavBar = ({ title, drawerNavigation, logOutUser }) => {
 
   // menu functionality
   const [menuVisible, setMenuVisible] = React.useState(false)
@@ -26,14 +29,17 @@ const NavBar = ({ title, drawerNavigation }) => {
               onPress={openMenu}
               color="white" />
           }>
-          <Menu.Item onPress={() => {alert("Logging out...")}}
-                     title="Logout" />
+          <Menu.Item onPress={() => {
+            deleteCredentials()
+            logOutUser()
+          }}
+          title="Logout" />
         </Menu>
       </Appbar.Header>
      </View>
   )
 };
 
+const mapDispatchToProps = dispatch => { return { logOutUser: () => dispatch(logOutUser()) } }
 
-
-export default NavBar;
+export default connect(null, mapDispatchToProps)(NavBar)

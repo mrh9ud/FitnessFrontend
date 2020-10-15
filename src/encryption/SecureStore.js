@@ -3,10 +3,11 @@ import * as SecureStore from 'expo-secure-store';
 const isSecureStorageAvailable = () => SecureStore.isAvailableAsync()
 
 const setCredentials = async (jwtToken) => {
+    console.log(typeof(jwtToken))
     try {
-        await SecureStore.setItemAsync('token', { jwtToken })
-    } catch (e) {
-        console.log(e)
+        await SecureStore.setItemAsync('token', jwtToken)
+    } catch (error) {
+        console.log(error)
     }
 }
 
@@ -14,9 +15,16 @@ const getCredentials = async () => {
     try {
         const credentials = await SecureStore.getItemAsync('token')
         return credentials
-    } catch(e) {
-        console.log(e)
+    } catch(error) {
+        console.log(error)
     }
 }
 
-export { setCredentials, getCredentials, isSecureStorageAvailable }
+const deleteCredentials = async () => {
+    try {
+        await SecureStore.deleteItemAsync('token')
+    } catch(error) {
+        console.log(error)
+    }
+}
+export { setCredentials, getCredentials, isSecureStorageAvailable, deleteCredentials }

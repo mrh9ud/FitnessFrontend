@@ -9,8 +9,11 @@ import  { connect } from 'react-redux'
 import LoginForm from "../components/LoginForm";
 import * as encryptor from '../encryption/SecureStore.js'
 import { verifyToken } from '../redux/actions/actionCreators'
+import RegisterForm from '../components/RegisterForm'
+import { createStackNavigator } from "@react-navigation/stack";
 
-const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator()
+const Stack = createStackNavigator()
 
 const MainNavigator = ({ currentUser, verifyToken }) => {
 
@@ -40,7 +43,12 @@ useEffect(() => {
         </Drawer.Navigator>
       </NavigationContainer>
       :
-      <LoginForm />
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={LoginForm}/>
+          <Stack.Screen name="New Account" component={RegisterForm} />
+        </Stack.Navigator>
+      </NavigationContainer>
       }
     </>
   )

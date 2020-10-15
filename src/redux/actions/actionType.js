@@ -1,4 +1,4 @@
 const LOADING = 'LOADING'
 const LOGIN = 'LOGIN'
-
-export { LOADING, LOGIN }
+const LOG_OUT_USER = 'LOG_OUT_USER'
+export { LOADING, LOGIN, LOG_OUT_USER }
