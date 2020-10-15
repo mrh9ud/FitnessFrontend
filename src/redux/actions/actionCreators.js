@@ -1,6 +1,12 @@
-import { VERIFY_USER_DATA } from './actionType'
+import { LOADING, LOGIN } from './actionType'
+import { Alert } from 'react-native'
+import * as encryptor from '../../encryption/SecureStore.js'
 
-const userLoginUrl = "localhost:3000/api/v1/login"
+const userLoginUrl = "http://10.0.0.128:3000/api/v1/login"
+
+function loading() { return { type: LOADING } }
+
+function loginUser(data) { return { type: LOGIN, payload: data } }
 
 function verifyUserData(userObj) {
     return dispatch => {
@@ -12,11 +18,20 @@ function verifyUserData(userObj) {
             },
             body: JSON.stringify(userObj)
         }
-        dispatch(loading())    // need to  review docs to finish implementing this feature
-        fetch(userLoginUrl, userConfigObj)
-        .then(res => res.json())
-        .then(data => console.log(data))   // should call a method to set current user and store credentials on device
-        .catch(error => console.log(error.message))
+        dispatch(loading())
+        fetch(userLoginUrl, userConfigObj).then(res => res.json())
+        .then(data => {
+            if (!data.error) {
+                if (encryptor.isSecureStorageAvailable()) {
+                    encryptor.setCredentials(data.jwt)
+                    dispatch(loginUser(data.user))
+                } else {
+                    Alert.alert("Cannot store credentials on device")
+                }
+            } else {
+                Alert.alert(data.message)
+        }})
+        .catch(error => console.log(error.messages))
     }
 }
 
