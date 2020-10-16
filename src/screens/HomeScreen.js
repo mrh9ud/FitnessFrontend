@@ -1,8 +1,8 @@
 import React from 'react'
-import Menu, {Text, Card, Title, Paragraph, Button} from "react-native-paper";
+import  { Card, Title, Paragraph, Button } from "react-native-paper";
 import NavBar from "../navigations/NavBar";
 import { View, StyleSheet } from 'react-native'
-import {createStackNavigator} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator()
 

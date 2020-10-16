@@ -3,14 +3,13 @@ import { Provider as PaperProvider } from 'react-native-paper'
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import store from './redux/store'
-import MainNavigator from "./navigations/MainNavigator";
-
+import SwitchNavigator from "./navigations/SwitchNavigator";
 
 const App = () => {
   return (
     <Provider store={store}>
       <PaperProvider>
-        <MainNavigator />
+        <SwitchNavigator />
       </PaperProvider>
     </Provider>
   );

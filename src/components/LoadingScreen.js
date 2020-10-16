@@ -4,7 +4,7 @@ import { Image, View, StyleSheet } from 'react-native'
 const LoadingScreen = () => {
     return (
         <View style={styles.container}>
-            <Image source={require('./splash.png')} style={{ width: 305, height: 300 }}/>
+            <Image source={require('../../assets/splash.png')} style={{ width: 400, height: 800 }}/>
         </View>
     )
 }
