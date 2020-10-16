@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native'
-import { Text, Appbar, TextInput, Button } from "react-native-paper";
+import { Text, TextInput, Button } from "react-native-paper";
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
 import { verifyUserData } from '../redux/actions/actionCreators'

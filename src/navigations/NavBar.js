@@ -8,7 +8,7 @@ import { deleteCredentials } from '../encryption/SecureStore'
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical'
 
 
-const NavBar = ({ props, drawerNavigation, logoutUser }) => {
+const NavBar = ({ props, drawerNavigation, logOutUser }) => {
 
   // menu functionality
   const [menuVisible, setMenuVisible] = React.useState(false)
@@ -17,9 +17,14 @@ const NavBar = ({ props, drawerNavigation, logoutUser }) => {
 
   return (
     <View>
-      <Appbar.Header >
-        <Appbar.Action icon='menu' onPress={() => drawerNavigation.openDrawer()} />
-        <Appbar.Content title={props.scene.route.name}/>
+      <Appbar.Header>
+
+        {props.previous
+          ?
+          <Appbar.BackAction onPress={() => props.navigation.goBack()} />
+          :
+          <Appbar.Action icon='menu' onPress={() => drawerNavigation.openDrawer()} />}
+        <Appbar.Content title={props.scene.route.name} />
         <Menu
           visible={menuVisible}
           onDismiss={closeMenu}
