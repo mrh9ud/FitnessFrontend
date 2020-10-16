@@ -5,10 +5,10 @@ import MyWorkoutScreen from "../screens/MyWorkoutScreen";
 
 const Stack = createStackNavigator()
 
-const MyWorkoutNavigator = () => {
+const MyWorkoutNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator
-      screenOptions={{ header: props => <NavBar props={props} />}}
+      screenOptions={{ header: props => <NavBar props={props} drawerNavigation={navigation} />}}
     >
       <Stack.Screen name='My Workout' component={MyWorkoutScreen} />
     </Stack.Navigator>

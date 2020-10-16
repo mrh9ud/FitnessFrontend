@@ -5,7 +5,7 @@ import { View } from 'react-native';
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical'
 
 
-const NavBar = ({ props }) => {
+const NavBar = ({ props, drawerNavigation }) => {
 
   // menu functionality
   const [menuVisible, setMenuVisible] = React.useState(false)
@@ -15,7 +15,7 @@ const NavBar = ({ props }) => {
   return (
     <View>
       <Appbar.Header >
-        {/*<Appbar.Action icon='menu' onPress={() => drawerNavigation.openDrawer()} />*/}
+        <Appbar.Action icon='menu' onPress={() => drawerNavigation.openDrawer()} />
         <Appbar.Content title={props.scene.route.name}/>
         <Menu
           visible={menuVisible}

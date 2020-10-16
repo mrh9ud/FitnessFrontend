@@ -5,10 +5,10 @@ import NavBar from "./NavBar";
 
 const Stack = createStackNavigator()
 
-const HomeNavigator = () => {
+const HomeNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator
-      screenOptions={{ header: props => <NavBar props={props} />}}
+      screenOptions={{ header: props => <NavBar props={props} drawerNavigation={navigation} />}}
     >
       <Stack.Screen name={'Home'} component={HomeScreen} />
     </Stack.Navigator>
