@@ -6,14 +6,9 @@ import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
 
 const Stack = createStackNavigator()
 
-const SettingsNavigator = ({ navigation }) => {
+const SettingsNavigator = () => {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        header: () => <NavBar title='Settings' drawerNavigation={navigation} />
-      }}
-      gestureDirection="horizontal"
-    >
+    <Stack.Navigator >
       <Stack.Screen name='Settings' component={SettingsScreen} />
       <Stack.Screen name='Profile' component={ProfileSettingsScreen}
                     options={{title: 'Profile Settings'}}

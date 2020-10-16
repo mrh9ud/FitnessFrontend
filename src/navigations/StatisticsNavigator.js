@@ -5,12 +5,10 @@ import StatisticsScreen from "../screens/StatisticsScreen";
 
 const Stack = createStackNavigator()
 
-const StatisticsNavigator = ({ navigation }) => {
+const StatisticsNavigator = () => {
   return (
     <Stack.Navigator
-      screenOptions={{
-        header: () => <NavBar title='Statistics' drawerNavigation={navigation} />
-      }}
+      options={{ header: props => <NavBar {...props} />}}
     >
       <Stack.Screen name='Statistics' component={StatisticsScreen} />
     </Stack.Navigator>

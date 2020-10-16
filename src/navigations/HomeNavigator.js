@@ -5,13 +5,9 @@ import NavBar from "./NavBar";
 
 const Stack = createStackNavigator()
 
-const HomeNavigator = ({ navigation }) => {
+const HomeNavigator = () => {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        header: () => <NavBar title='Home' drawerNavigation={navigation} />
-      }}
-    >
+    <Stack.Navigator >
       <Stack.Screen name={'Home'} component={HomeScreen} />
     </Stack.Navigator>
   )
