@@ -41,13 +41,14 @@ function verifyUserData(userObj) {
 function verifyToken(token) {
     return dispatch =>  {
         dispatch(loading())
-        fetch(tokenVerificationUrl, {
+            return fetch(tokenVerificationUrl, {
             method: "GET",
             headers: {
                 "Authentication": token
             }
         }).then(res => res.json())
-            .then(data => dispatch(loginUser(data)))
+        .then(data => { return data })
+        .then(data => dispatch(loginUser(data)))
             .catch(error => console.log(error.messages))
     }
 }

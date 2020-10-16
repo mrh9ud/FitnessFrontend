@@ -3,7 +3,6 @@ import * as SecureStore from 'expo-secure-store';
 const isSecureStorageAvailable = () => SecureStore.isAvailableAsync()
 
 const setCredentials = async (jwtToken) => {
-    console.log(typeof(jwtToken))
     try {
         await SecureStore.setItemAsync('token', jwtToken)
     } catch (error) {
