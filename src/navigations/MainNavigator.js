@@ -9,8 +9,11 @@ import HomeNavigator from "./HomeNavigator";
 import SettingsNavigator from "./SettingsNavigator";
 import MyWorkoutNavigator from "./MyWorkoutNavigator";
 import StatisticsNavigator from "./StatisticsNavigator";
+import RegisterForm from '../components/RegisterForm'
+import { createStackNavigator } from "@react-navigation/stack";
 
-const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator()
+const Stack = createStackNavigator()
 
 const MainNavigator = ({ currentUser, verifyToken }) => {
 
@@ -40,7 +43,12 @@ useEffect(() => {
         </Drawer.Navigator>
       </NavigationContainer>
       :
-      <LoginForm />
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={LoginForm}/>
+          <Stack.Screen name="New Account" component={RegisterForm} />
+        </Stack.Navigator>
+      </NavigationContainer>
       }
     </>
   )
