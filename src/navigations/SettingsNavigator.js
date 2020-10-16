@@ -8,7 +8,9 @@ const Stack = createStackNavigator()
 
 const SettingsNavigator = () => {
   return (
-    <Stack.Navigator >
+    <Stack.Navigator
+      screenOptions={{ header: props => <NavBar props={props} />}}
+    >
       <Stack.Screen name='Settings' component={SettingsScreen} />
       <Stack.Screen name='Profile' component={ProfileSettingsScreen}
                     options={{title: 'Profile Settings'}}

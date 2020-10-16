@@ -7,7 +7,9 @@ const Stack = createStackNavigator()
 
 const HomeNavigator = () => {
   return (
-    <Stack.Navigator >
+    <Stack.Navigator
+      screenOptions={{ header: props => <NavBar props={props} />}}
+    >
       <Stack.Screen name={'Home'} component={HomeScreen} />
     </Stack.Navigator>
   )

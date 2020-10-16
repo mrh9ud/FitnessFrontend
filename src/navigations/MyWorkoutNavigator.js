@@ -7,7 +7,9 @@ const Stack = createStackNavigator()
 
 const MyWorkoutNavigator = () => {
   return (
-    <Stack.Navigator >
+    <Stack.Navigator
+      screenOptions={{ header: props => <NavBar props={props} />}}
+    >
       <Stack.Screen name='My Workout' component={MyWorkoutScreen} />
     </Stack.Navigator>
   )

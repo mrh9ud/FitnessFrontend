@@ -8,7 +8,7 @@ const Stack = createStackNavigator()
 const StatisticsNavigator = () => {
   return (
     <Stack.Navigator
-      options={{ header: props => <NavBar {...props} />}}
+      screenOptions={{ header: props => <NavBar props={props} />}}
     >
       <Stack.Screen name='Statistics' component={StatisticsScreen} />
     </Stack.Navigator>
