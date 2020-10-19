@@ -1,8 +1,7 @@
 import { LOADING, LOGIN, LOG_OUT_USER } from './actionType'
-import { Alert } from 'react-native'
 import * as encryptor from '../../encryption/SecureStore.js'
 
-const ipPort = "http://10.0.0.68:3000"
+const ipPort = "http://10.0.0.70:3000"
 const userLoginUrl = `${ipPort}/api/v1/login`
 const tokenVerificationUrl = `${ipPort}/api/v1/profile`
 const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
@@ -29,12 +28,12 @@ function verifyUserData(userObj) {
                     encryptor.setCredentials(data.jwt)
                     dispatch(loginUser(data.user))
                 } else {
-                    Alert.alert("Cannot store credentials on device")
+                    alert("Cannot store credentials on device")
                 }
             } else {
-                Alert.alert(data.message)
+                alert(data.message)
         }})
-        .catch(error => console.log(error.messages))
+        .catch(error => alert(error))
     }
 }
 
@@ -49,7 +48,7 @@ function verifyToken(token) {
         }).then(res => res.json())
         .then(data => { return data })
         .then(data => dispatch(loginUser(data)))
-            .catch(error => console.log(error.messages))
+            .catch(error => alert(error))
     }
 }
 
@@ -68,10 +67,10 @@ function createNewUser(userData) {
                         encryptor.setCredentials(data.jwt)
                         dispatch(loginUser(data.currentUser))
                     } else {
-                        Alert.alert('Cannot store credentials on this device')
+                        alert('Cannot store credentials on this device')
                     }
                 } else {
-                    Alert.alert(data.error)
+                    alert(data.message.message)
                 }
             })
             .catch(error => console.log(error.messages))

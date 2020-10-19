@@ -4,6 +4,7 @@ import { Text, TextInput, Button } from "react-native-paper";
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
 import { verifyUserData } from '../redux/actions/actionCreators'
+import * as yup from 'yup'
 
 const LoginForm = ({ verifyUserData, navigation }) => {
   return (
@@ -11,28 +12,47 @@ const LoginForm = ({ verifyUserData, navigation }) => {
       <Formik 
         initialValues={{username: '', password: ''}}
         onSubmit={(values) => verifyUserData(values)}
+        validationSchema={yup.object().shape({
+           username: yup
+            .string()
+            .required("username required"),
+          password: yup
+            .string()
+            .required("password required")
+         })}
       >
-        {({ handleChange, handleSubmit, values }) => (
+        {({ handleSubmit, handleChange, setFieldTouched, touched, isValid, values, errors }) => (
         <View>
           <TextInput
             label='Username'
             mode='outlined'
+            icon="account"
             style={styles.inputField}
             value={values.username}
             onChangeText={handleChange('username')}
+            onBlur={() => setFieldTouched('username')}
           />
+          {touched.username && errors.username &&
+            <Text style={styles.error}>{errors.username}</Text>
+          }
           <TextInput
             label='Password'
             mode='outlined'
+            icon="account-lock"
             style={styles.inputField}
             value={values.password}
             onChangeText={handleChange('password')}
             secureTextEntry={true}
+            onBlur={() => setFieldTouched("password")}
           />
+          {touched.username && errors.password &&
+            <Text style={styles.error}>{errors.password}</Text>
+          }
           <View style={styles.button}>
             <Button
               mode="contained"
               onPress={handleSubmit}
+              disabled={!isValid}
             >
               Submit
             </Button>
@@ -59,6 +79,10 @@ const styles= StyleSheet.create({
   },
   button: {
     alignItems: 'center'
+  },
+  error: { 
+    fontSize: 10, 
+    color: 'red'  
   }
 })
 
