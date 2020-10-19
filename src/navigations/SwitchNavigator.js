@@ -62,5 +62,4 @@ class SwitchNavigator extends React.Component {
 
 const mapDispatchToProps = dispatch => { return { verifyToken: token => dispatch(verifyToken(token)) } }
 
-
 export default connect(null, mapDispatchToProps)(SwitchNavigator)

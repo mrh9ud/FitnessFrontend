@@ -12,7 +12,7 @@ const SettingsNavigator = ({ navigation }) => {
       screenOptions={{ header: props => <NavBar props={props} drawerNavigation={navigation} />}}
     >
       <Stack.Screen name='Settings' component={SettingsScreen} />
-      <Stack.Screen name='Profile' component={ProfileSettingsScreen}
+      <Stack.Screen name='Edit Profile' component={ProfileSettingsScreen}
                     options={{title: 'Profile Settings'}}
       />
     </Stack.Navigator>

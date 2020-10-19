@@ -2,7 +2,7 @@ import { LOADING, LOGIN, LOG_OUT_USER } from './actionType'
 import { Alert } from 'react-native'
 import * as encryptor from '../../encryption/SecureStore.js'
 
-const ipPort = "http://10.0.0.68:3000"
+const ipPort = "http://10.0.0.70:3000"
 const userLoginUrl = `${ipPort}/api/v1/login`
 const tokenVerificationUrl = `${ipPort}/api/v1/profile`
 const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
