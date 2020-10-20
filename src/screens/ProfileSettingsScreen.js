@@ -12,12 +12,6 @@ const ProfileSettingsScreen = ({ currentUser }) => {
 
   const hideDialog = () => setVisible(false)
 
-  const handlePress = (props) => {
-    debugger
-    console.log(props)
-    showDialog()
-  }
-
   return (
     <View>
       <EditDialog visible={visible} hideDialog={hideDialog} />
@@ -26,7 +20,7 @@ const ProfileSettingsScreen = ({ currentUser }) => {
         <List.Item
           title="Username"
           right={() => <Text>{currentUser.username}</Text>}
-          onPress={() => handlePress()}
+          onPress={() => showDialog}
         />
         <Divider />
         <List.Item
