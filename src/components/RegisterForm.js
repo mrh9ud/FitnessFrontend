@@ -4,17 +4,18 @@ import { TextInput, Text, Button } from "react-native-paper";
 import { Formik } from 'formik'
 import { createNewUser } from '../redux/actions/actionCreators'
 import { connect } from 'react-redux'
+import { USERNAME, PASSWORD, FIRST_NAME, LAST_NAME, EMAIL } from '../helpers/FormKeyType'
 import * as yup from 'yup'
 
 const RegisterForm = ({ createNewUser }) => {
   return (
     <Formik
       initialValues={{
-        username: '',
-        password: '',
-        first_name: '',
-        last_name: '',
-        email: ''
+        [USERNAME]: '',
+        [PASSWORD]: '',
+        [FIRST_NAME]: '',
+        [LAST_NAME]: '',
+        [EMAIL]: '',
       }}
       onSubmit={values => createNewUser(values)}
       validationSchema={yup.object().shape({
