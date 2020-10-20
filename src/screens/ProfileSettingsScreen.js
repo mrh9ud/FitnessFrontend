@@ -1,6 +1,6 @@
 import React from 'react'
 import {List, Divider, Text, Portal, Button, Dialog, TextInput} from "react-native-paper";
-import { View } from "react-native";
+import {ScrollView, View} from "react-native";
 import { connect } from 'react-redux'
 import EditDialog from "../components/EditDialog";
 import { USERNAME, PASSWORD, FIRST_NAME, LAST_NAME, EMAIL } from '../helpers/FormKeyType'
@@ -23,12 +23,13 @@ const ProfileSettingsScreen = ({ currentUser }) => {
   }
 
   return (
-    <View>
+    <ScrollView>
       <EditDialog visible={visible}
                   hideDialog={hideDialog}
                   title={entry}
                   formKey={entryKey}
                   value={value}
+                  userId={currentUser.id}
       />
       <List.Section>
         <List.Subheader>Account Information</List.Subheader>
@@ -64,7 +65,7 @@ const ProfileSettingsScreen = ({ currentUser }) => {
         />
         <Divider />
       </List.Section>
-    </View>
+    </ScrollView>
   )
 }
 
