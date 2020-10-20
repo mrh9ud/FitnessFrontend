@@ -20,18 +20,6 @@ const ProfileSettingsScreen = ({ currentUser }) => {
 
   return (
     <View>
-      {/*<Portal>*/}
-      {/*  <Dialog visible={visible} onDismiss={hideModal}>*/}
-      {/*    <Dialog.Title>Change Username</Dialog.Title>*/}
-      {/*    <Dialog.Content>*/}
-      {/*      <TextInput label="Username" />*/}
-      {/*    </Dialog.Content>*/}
-      {/*    <Dialog.Actions>*/}
-      {/*      <Button onPress={hideModal}>Cancel</Button>*/}
-      {/*      <Button>Confirm</Button>*/}
-      {/*    </Dialog.Actions>*/}
-      {/*  </Dialog>*/}
-      {/*</Portal>*/}
       <EditDialog visible={visible} hideDialog={hideDialog} />
       <List.Section>
         <List.Subheader>Account Information</List.Subheader>
