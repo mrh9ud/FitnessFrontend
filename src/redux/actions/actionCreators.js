@@ -28,7 +28,7 @@ function verifyUserData(userObj) {
                     encryptor.setCredentials(data.jwt)
                     dispatch(loginUser(data.user))
                 } else {
-                    alert("Cannot store credentials on device")
+                    alert("Cannot store credentials on your device")
                 }
             } else {
                 alert(data.message)
@@ -63,12 +63,7 @@ function createNewUser(userData) {
         fetch(userCreationUrl, userConfigObj).then(resp => resp.json())
             .then(data => {
                 if (!data.error) {
-                    if (encryptor.isSecureStorageAvailable()) {
-                        encryptor.setCredentials(data.jwt)
-                        dispatch(loginUser(data.currentUser))
-                    } else {
-                        alert('Cannot store credentials on this device')
-                    }
+                    alert(data.message)
                 } else {
                     alert(data.message.message)
                 }
