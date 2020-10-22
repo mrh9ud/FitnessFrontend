@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native'
 import { Text, TextInput, Button } from "react-native-paper";
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
-import { verifyUserData } from '../redux/actions/actionCreators'
+import { verifyUserData } from '../redux/actions/users/actionCreators'
 import * as yup from 'yup'
 import { USERNAME, PASSWORD } from '../helpers/FormKeyType'
 

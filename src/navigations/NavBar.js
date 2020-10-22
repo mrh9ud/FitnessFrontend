@@ -1,7 +1,7 @@
 import React from 'react'
 import { Appbar, Menu} from "react-native-paper";
 import { View } from 'react-native';
-import { logOutUser } from '../redux/actions/actionCreators'
+import { logOutUser } from '../redux/actions/users/actionCreators'
 import { connect } from 'react-redux'
 import { deleteCredentials } from '../encryption/SecureStore'
 

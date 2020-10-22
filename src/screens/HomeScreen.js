@@ -1,16 +1,16 @@
 import React from 'react'
-import { Card, Title, Paragraph, Button } from "react-native-paper";
+import { Card, Title, Button } from "react-native-paper";
 import { View, StyleSheet } from 'react-native'
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   return (
     <View>
       <View style={styleSheet.cards}>
         <Card elevation={2}>
           <Card.Title title="Today's Workout" subtitle="Arms, Lower Back"/>
           <Card.Content>
-            <Title>skldfjsd</Title>
-            <Paragraph>jslkdfjslkjsdlfksjf</Paragraph>
+            <Title>Want a New Workout?</Title>
+            <Button onPress={() => navigation.navigate("Workout Questionnaire")}>Start Now</Button>
           </Card.Content>
           <Card.Actions>
             <Button>View</Button>
