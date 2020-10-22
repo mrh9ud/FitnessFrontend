@@ -64,7 +64,7 @@ const firstNameValidation = {
     [DURATION]: yup
       .string().required("Must include a workout duration")
       .max(3, "Healthy exercise should be constrained to less than 1000 minutes a day")
-      .matches(/^\d+$/g, { message: "Numbers only!" })
+      .matches(/^\d+$/g, { message: "Numbers only!", excludeEmptyString: true })
   }
 
 const loginFormValidations = yup.object().shape({

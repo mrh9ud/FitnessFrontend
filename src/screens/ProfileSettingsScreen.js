@@ -1,6 +1,6 @@
 import React from 'react'
-import {List, Divider, Text } from "react-native-paper";
-import {ScrollView } from "react-native";
+import { List, Divider, Text } from "react-native-paper";
+import { ScrollView } from "react-native";
 import { connect } from 'react-redux'
 import EditUserForm from "../components/EditUserForm";
 import { USERNAME, PASSWORD, FIRST_NAME, LAST_NAME, EMAIL } from '../helpers/FormKeyType'
@@ -26,17 +26,17 @@ const ProfileSettingsScreen = ({ currentUser }) => {
     <ScrollView>
       {/*Only render the edit box if there is a supplied form key*/}
       {
-        formKey
-          ?
-          <EditUserForm visible={visible}
-                      hideDialog={hideDialog}
-                      title={formTitle}
-                      formKey={formKey}
-                      value={formValue}
-                      userId={currentUser.id}
-          />
-          :
-          null
+      formKey
+      ?
+      <EditUserForm visible={visible}
+                  hideDialog={hideDialog}
+                  title={formTitle}
+                  formKey={formKey}
+                  value={formValue}
+                  userId={currentUser.id}
+      />
+      :
+      null
       }
       <List.Section>
         <List.Subheader>Account Information</List.Subheader>

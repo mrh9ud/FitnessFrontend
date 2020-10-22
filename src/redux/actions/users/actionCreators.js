@@ -1,11 +1,12 @@
 import { LOADING, LOGIN, LOG_OUT_USER } from '../actionType'
 import * as encryptor from '../../../encryption/SecureStore.js'
 
-const ipPort = "http://10.0.0.128:3000"
+const ipPort = "http://10.0.0.70:3000"
 const userLoginUrl = `${ipPort}/api/v1/login`
 const tokenVerificationUrl = `${ipPort}/api/v1/profile`
 const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
 const userCreationUrl = `${ipPort}/api/v1/users`
+const userUpdateUrl = `${ipPort}/api/v1/users/`
 
 function loading() { return { type: LOADING } }
 
@@ -73,19 +74,23 @@ function createNewUser(userData) {
 }
 
 function updateUser(userData, userId) {
-    debugger
     return dispatch => {
         const userConfigObj = {
             method: "PATCH",
             headers: fetchHeaders,
-            body: JSON.stringify({user: userData})
+            body: JSON.stringify({ user: userData })
         }
         dispatch(loading())
-        fetch(`http://10.0.0.128:3000/api/v1/users/${userId}`, userConfigObj).then(resp => resp.json())
+        fetch(`${userUpdateUrl}${userId}`, userConfigObj).then(resp => resp.json())
           .then(data => {
-              console.log(data)
+              if (!data.error) {
+                  dispatch(loginUser(data))
+                  alert("Information Updated Successfully")
+                } else {
+                  alert(data.message.message) 
+              }
           })
-          .catch(error => (alert(error)))
+          .catch(error => alert(error))
     }
 }
 
