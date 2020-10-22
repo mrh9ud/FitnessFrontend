@@ -1,8 +1,8 @@
 import React from 'react'
-import {List, Divider, Text, Portal, Button, Dialog, TextInput} from "react-native-paper";
-import {ScrollView, View} from "react-native";
+import {List, Divider, Text } from "react-native-paper";
+import {ScrollView } from "react-native";
 import { connect } from 'react-redux'
-import EditDialog from "../components/EditDialog";
+import EditUserForm from "../components/EditUserForm";
 import { USERNAME, PASSWORD, FIRST_NAME, LAST_NAME, EMAIL } from '../helpers/FormKeyType'
 
 const ProfileSettingsScreen = ({ currentUser }) => {
@@ -28,7 +28,7 @@ const ProfileSettingsScreen = ({ currentUser }) => {
       {
         formKey
           ?
-          <EditDialog visible={visible}
+          <EditUserForm visible={visible}
                       hideDialog={hideDialog}
                       title={formTitle}
                       formKey={formKey}
