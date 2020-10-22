@@ -10,7 +10,7 @@ import { submitWorkoutQuestionnaire } from '../redux/actions/workouts/actionCrea
 const validationSchema = yup.object().shape({
   duration: yup
     .string().required("Must include a workout duration")
-    .max(3, "You shouldn't exercise for over 999 minutes a days")
+    .max(3, "Healthy exercise should be constrained to less than 1000 minutes a day")
     .matches(/^\d+$/g, { message: "Numbers only!" })
 })
 
