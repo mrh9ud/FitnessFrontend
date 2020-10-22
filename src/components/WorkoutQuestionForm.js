@@ -11,6 +11,7 @@ const validationSchema = yup.object().shape({
   duration: yup
     .string().required("Must include a workout duration")
     .max(3, "You shouldn't exercise for over 999 minutes a days")
+    .matches(/^\d+$/g, { message: "Numbers only!" })
 })
 
 const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser }) => {
