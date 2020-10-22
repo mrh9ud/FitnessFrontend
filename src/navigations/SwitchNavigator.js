@@ -1,7 +1,7 @@
 import React from 'react'
 import MainNavigator from './MainNavigator'
 import { connect } from 'react-redux'
-import { verifyToken } from '../redux/actions/actionCreators'
+import { verifyToken } from '../redux/actions/users/actionCreators'
 import * as SplashScreen from 'expo-splash-screen';
 import * as encryptor from '../encryption/SecureStore.js'
 import AccountNavigator from './AccountNavigator'

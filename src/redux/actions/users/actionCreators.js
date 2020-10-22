@@ -1,5 +1,5 @@
-import { LOADING, LOGIN, LOG_OUT_USER } from './actionType'
-import * as encryptor from '../../encryption/SecureStore.js'
+import { LOADING, LOGIN, LOG_OUT_USER } from '../actionType'
+import * as encryptor from '../../../encryption/SecureStore.js'
 
 const ipPort = "http://10.0.0.128:3000"
 const userLoginUrl = `${ipPort}/api/v1/login`
@@ -28,7 +28,7 @@ function verifyUserData(userObj) {
                     encryptor.setCredentials(data.jwt)
                     dispatch(loginUser(data.user))
                 } else {
-                    alert("Cannot store credentials on device")
+                    alert("Cannot store credentials on your device")
                 }
             } else {
                 alert(data.message)
@@ -48,7 +48,7 @@ function verifyToken(token) {
         }).then(res => res.json())
         .then(data => { return data })
         .then(data => dispatch(loginUser(data)))
-            .catch(error => alert("testing"))
+            .catch(error => alert(error))
     }
 }
 
@@ -63,12 +63,7 @@ function createNewUser(userData) {
         fetch(userCreationUrl, userConfigObj).then(resp => resp.json())
             .then(data => {
                 if (!data.error) {
-                    if (encryptor.isSecureStorageAvailable()) {
-                        encryptor.setCredentials(data.jwt)
-                        dispatch(loginUser(data.currentUser))
-                    } else {
-                        alert('Cannot store credentials on this device')
-                    }
+                    alert(data.message)
                 } else {
                     alert(data.message.message)
                 }

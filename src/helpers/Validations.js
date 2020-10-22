@@ -17,6 +17,16 @@ const passwordValidation = {
     .matches(/^[\S]+$/g, {message: "No spaces permitted", excludeEmptyString: true})
 }
 
+
+const confirmPasswordValidation = {
+  confirm_password: yup
+    .string().required("must confirm matching passwords")
+    .label("Confirm Password")
+    .test('passwords-match', 'Passwords must match', function(value) {
+      return this.parent.password === value;
+    })
+}
+
 const firstNameValidation = {
   [FIRST_NAME]: yup
     .string().required("first name required")
@@ -43,6 +53,7 @@ const emailValidation = {
 const accountInfoValidations = yup.object().shape({
   ...usernameValidation,
   ...passwordValidation,
+  ...confirmPasswordValidation,
   ...firstNameValidation,
   ...lastNameValidation,
   ...emailValidation
@@ -51,23 +62,23 @@ const accountInfoValidations = yup.object().shape({
 const editFormValidation = (key) => {
   switch (key) {
     case USERNAME:
-      return yup.object.shape({
+      return yup.object().shape({
         ...usernameValidation
       })
     case PASSWORD:
-      return yup.object.shape({
+      return yup.object().shape({
         ...passwordValidation
       })
     case FIRST_NAME:
-      return yup.object.shape({
+      return yup.object().shape({
         ...firstNameValidation
       })
     case LAST_NAME:
-      return yup.object.shape({
+      return yup.object().shape({
         ...lastNameValidation
       })
     case EMAIL:
-      return yup.object.shape({
+      return yup.object().shape({
         ...emailValidation
       })
   }

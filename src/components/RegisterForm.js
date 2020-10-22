@@ -2,9 +2,9 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native'
 import { TextInput, Text, Button } from "react-native-paper";
 import { Formik } from 'formik'
-import { createNewUser } from '../redux/actions/actionCreators'
+import { createNewUser } from '../redux/actions/users/actionCreators'
 import { connect } from 'react-redux'
-import { USERNAME, PASSWORD, FIRST_NAME, LAST_NAME, EMAIL } from '../helpers/FormKeyType'
+import { USERNAME, PASSWORD, CONFIRM_PASSWORD, FIRST_NAME, LAST_NAME, EMAIL } from '../helpers/FormKeyType'
 import {accountInfoValidations} from "../helpers/Validations";
 
 const RegisterForm = ({ createNewUser }) => {
@@ -14,17 +14,19 @@ const RegisterForm = ({ createNewUser }) => {
         initialValues={{
           [USERNAME]: '',
           [PASSWORD]: '',
+          [CONFIRM_PASSWORD]: '',
           [FIRST_NAME]: '',
           [LAST_NAME]: '',
           [EMAIL]: '',
         }}
         onSubmit={values => createNewUser(values)}
         validationSchema={accountInfoValidations}
-      >
+        >
         {({handleChange, handleSubmit, errors, setFieldTouched, touched, isValid, values}) => (
           <View>
             <TextInput
-              label='Username'
+              label="Username"
+              placeholder='user_123'
               mode='outlined'
               style={styles.inputField}
               value={values.username}
@@ -32,10 +34,11 @@ const RegisterForm = ({ createNewUser }) => {
               onBlur={() => setFieldTouched('username')}
             />
             {touched.username && errors.username &&
-            <Text style={styles.error}>{errors.username}</Text>
-            }
+              <Text style={styles.error}>{errors.username}</Text>}
+
             <TextInput
-              label='Password'
+              label="Password"
+              placeholder='s0meth1ng_s3cure_her3!'
               mode='outlined'
               style={styles.inputField}
               value={values.password}
@@ -44,10 +47,24 @@ const RegisterForm = ({ createNewUser }) => {
               onBlur={() => setFieldTouched('password')}
             />
             {touched.password && errors.password &&
-            <Text style={styles.error}>{errors.password}</Text>
-            }
+              <Text style={styles.error}>{errors.password}</Text>}
+
             <TextInput
-              label='First Name'
+              label="Confirm Password"
+              placeholder="s0meth1ng_s3cure_her3!"
+              mode='outlined'
+              style={styles.inputField}
+              value={values.confirm_password}
+              onChangeText={handleChange('confirm_password')}
+              secureTextEntry={true}
+              onBlur={() => setFieldTouched('confirm_password')}
+            />
+            {touched.confirm_password && errors.confirm_password &&
+              <Text style={styles.error}>{errors.confirm_password}</Text>}
+
+            <TextInput
+              label="First Name"
+              placeholder='John'
               mode='outlined'
               style={styles.inputField}
               value={values.first_name}
@@ -55,10 +72,11 @@ const RegisterForm = ({ createNewUser }) => {
               onBlur={() => setFieldTouched('first_name')}
             />
             {touched.first_name && errors.first_name &&
-            <Text style={styles.error}>{errors.first_name}</Text>
-            }
+              <Text style={styles.error}>{errors.first_name}</Text>}
+
             <TextInput
-              label='Last Name'
+              label="Last Name"
+              placeholder='Doe'
               mode='outlined'
               style={styles.inputField}
               value={values.last_name}
@@ -66,10 +84,11 @@ const RegisterForm = ({ createNewUser }) => {
               onBlur={() => setFieldTouched('last_name')}
             />
             {touched.last_name && errors.last_name &&
-            <Text style={styles.error}>{errors.last_name}</Text>
-            }
+              <Text style={styles.error}>{errors.last_name}</Text>}
+
             <TextInput
               label='Email'
+              placeholder="johndoe@email.com"
               mode='outlined'
               style={styles.inputField}
               value={values.email}
@@ -77,19 +96,19 @@ const RegisterForm = ({ createNewUser }) => {
               onBlur={() => setFieldTouched('email')}
             />
             {touched.email && errors.email &&
-            <Text style={styles.error}>{errors.email}</Text>
-            }
+              <Text style={styles.error}>{errors.email}</Text>}
+
             <View style={styles.button}>
               <Button
                 mode="contained"
                 onPress={handleSubmit}
                 disabled={!isValid}
-              >Submit
+                >Submit
               </Button>
             </View>
           </View>
-        )}
-      </Formik>
+          )}
+        </Formik>
     </ScrollView>
   )
 }

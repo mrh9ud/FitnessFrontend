@@ -3,23 +3,26 @@ import { View, StyleSheet } from 'react-native'
 import { Text, TextInput, Button } from "react-native-paper";
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
-import { verifyUserData } from '../redux/actions/actionCreators'
+import { verifyUserData } from '../redux/actions/users/actionCreators'
 import * as yup from 'yup'
+import { USERNAME, PASSWORD } from '../helpers/FormKeyType'
+
+const validationSchema = yup.object().shape({
+  username: yup
+    .string()
+    .required("username required"),
+  password: yup
+    .string()
+    .required("password required")
+})
 
 const LoginForm = ({ verifyUserData, navigation }) => {
   return (
     <View>
       <Formik 
-        initialValues={{username: '', password: ''}}
+        initialValues={{[USERNAME]: '', [PASSWORD]: ''}}
         onSubmit={(values) => verifyUserData(values)}
-        validationSchema={yup.object().shape({
-           username: yup
-            .string()
-            .required("username required"),
-          password: yup
-            .string()
-            .required("password required")
-         })}
+        validationSchema={validationSchema}
       >
         {({ handleSubmit, handleChange, setFieldTouched, touched, isValid, values, errors }) => (
         <View>

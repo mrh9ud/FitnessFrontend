@@ -1,9 +1,10 @@
 import React from 'react'
 import { Button, Dialog, Portal, TextInput } from "react-native-paper";
 import { Formik } from 'formik'
-import { updateUser } from "../redux/actions/actionCreators";
+import { updateUser } from "../redux/actions/users/actionCreators";
 import { connect } from 'react-redux'
 import { editFormValidation } from "../helpers/Validations";
+import * as yup from 'yup'
 
 const EditDialog = ({ visible, hideDialog, title, formKey, value, userId, updateUser }) => {
   return (
