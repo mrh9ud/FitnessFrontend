@@ -77,8 +77,8 @@ function createNewUser(userData) {
     }
 }
 
-function updateUser(userData) {
-    delete userData[""]
+function updateUser(userData, userId) {
+    debugger
     return dispatch => {
         const userConfigObj = {
             method: "PATCH",
@@ -86,7 +86,7 @@ function updateUser(userData) {
             body: JSON.stringify({user: userData})
         }
         dispatch(loading())
-        fetch(`http://10.0.0.128:3000/api/v1/users/${userData.id}`, userConfigObj).then(resp => resp.json())
+        fetch(`http://10.0.0.128:3000/api/v1/users/${userId}`, userConfigObj).then(resp => resp.json())
           .then(data => {
               console.log(data)
           })

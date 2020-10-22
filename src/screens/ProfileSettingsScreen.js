@@ -7,30 +7,37 @@ import { USERNAME, PASSWORD, FIRST_NAME, LAST_NAME, EMAIL } from '../helpers/For
 
 const ProfileSettingsScreen = ({ currentUser }) => {
   const [visible, setVisible] = React.useState(false)
-  const [entry, setEntry] = React.useState('')
-  const [entryKey, setEntryKey] = React.useState('')
-  const [value, setValue] = React.useState('')
+  const [formTitle, setFormTitle] = React.useState('')
+  const [formKey, setFormKey] = React.useState('')
+  const [formValue, setFormValue] = React.useState('')
 
   const showDialog = () => setVisible(true)
 
   const hideDialog = () => setVisible(false)
 
   const handlePress = (entry, entryKey, value) => {
-    setEntry(entry)
-    setEntryKey(entryKey)
-    setValue(value)
+    setFormTitle(entry)
+    setFormKey(entryKey)
+    setFormValue(value)
     showDialog()
   }
 
   return (
     <ScrollView>
-      <EditDialog visible={visible}
-                  hideDialog={hideDialog}
-                  title={entry}
-                  formKey={entryKey}
-                  value={value}
-                  userId={currentUser.id}
-      />
+      {/*Only render the edit box if there is a supplied form key*/}
+      {
+        formKey
+          ?
+          <EditDialog visible={visible}
+                      hideDialog={hideDialog}
+                      title={formTitle}
+                      formKey={formKey}
+                      value={formValue}
+                      userId={currentUser.id}
+          />
+          :
+          null
+      }
       <List.Section>
         <List.Subheader>Account Information</List.Subheader>
         <List.Item

@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
 import { TextInput, Text, Button } from "react-native-paper";
 import { Formik } from 'formik'
 import { createNewUser } from '../redux/actions/actionCreators'
 import { connect } from 'react-redux'
 import { USERNAME, PASSWORD, FIRST_NAME, LAST_NAME, EMAIL } from '../helpers/FormKeyType'
-import * as yup from 'yup'
+import {accountInfoValidations} from "../helpers/Validations";
 
 const RegisterForm = ({ createNewUser }) => {
   return (
@@ -19,33 +19,7 @@ const RegisterForm = ({ createNewUser }) => {
           [EMAIL]: '',
         }}
         onSubmit={values => createNewUser(values)}
-        validationSchema={yup.object().shape({
-          username: yup
-            .string().required("username required")
-            .min(4, "Must have at least 4 characters")
-            .max(12, "No more than 12 characters")
-            .matches(/^\S[A-Za-z0-9_]+$/g, {message: "No spaces or special characters", excludeEmptyString: true}),
-          password: yup
-            .string().required("password required")
-            .min(6, "Must be at least 6 characters")
-            .max(25, "No more than 25 characters")
-            .matches(/^[\S]+$/g, {message: "No spaces permitted", excludeEmptyString: true}),
-          first_name: yup
-            .string().required("first name required")
-            .min(2, "Must have at least 2 characters")
-            .max(15, "No more than 15 characters")
-            .matches(/^([A-Za-z](\s?|-|'))+[A-Za-z]$/g, {
-              message: "No special characters or extra spaces",
-              excludeEmptyString: true
-            }),
-          last_name: yup
-            .string().required("last name required")
-            .min(2, "Must have at least 2 characters")
-            .max(20, "No more than 20 characters")
-            .matches(/^([A-Za-z](\s?|-|'))+[A-Za-z]$/g, {message: "No special characters or spaces"}),
-          email: yup
-            .string().required("email required").email("Not a valid email")
-        })}
+        validationSchema={accountInfoValidations}
       >
         {({handleChange, handleSubmit, errors, setFieldTouched, touched, isValid, values}) => (
           <View>
