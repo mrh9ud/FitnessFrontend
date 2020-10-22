@@ -4,17 +4,8 @@ import { Text, TextInput, Button } from "react-native-paper";
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
 import { verifyUserData } from '../redux/actions/users/actionCreators'
-import * as yup from 'yup'
+import { loginFormValidations } from '../helpers/Validations'
 import { USERNAME, PASSWORD } from '../helpers/FormKeyType'
-
-const validationSchema = yup.object().shape({
-  username: yup
-    .string()
-    .required("username required"),
-  password: yup
-    .string()
-    .required("password required")
-})
 
 const LoginForm = ({ verifyUserData, navigation }) => {
   return (
@@ -22,7 +13,7 @@ const LoginForm = ({ verifyUserData, navigation }) => {
       <Formik 
         initialValues={{[USERNAME]: '', [PASSWORD]: ''}}
         onSubmit={(values) => verifyUserData(values)}
-        validationSchema={validationSchema}
+        validationSchema={loginFormValidations}
       >
         {({ handleSubmit, handleChange, setFieldTouched, touched, isValid, values, errors }) => (
         <View>

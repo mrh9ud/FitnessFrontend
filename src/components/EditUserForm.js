@@ -3,10 +3,9 @@ import { Button, Dialog, Portal, TextInput } from "react-native-paper";
 import { Formik } from 'formik'
 import { updateUser } from "../redux/actions/users/actionCreators";
 import { connect } from 'react-redux'
-import { editFormValidation } from "../helpers/Validations";
-import * as yup from 'yup'
+import { editFormValidations } from "../helpers/Validations";
 
-const EditDialog = ({ visible, hideDialog, title, formKey, value, userId, updateUser }) => {
+const EditUserForm = ({ visible, hideDialog, title, formKey, value, userId, updateUser }) => {
   return (
     <Portal>
       <Formik
@@ -14,7 +13,7 @@ const EditDialog = ({ visible, hideDialog, title, formKey, value, userId, update
           [formKey]: ''
         }}
         onSubmit={(values) => {updateUser(values, userId)}}
-        validationSchema={() => editFormValidation(formKey)}
+        validationSchema={() => editFormValidations(formKey)}
       >
         {({handleChange, handleSubmit, isValid, values}) => (
           <Dialog visible={visible} onDismiss={hideDialog}>
@@ -40,4 +39,4 @@ const EditDialog = ({ visible, hideDialog, title, formKey, value, userId, update
 
 const mapDispatchToProps = dispatch => { return { updateUser: (userData, userId) => dispatch(updateUser(userData, userId))}}
 
-export default connect(null, mapDispatchToProps)(EditDialog)
+export default connect(null, mapDispatchToProps)(EditUserForm)

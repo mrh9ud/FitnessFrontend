@@ -3,16 +3,9 @@ import { View, StyleSheet } from 'react-native'
 import { Text, TextInput, Button, Switch, Title, Checkbox } from "react-native-paper";
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
-import * as yup from 'yup'
 import { DURATION } from '../helpers/FormKeyType'
 import { submitWorkoutQuestionnaire } from '../redux/actions/workouts/actionCreators'
-
-const validationSchema = yup.object().shape({
-  duration: yup
-    .string().required("Must include a workout duration")
-    .max(3, "Healthy exercise should be constrained to less than 1000 minutes a day")
-    .matches(/^\d+$/g, { message: "Numbers only!" })
-})
+import { workoutQuestionsValidations } from '../helpers/Validations'
 
 const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser }) => {
 
@@ -37,7 +30,7 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser }) => {
     const workoutObj = {
       strength: workoutStrFocus,
       cardio: workoutCardioFocus,
-      durationInt,
+      duration: durationInt,
       ...difficulty
     }
     submitWorkoutQuestionnaire(workoutObj, currentUser)
@@ -48,7 +41,7 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser }) => {
       initialValues={{
         [DURATION]: ''
       }}
-      validationSchema={validationSchema}
+      validationSchema={workoutQuestionsValidations}
     >
     {({isValid, errors, handleChange, values}) => (
       <View>

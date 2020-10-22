@@ -1,7 +1,7 @@
 import * as yup from 'yup'
-import {EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, USERNAME} from "./FormKeyType";
+import { EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, USERNAME, DURATION, CONFIRM_PASSWORD } from "./FormKeyType";
 
-const usernameValidation = {
+const usernameRegisterValidation = {
   [USERNAME]: yup
     .string().required("username required")
     .min(4, "Must have at least 4 characters")
@@ -9,7 +9,7 @@ const usernameValidation = {
     .matches(/^\S[A-Za-z0-9_]+$/g, {message: "No spaces or special characters", excludeEmptyString: true})
 }
 
-const passwordValidation = {
+const passwordRegisterValidation = {
   [PASSWORD]: yup
     .string().required("password required")
     .min(6, "Must be at least 6 characters")
@@ -17,9 +17,18 @@ const passwordValidation = {
     .matches(/^[\S]+$/g, {message: "No spaces permitted", excludeEmptyString: true})
 }
 
+const loginUsernameValidation = {
+  [USERNAME]: yup
+    .string().required("username required")
+}
+
+const loginPasswordValidation = {
+  [PASSWORD]: yup
+    .string().required("password required")
+}
 
 const confirmPasswordValidation = {
-  confirm_password: yup
+  [CONFIRM_PASSWORD]: yup
     .string().required("must confirm matching passwords")
     .label("Confirm Password")
     .test('passwords-match', 'Passwords must match', function(value) {
@@ -36,38 +45,55 @@ const firstNameValidation = {
       message: "No special characters or extra spaces",
       excludeEmptyString: true
     })
-}
-
-const lastNameValidation = {
-  [LAST_NAME]: yup
+  }
+  
+  const lastNameValidation = {
+    [LAST_NAME]: yup
     .string().required("last name required")
     .min(2, "Must have at least 2 characters")
     .max(20, "No more than 20 characters")
     .matches(/^([A-Za-z](\s?|-|'))+[A-Za-z]$/g, {message: "No special characters or spaces"})
-}
-
-const emailValidation = {
-  email: yup
+  }
+  
+  const emailValidation = {
+    [EMAIL]: yup
     .string().required("email required").email("Not a valid email")
-}
-const accountInfoValidations = yup.object().shape({
-  ...usernameValidation,
-  ...passwordValidation,
+  }
+  
+  const workoutDurationValidation = {
+    [DURATION]: yup
+      .string().required("Must include a workout duration")
+      .max(3, "Healthy exercise should be constrained to less than 1000 minutes a day")
+      .matches(/^\d+$/g, { message: "Numbers only!" })
+  }
+
+const loginFormValidations = yup.object().shape({
+  ...loginUsernameValidation,
+  ...loginPasswordValidation
+})
+
+const registrationFormValidations = yup.object().shape({
+  ...usernameRegisterValidation,
+  ...passwordRegisterValidation,
   ...confirmPasswordValidation,
   ...firstNameValidation,
   ...lastNameValidation,
   ...emailValidation
 })
 
-const editFormValidation = (key) => {
+const workoutQuestionsValidations = yup.object().shape({
+  ...workoutDurationValidation
+})
+
+const editFormValidations = (key) => {
   switch (key) {
     case USERNAME:
       return yup.object().shape({
-        ...usernameValidation
+        ...usernameRegisterValidation
       })
     case PASSWORD:
       return yup.object().shape({
-        ...passwordValidation
+        ...passwordRegisterValidation
       })
     case FIRST_NAME:
       return yup.object().shape({
@@ -84,4 +110,5 @@ const editFormValidation = (key) => {
   }
 }
 
-export { accountInfoValidations, editFormValidation }
+
+export { registrationFormValidations, editFormValidations, loginFormValidations, workoutQuestionsValidations }

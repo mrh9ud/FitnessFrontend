@@ -5,7 +5,7 @@ import { Formik } from 'formik'
 import { createNewUser } from '../redux/actions/users/actionCreators'
 import { connect } from 'react-redux'
 import { USERNAME, PASSWORD, CONFIRM_PASSWORD, FIRST_NAME, LAST_NAME, EMAIL } from '../helpers/FormKeyType'
-import {accountInfoValidations} from "../helpers/Validations";
+import { registrationFormValidations } from "../helpers/Validations";
 
 const RegisterForm = ({ createNewUser }) => {
   return (
@@ -20,7 +20,7 @@ const RegisterForm = ({ createNewUser }) => {
           [EMAIL]: '',
         }}
         onSubmit={values => createNewUser(values)}
-        validationSchema={accountInfoValidations}
+        validationSchema={registrationFormValidations}
         >
         {({handleChange, handleSubmit, errors, setFieldTouched, touched, isValid, values}) => (
           <View>
