@@ -7,14 +7,22 @@ import StatisticsNavigator from "./StatisticsNavigator";
 import SettingsNavigator from "./SettingsNavigator";
 import AccountNavigator from "./AccountNavigator";
 import { connect } from 'react-redux'
+import ResetPasswordForm from "../forms/ResetPasswordForm"
+import { createStackNavigator } from "@react-navigation/stack";
 
-const MainNavigator = ({ currentUser }) => {
+const MainNavigator = ({ currentUser, passwordResetting }) => {
   const Drawer = createDrawerNavigator()
+  const Stack = createStackNavigator()
 
   return (
     <>
-    {currentUser
-    ?
+    {currentUser ? passwordResetting ?
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Reset Password" component={ResetPasswordForm} />
+      </Stack.Navigator>
+    </NavigationContainer>
+    :
     <NavigationContainer>
       <Drawer.Navigator>
         <Drawer.Screen name="Home" component={HomeNavigator} />
@@ -30,6 +38,6 @@ const MainNavigator = ({ currentUser }) => {
   )
 }
 
-const mapStateToProps = store => ({ currentUser: store.currentUser })
+const mapStateToProps = store => ({ currentUser: store.currentUser, passwordResetting: store.passwordResetting })
 
 export default connect(mapStateToProps)(MainNavigator)

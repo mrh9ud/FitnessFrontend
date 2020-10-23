@@ -1,6 +1,5 @@
 import React from 'react'
 import { Divider, List } from "react-native-paper";
-import {View} from "react-native";
 
 const SettingsScreen = ({ navigation }) => {
   return (

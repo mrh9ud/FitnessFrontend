@@ -10,7 +10,6 @@ const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical'
 
 const NavBar = ({ props, drawerNavigation, logOutUser }) => {
 
-  // menu functionality
   const [menuVisible, setMenuVisible] = React.useState(false)
   const openMenu = () => setMenuVisible(true)
   const closeMenu = () => setMenuVisible(false)

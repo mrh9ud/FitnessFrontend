@@ -22,7 +22,7 @@ const RegisterForm = ({ createNewUser }) => {
         onSubmit={values => createNewUser(values)}
         validationSchema={registrationFormValidations}
         >
-        {({handleChange, handleSubmit, errors, setFieldTouched, touched, isValid, values}) => (
+        {({handleChange, handleSubmit, errors, isValid, values}) => (
           <View>
             <TextInput
               label="Username"
@@ -31,9 +31,8 @@ const RegisterForm = ({ createNewUser }) => {
               style={styles.inputField}
               value={values.username}
               onChangeText={handleChange('username')}
-              onBlur={() => setFieldTouched('username')}
             />
-            {touched.username && errors.username &&
+            {errors.username &&
               <Text style={styles.error}>{errors.username}</Text>}
 
             <TextInput
@@ -44,9 +43,8 @@ const RegisterForm = ({ createNewUser }) => {
               value={values.password}
               onChangeText={handleChange('password')}
               secureTextEntry={true}
-              onBlur={() => setFieldTouched('password')}
             />
-            {touched.password && errors.password &&
+            {errors.password &&
               <Text style={styles.error}>{errors.password}</Text>}
 
             <TextInput
@@ -57,9 +55,8 @@ const RegisterForm = ({ createNewUser }) => {
               value={values.confirm_password}
               onChangeText={handleChange('confirm_password')}
               secureTextEntry={true}
-              onBlur={() => setFieldTouched('confirm_password')}
             />
-            {touched.confirm_password && errors.confirm_password &&
+            {errors.confirm_password &&
               <Text style={styles.error}>{errors.confirm_password}</Text>}
 
             <TextInput
@@ -69,9 +66,8 @@ const RegisterForm = ({ createNewUser }) => {
               style={styles.inputField}
               value={values.first_name}
               onChangeText={handleChange('first_name')}
-              onBlur={() => setFieldTouched('first_name')}
             />
-            {touched.first_name && errors.first_name &&
+            {errors.first_name &&
               <Text style={styles.error}>{errors.first_name}</Text>}
 
             <TextInput
@@ -81,9 +77,8 @@ const RegisterForm = ({ createNewUser }) => {
               style={styles.inputField}
               value={values.last_name}
               onChangeText={handleChange('last_name')}
-              onBlur={() => setFieldTouched('last_name')}
             />
-            {touched.last_name && errors.last_name &&
+            {errors.last_name &&
               <Text style={styles.error}>{errors.last_name}</Text>}
 
             <TextInput
@@ -93,9 +88,8 @@ const RegisterForm = ({ createNewUser }) => {
               style={styles.inputField}
               value={values.email}
               onChangeText={handleChange('email')}
-              onBlur={() => setFieldTouched('email')}
             />
-            {touched.email && errors.email &&
+            {errors.email &&
               <Text style={styles.error}>{errors.email}</Text>}
 
             <View style={styles.button}>

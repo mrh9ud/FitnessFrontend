@@ -9,7 +9,7 @@ import AccountNavigator from './AccountNavigator'
 class SwitchNavigator extends React.Component {
     state = {
         appIsReady: false,
-        userPresent: false
+        userPresent: false,
       }
 
     async componentDidMount() {
@@ -23,13 +23,13 @@ class SwitchNavigator extends React.Component {
       
       prepareResources = async () => {
         try {
-          let response = await this.checkToken()
-          if (response) {
+          let tokenResponse = await this.checkToken()
+          if (tokenResponse ) {
             this.setState(prevState => ({
-                appIsReady: !prevState.appIsReady,
-                userPresent: !prevState.userPresent }), async function() {
-                    await SplashScreen.hideAsync()
-                })
+              appIsReady: !prevState.appIsReady,
+              userPresent: !prevState.userPresent }), async function() {
+                  await SplashScreen.hideAsync()
+              })
           } else {
               this.setState(prevState => ({
                   appIsReady: !prevState.appIsReady }), async function() {
@@ -42,7 +42,7 @@ class SwitchNavigator extends React.Component {
       }
       
       async checkToken() {
-        const token = await encryptor.getCredentials()
+        const token = await encryptor.getCredentials('token')
         if (token) {
           let response = await this.props.verifyToken(token)
           return response.payload
@@ -51,7 +51,6 @@ class SwitchNavigator extends React.Component {
 
     render() {
         if (!this.state.appIsReady) { return null }
-        
         else if (this.state.appIsReady && this.state.userPresent) {
             return <MainNavigator />
         } else {

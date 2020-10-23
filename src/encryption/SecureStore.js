@@ -10,9 +10,9 @@ const setCredentials = async (jwtToken) => {
     }
 }
 
-const getCredentials = async () => {
+const getCredentials = async key => {
     try {
-        const credentials = await SecureStore.getItemAsync('token')
+        const credentials = await SecureStore.getItemAsync(key)
         return credentials
     } catch(error) {
         console.log(error)

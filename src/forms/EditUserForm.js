@@ -13,13 +13,14 @@ const EditUserForm = ({ visible, hideDialog, title, formKey, value, userId, upda
         initialValues={{
           [formKey]: ''
         }}
-        onSubmit={(values) => {updateUser(values, userId)}}
+        onSubmit={(values) => updateUser(values, userId)}
         validationSchema={() => editFormValidations(formKey)}
       >
         {({handleChange, handleSubmit, errors, isValid, values}) => (
           <Dialog visible={visible} onDismiss={hideDialog}>
             <Dialog.Title>Change {title}</Dialog.Title>
             <Dialog.Content>
+              
               <TextInput label={title}
                          placeholder={value}
                          mode='outlined'
@@ -28,13 +29,24 @@ const EditUserForm = ({ visible, hideDialog, title, formKey, value, userId, upda
               />
               {errors[formKey] &&
                 <Text style={styles.error}>{errors[formKey]}</Text>}
+
             </Dialog.Content>
+
             <Dialog.Actions>
-              <Button onPress={hideDialog}>Cancel</Button>
-              <Button onPress={() => {
-                handleSubmit()
-                hideDialog()
-                }} disabled={!isValid} mode='contained'>Confirm</Button>
+              <Button 
+                onPress={hideDialog}
+                mode="contained"
+                >Cancel
+              </Button>
+              <Button 
+                onPress={() => {
+                  handleSubmit()
+                  hideDialog()
+                }} 
+                disabled={!isValid} 
+                mode='contained'
+                >Confirm
+              </Button>
             </Dialog.Actions>
           </Dialog>
         )}

@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "../screens/HomeScreen";
 import NavBar from "./NavBar";
-import WorkoutQuestionForm from '../components/WorkoutQuestionForm'
+import WorkoutQuestionForm from '../forms/WorkoutQuestionForm'
 
 const Stack = createStackNavigator()
 

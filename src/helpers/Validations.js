@@ -85,6 +85,17 @@ const workoutQuestionsValidations = yup.object().shape({
   ...workoutDurationValidation
 })
 
+const forgotPasswordFormValidations = yup.object().shape({
+  ...loginUsernameValidation,
+  ...emailValidation
+})
+
+const resetPasswordFormValidations = yup.object().shape({
+  ...loginUsernameValidation,
+  ...passwordRegisterValidation,
+  ...confirmPasswordValidation
+})
+
 const editFormValidations = (key) => {
   switch (key) {
     case USERNAME:
@@ -110,5 +121,4 @@ const editFormValidations = (key) => {
   }
 }
 
-
-export { registrationFormValidations, editFormValidations, loginFormValidations, workoutQuestionsValidations }
+export { registrationFormValidations, editFormValidations, loginFormValidations, workoutQuestionsValidations, forgotPasswordFormValidations, resetPasswordFormValidations }

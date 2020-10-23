@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { List, Divider, Text } from "react-native-paper";
 import { ScrollView } from "react-native";
 import { connect } from 'react-redux'
-import EditUserForm from "../components/EditUserForm";
+import EditUserForm from "../forms/EditUserForm";
 import { USERNAME, PASSWORD, FIRST_NAME, LAST_NAME, EMAIL } from '../helpers/FormKeyType'
 
 const ProfileSettingsScreen = ({ currentUser }) => {
-  const [visible, setVisible] = React.useState(false)
-  const [formTitle, setFormTitle] = React.useState('')
-  const [formKey, setFormKey] = React.useState('')
-  const [formValue, setFormValue] = React.useState('')
+  const [visible, setVisible] = useState(false)
+  const [formTitle, setFormTitle] = useState('')
+  const [formKey, setFormKey] = useState('')
+  const [formValue, setFormValue] = useState('')
 
   const showDialog = () => setVisible(true)
 
