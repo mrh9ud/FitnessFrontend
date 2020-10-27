@@ -1,6 +1,6 @@
 import { LOADING } from '../actionType'
 
-const ipPort = "http://10.0.0.68:3000"
+const ipPort = "http://10.0.0.128:3000"
 const workoutCreationUrl = `${ipPort}/api/v1/workouts`
 const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
 

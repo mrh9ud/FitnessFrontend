@@ -34,7 +34,7 @@ const ResetPasswordForm = ({ route, createNewPassword, resetPassEmailExpired }) 
       }}
       onSubmit={values => {
         const expired = createNewPassword(values)
-        if (!expired) {
+        if (expired !== 'EXPIRED') {
           rootNavigation.navigate('App')
         }
       }}
