@@ -7,7 +7,8 @@ import { createNewPassword } from '../redux/actions/users/actionCreators'
 import { resetPasswordFormValidations } from '../helpers/Validations'
 import { connect } from 'react-redux'
 
-const ResetPasswordForm = ({ createNewPassword }) => {
+const ResetPasswordForm = ({ route, createNewPassword }) => {
+  const { rootNavigation } = route.params
   return (
     <Formik
       initialValues={{
@@ -15,7 +16,10 @@ const ResetPasswordForm = ({ createNewPassword }) => {
         [PASSWORD]: '',
         [CONFIRM_PASSWORD]: ''
       }}
-      onSubmit={values => createNewPassword(values)}
+      onSubmit={values => {
+        createNewPassword(values)
+        rootNavigation.navigate('App')
+      }}
       validationSchema={resetPasswordFormValidations}
     >
     {({handleChange, handleSubmit, errors, isValid, values}) => (

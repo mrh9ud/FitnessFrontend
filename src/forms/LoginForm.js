@@ -8,14 +8,15 @@ import { loginFormValidations } from '../helpers/Validations'
 import { USERNAME, PASSWORD } from '../helpers/FormKeyType'
 import ForgotPasswordForm from './ForgotPasswordForm'
 
-const LoginForm = ({ props, verifyUserData, rootNavigation, navigation }) => {
+const LoginForm = ({ verifyUserData, route, navigation }) => {
+  const { rootNavigation } = route.params
+
   const [visible, setVisible] = useState(false)
   const hideForgotPasswordForm = () => setVisible(false)
   const showForgotPasswordForm = () => setVisible(true);
 
   return (
     <View>
-
       {visible
       ?
       <ForgotPasswordForm
@@ -30,7 +31,8 @@ const LoginForm = ({ props, verifyUserData, rootNavigation, navigation }) => {
         initialValues={{[USERNAME]: '', [PASSWORD]: ''}}
         onSubmit={async (values, passwordResettingResponse) => {
           const loggedIn = await verifyUserData(values, passwordResettingResponse)
-          if (loggedIn) rootNavigation.navigate('App')
+          if (loggedIn === 'SUCCESS') rootNavigation.navigate('App')
+          else if (loggedIn === 'PASSWORD_RESET') navigation.navigate('Reset Password')
         }}
         validationSchema={loginFormValidations}
       >
@@ -72,7 +74,7 @@ const LoginForm = ({ props, verifyUserData, rootNavigation, navigation }) => {
 
             <Button
               mode="contained"
-              onPress={() => props.navigation.navigate("New Account")}
+              onPress={() => navigation.navigate("New Account")}
               >Register
             </Button>
 

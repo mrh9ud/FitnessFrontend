@@ -1,64 +1,17 @@
-import React from 'react'
-import MainNavigator from './MainNavigator'
-import { connect } from 'react-redux'
-import { verifyToken } from '../redux/actions/users/actionCreators'
-import * as SplashScreen from 'expo-splash-screen';
-import * as encryptor from '../encryption/SecureStore.js'
-import AccountNavigator from './AccountNavigator'
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import AuthLoadingScreen from "../screens/AuthLoadingScreen";
+import TestDrawerNavigator from "./MainNavigator";
+import { AuthStack } from "./AuthStack";
 
-class SwitchNavigator extends React.Component {
-    state = {
-        appIsReady: false,
-        userPresent: false,
-      }
-
-    async componentDidMount() {
-        try {
-          await SplashScreen.preventAutoHideAsync();
-        } catch (error) {
-          console.warn(error);
+export default createAppContainer(
+    createSwitchNavigator(
+        {
+            AuthLoading: AuthLoadingScreen,
+            App: TestDrawerNavigator,
+            Auth: AuthStack
+        },
+        {
+            initialRouteName: 'AuthLoading'
         }
-        this.prepareResources();
-      }
-      
-      prepareResources = async () => {
-        try {
-          let tokenResponse = await this.checkToken()
-          if (tokenResponse ) {
-            this.setState(prevState => ({
-              appIsReady: !prevState.appIsReady,
-              userPresent: !prevState.userPresent }), async function() {
-                  await SplashScreen.hideAsync()
-              })
-          } else {
-              this.setState(prevState => ({
-                  appIsReady: !prevState.appIsReady }), async function() {
-                      await SplashScreen.hideAsync()
-                  })
-          }
-        } catch(error) {
-            console.warn(error)
-        }
-      }
-      
-      async checkToken() {
-        const token = await encryptor.getCredentials('token')
-        if (token) {
-          let response = await this.props.verifyToken(token)
-          return response.payload
-        }
-      }
-
-    render() {
-        if (!this.state.appIsReady) { return null }
-        else if (this.state.appIsReady && this.state.userPresent) {
-            return <MainNavigator />
-        } else {
-            return <AccountNavigator />
-        }
-    }
-}
-
-const mapDispatchToProps = dispatch => { return { verifyToken: token => dispatch(verifyToken(token)) } }
-
-export default connect(null, mapDispatchToProps)(SwitchNavigator)
+    )
+)

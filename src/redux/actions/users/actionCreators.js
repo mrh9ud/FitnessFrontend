@@ -35,10 +35,11 @@ function verifyUserData(userObj) {
                     if (data.user.resetting_password) {
                         dispatch(loginUser(data.user))
                         dispatch(resetPassword())
+                        return 'PASSWORD_RESET'
                     } else {
                         encryptor.setCredentials(data.jwt)
                         dispatch(loginUser(data.user))
-                        return true
+                        return 'SUCCESS'
                     }
                 } else {
                     alert("Cannot store credentials on your device. Update your device to continue.")
