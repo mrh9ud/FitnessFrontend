@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Text, TextInput, Button } from 'react-native-paper'
 import { Formik } from 'formik'
@@ -6,10 +6,26 @@ import { CONFIRM_PASSWORD, USERNAME, PASSWORD } from '../helpers/FormKeyType'
 import { createNewPassword } from '../redux/actions/users/actionCreators'
 import { resetPasswordFormValidations } from '../helpers/Validations'
 import { connect } from 'react-redux'
+import ResendResetPassEmail from '../components/ResendResetPassEmail'
 
-const ResetPasswordForm = ({ route, createNewPassword }) => {
+const ResetPasswordForm = ({ route, createNewPassword, resetPassEmailExpired }) => {
+
   const { rootNavigation } = route.params
+  const [visible, setVisible] = useState(false)
+  const hideResendEmailModal = () => setVisible(false)
+
   return (
+    <>
+    {resetPassEmailExpired
+    ? 
+    <ResendResetPassEmail 
+      hideResendEmailModal={hideResendEmailModal}
+      visible={true}
+      resetPassEmailExpired={resetPassEmailExpired}
+      />    
+    : 
+    null}
+    
     <Formik
       initialValues={{
         [USERNAME]: '',
@@ -17,8 +33,10 @@ const ResetPasswordForm = ({ route, createNewPassword }) => {
         [CONFIRM_PASSWORD]: ''
       }}
       onSubmit={values => {
-        createNewPassword(values)
-        rootNavigation.navigate('App')
+        const expired = createNewPassword(values)
+        if (!expired) {
+          rootNavigation.navigate('App')
+        }
       }}
       validationSchema={resetPasswordFormValidations}
     >
@@ -70,6 +88,7 @@ const ResetPasswordForm = ({ route, createNewPassword }) => {
       </View>
       )}
     </Formik>
+    </>
   )
 }
 
@@ -87,6 +106,7 @@ const styles= StyleSheet.create({
   }
 })
 
-const mapDispatchToProps = dispatch => { return { createNewPassword: userData => dispatch(createNewPassword(userData)) } }
+const mapStateToProps = store => ({ resetPassEmailExpired: store.resetPassEmailExpired })
+const mapDispatchToProps = dispatch => { return { createNewPassword: userData => dispatch(createNewPassword(userData))} }
 
-export default connect(null, mapDispatchToProps)(ResetPasswordForm)
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPasswordForm)
