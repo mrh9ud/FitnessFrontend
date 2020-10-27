@@ -3,9 +3,9 @@ import { View, StyleSheet } from 'react-native'
 import { Text, TextInput, Button, Switch, Title, Checkbox } from "react-native-paper";
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
-import { DURATION } from '../helpers/FormKeyType'
-import { submitWorkoutQuestionnaire } from '../redux/actions/workouts/actionCreators'
-import { workoutQuestionsValidations } from '../helpers/Validations'
+import { DURATION } from '../../helpers/FormKeyType'
+import { submitWorkoutQuestionnaire } from '../../redux/actions/workouts/actionCreators'
+import { workoutQuestionsValidations } from '../../helpers/Validations'
 
 const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser }) => {
 

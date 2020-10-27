@@ -1,7 +1,7 @@
 import { LOADING, LOGIN, LOG_OUT_USER, PASSWORD_RESET_EMAIL_RESENT, RESET_PASSWORD, RESET_PASSWORD_COMPLETED, RESET_PASSWORD_PERIOD_EXPIRED } from '../actionType'
 import * as encryptor from '../../../encryption/SecureStore.js'
 
-const ipPort = "http://10.0.0.128:3000"
+const ipPort = "http://10.0.0.68:3000"
 const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
 const userLoginUrl = `${ipPort}/api/v1/login`
 const tokenVerificationUrl = `${ipPort}/api/v1/profile`
@@ -9,6 +9,7 @@ const userCreationUrl = `${ipPort}/api/v1/users`
 const userUpdateUrl = `${ipPort}/api/v1/users/`
 const verifyUserEmailUsernameUrl = `${ipPort}/api/v1/verify_email_username`
 const createNewPasswordUrl = `${ipPort}/api/v1/reset_password`
+const changePasswordUrl = `${ipPort}/api/v1/change_password`
 
 function loading() { return { type: LOADING } }
 
@@ -167,4 +168,24 @@ function createNewPassword(userData) {
     }
 }
 
-export { verifyUserData, verifyToken, createNewUser, logOutUser, updateUser, verifyEmailUsername, createNewPassword }
+function changePassword(userData, userId) {
+    return dispatch => {
+        const userConfigObj = {
+            method: "PATCH",
+            headers: fetchHeaders,
+            body: JSON.stringify({ user: {...userData, id: userId }})
+        }
+        dispatch(loading())
+        fetch(changePasswordUrl, userConfigObj).then(resp => resp.json())
+            .then(data => {
+                if (!data.error) {
+                    alert(data.message)
+                } else {
+                    alert(data.message)
+                }
+            })
+            .catch(error => alert(error))
+    }
+}
+
+export { verifyUserData, verifyToken, createNewUser, logOutUser, updateUser, verifyEmailUsername, createNewPassword, changePassword }

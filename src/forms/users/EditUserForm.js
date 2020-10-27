@@ -2,18 +2,26 @@ import React from 'react'
 import { Button, Dialog, Portal, TextInput, Text } from "react-native-paper";
 import { StyleSheet } from 'react-native'
 import { Formik } from 'formik'
-import { updateUser } from "../redux/actions/users/actionCreators";
+import { updateUser, changePassword } from "../../redux/actions/users/actionCreators";
 import { connect } from 'react-redux'
-import { editFormValidations } from "../helpers/Validations";
+import { editFormValidations } from "../../helpers/Validations";
+import { CONFIRM_PASSWORD } from '../../helpers/FormKeyType'
 
-const EditUserForm = ({ visible, hideDialog, title, formKey, value, userId, updateUser }) => {
+const EditUserForm = ({ visible, hideDialog, title, formKey, value, userId, updateUser, changePassword }) => {
   return (
     <Portal>
       <Formik
         initialValues={{
-          [formKey]: ''
+          [formKey]: '',
+          [CONFIRM_PASSWORD]: ''
         }}
-        onSubmit={(values) => updateUser(values, userId)}
+        onSubmit={values => {
+          if (formKey  === 'password') {
+            changePassword(values, userId)
+          } else {
+          updateUser(values, userId)
+          }
+        }}
         validationSchema={() => editFormValidations(formKey)}
       >
         {({handleChange, handleSubmit, errors, isValid, values}) => (
@@ -26,9 +34,26 @@ const EditUserForm = ({ visible, hideDialog, title, formKey, value, userId, upda
                          mode='outlined'
                          value={values[formKey]}
                          onChangeText={handleChange(formKey)}
+                         secureTextEntry={formKey === 'password' ? true : false}
               />
               {errors[formKey] &&
                 <Text style={styles.error}>{errors[formKey]}</Text>}
+
+              {formKey === 'password' ?
+              <>
+              <TextInput 
+                label="Confirm Password"
+                placeholder="input the info above here!"
+                mode="outlined"
+                value={values.confirm_password}
+                onChangeText={handleChange('confirm_password')}
+                secureTextEntry={true}
+              />
+              {errors.confirm_password &&
+                <Text style={styles.error}>{errors.confirm_password}</Text>}
+              </>
+              :
+              null}
 
             </Dialog.Content>
 
@@ -62,6 +87,11 @@ const styles= StyleSheet.create({
   }
 })
 
-const mapDispatchToProps = dispatch => { return { updateUser: (userData, userId) => dispatch(updateUser(userData, userId))}}
+const mapDispatchToProps = dispatch => { 
+  return { 
+    updateUser: (userData, userId) => dispatch(updateUser(userData, userId)), 
+    changePassword: (userData, userId) => dispatch(changePassword(userData, userId)) 
+  } 
+}
 
 export default connect(null, mapDispatchToProps)(EditUserForm)

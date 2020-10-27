@@ -3,9 +3,9 @@ import { View, StyleSheet } from 'react-native'
 import { Text, TextInput, Button } from "react-native-paper";
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
-import { verifyUserData } from '../redux/actions/users/actionCreators'
-import { loginFormValidations } from '../helpers/Validations'
-import { USERNAME, PASSWORD } from '../helpers/FormKeyType'
+import { verifyUserData } from '../../redux/actions/users/actionCreators'
+import { loginFormValidations } from '../../helpers/Validations'
+import { USERNAME, PASSWORD } from '../../helpers/FormKeyType'
 import ForgotPasswordForm from './ForgotPasswordForm'
 
 const LoginForm = ({ verifyUserData, route, navigation }) => {

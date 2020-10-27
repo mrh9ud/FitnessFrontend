@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Text, TextInput, Button } from 'react-native-paper'
 import { Formik } from 'formik'
-import { CONFIRM_PASSWORD, USERNAME, PASSWORD } from '../helpers/FormKeyType'
-import { createNewPassword } from '../redux/actions/users/actionCreators'
-import { resetPasswordFormValidations } from '../helpers/Validations'
+import { CONFIRM_PASSWORD, USERNAME, PASSWORD } from '../../helpers/FormKeyType'
+import { createNewPassword } from '../../redux/actions/users/actionCreators'
+import { resetPasswordFormValidations } from '../../helpers/Validations'
 import { connect } from 'react-redux'
-import ResendResetPassEmail from '../components/ResendResetPassEmail'
+import ResendResetPassEmail from '../../components/ResendResetPassEmail'
 
 const ResetPasswordForm = ({ route, createNewPassword, resetPassEmailExpired }) => {
 

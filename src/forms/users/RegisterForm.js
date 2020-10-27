@@ -2,10 +2,10 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native'
 import { TextInput, Text, Button } from "react-native-paper";
 import { Formik } from 'formik'
-import { createNewUser } from '../redux/actions/users/actionCreators'
+import { createNewUser } from '../../redux/actions/users/actionCreators'
 import { connect } from 'react-redux'
-import { USERNAME, PASSWORD, CONFIRM_PASSWORD, FIRST_NAME, LAST_NAME, EMAIL } from '../helpers/FormKeyType'
-import { registrationFormValidations } from "../helpers/Validations";
+import { USERNAME, PASSWORD, CONFIRM_PASSWORD, FIRST_NAME, LAST_NAME, EMAIL } from '../../helpers/FormKeyType'
+import { registrationFormValidations } from "../../helpers/Validations";
 
 const RegisterForm = ({ createNewUser }) => {
   return (

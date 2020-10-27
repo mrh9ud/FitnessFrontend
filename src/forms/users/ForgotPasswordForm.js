@@ -1,9 +1,9 @@
 import React from 'react'
 import { Dialog, Portal, TextInput, Text, Button } from 'react-native-paper'
 import { StyleSheet } from 'react-native'
-import { USERNAME, EMAIL } from '../helpers/FormKeyType'
-import { verifyEmailUsername } from '../redux/actions/users/actionCreators'
-import { forgotPasswordFormValidations } from '../helpers/Validations'
+import { USERNAME, EMAIL } from '../../helpers/FormKeyType'
+import { verifyEmailUsername } from '../../redux/actions/users/actionCreators'
+import { forgotPasswordFormValidations } from '../../helpers/Validations'
 import { connect } from 'react-redux'
 import { Formik } from 'formik'
 

@@ -104,7 +104,8 @@ const editFormValidations = (key) => {
       })
     case PASSWORD:
       return yup.object().shape({
-        ...passwordRegisterValidation
+        ...passwordRegisterValidation,
+        ...confirmPasswordValidation
       })
     case FIRST_NAME:
       return yup.object().shape({
