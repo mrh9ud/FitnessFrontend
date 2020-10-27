@@ -6,10 +6,14 @@ import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
 
 const Stack = createStackNavigator()
 
-const SettingsNavigator = ({ navigation }) => {
+const SettingsNavigator = ({ route, navigation }) => {
+  const { rootNavigation } = route.params
   return (
     <Stack.Navigator
-      screenOptions={{ header: props => <NavBar props={props} drawerNavigation={navigation} />}}
+      screenOptions={{ header: props => <NavBar
+          props={props}
+          drawerNavigation={navigation}
+          rootNavigation={rootNavigation} />}}
     >
       <Stack.Screen name='Settings' component={SettingsScreen} />
       <Stack.Screen name='Edit Profile' component={ProfileSettingsScreen}

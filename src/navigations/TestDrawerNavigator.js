@@ -6,15 +6,27 @@ import StatisticsNavigator from "./StatisticsNavigator";
 import SettingsNavigator from "./SettingsNavigator";
 import { connect } from 'react-redux'
 
-const MainNavigator = ({ currentUser, passwordResetting }) => {
+const MainNavigator = ({ currentUser, passwordResetting, navigation }) => {
     const Drawer = createDrawerNavigator()
 
     return (
         <Drawer.Navigator>
-            <Drawer.Screen name="Home" component={HomeNavigator} />
-            <Drawer.Screen name="My Workout" component={MyWorkoutNavigator}/>
-            <Drawer.Screen name="Stats" component={StatisticsNavigator}/>
-            <Drawer.Screen name="Settings" component={SettingsNavigator}/>
+            <Drawer.Screen name="Home"
+                           component={HomeNavigator}
+                           initialParams={{rootNavigation: navigation}}
+            />
+            <Drawer.Screen name="My Workout"
+                           component={MyWorkoutNavigator}
+                           initialParams={{rootNavigation: navigation}}
+            />
+            <Drawer.Screen name="Stats"
+                           component={StatisticsNavigator}
+                           initialParams={{rootNavigation: navigation}}
+            />
+            <Drawer.Screen name="Settings"
+                           component={SettingsNavigator}
+                           initialParams={{rootNavigation: navigation}}
+            />
         </Drawer.Navigator>
     )
 }

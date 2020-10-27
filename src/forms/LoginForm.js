@@ -8,8 +8,7 @@ import { loginFormValidations } from '../helpers/Validations'
 import { USERNAME, PASSWORD } from '../helpers/FormKeyType'
 import ForgotPasswordForm from './ForgotPasswordForm'
 
-const LoginForm = ({ verifyUserData, navigation }) => {
-
+const LoginForm = ({ props, verifyUserData, rootNavigation, navigation }) => {
   const [visible, setVisible] = useState(false)
   const hideForgotPasswordForm = () => setVisible(false)
   const showForgotPasswordForm = () => setVisible(true);
@@ -19,7 +18,7 @@ const LoginForm = ({ verifyUserData, navigation }) => {
 
       {visible
       ?
-      <ForgotPasswordForm 
+      <ForgotPasswordForm
         hideForgotPasswordForm={hideForgotPasswordForm}
         visible={visible}
       />
@@ -27,9 +26,12 @@ const LoginForm = ({ verifyUserData, navigation }) => {
       null
       }
 
-      <Formik 
+      <Formik
         initialValues={{[USERNAME]: '', [PASSWORD]: ''}}
-        onSubmit={(values, passwordResettingResponse) => verifyUserData(values, passwordResettingResponse)}
+        onSubmit={async (values, passwordResettingResponse) => {
+          const loggedIn = await verifyUserData(values, passwordResettingResponse)
+          if (loggedIn) rootNavigation.navigate('App')
+        }}
         validationSchema={loginFormValidations}
       >
         {({ handleSubmit, handleChange, isValid, values, errors }) => (
@@ -68,9 +70,9 @@ const LoginForm = ({ verifyUserData, navigation }) => {
 
             <Text>Don't have an account?</Text>
 
-            <Button 
-              mode="contained" 
-              onPress={() => navigation.navigate("New Account")}
+            <Button
+              mode="contained"
+              onPress={() => props.navigation.navigate("New Account")}
               >Register
             </Button>
 
@@ -90,15 +92,15 @@ const LoginForm = ({ verifyUserData, navigation }) => {
 
 const styles= StyleSheet.create({
   inputField: {
-    paddingHorizontal: '5%', 
+    paddingHorizontal: '5%',
     paddingVertical: '5%'
   },
   button: {
     alignItems: 'center'
   },
-  error: { 
-    fontSize: 10, 
-    color: 'red'  
+  error: {
+    fontSize: 10,
+    color: 'red'
   },
   forgotPassText: {
     paddingVertical: '3%',

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Appbar, Menu} from "react-native-paper";
+import { Appbar, Menu } from "react-native-paper";
 import { View } from 'react-native';
 import { logOutUser } from '../redux/actions/users/actionCreators'
 import { connect } from 'react-redux'
@@ -8,8 +8,7 @@ import { deleteCredentials } from '../encryption/SecureStore'
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical'
 
 
-const NavBar = ({ props, drawerNavigation, logOutUser }) => {
-
+const NavBar = ({ props, drawerNavigation, rootNavigation, logOutUser }) => {
   const [menuVisible, setMenuVisible] = React.useState(false)
   const openMenu = () => setMenuVisible(true)
   const closeMenu = () => setMenuVisible(false)
@@ -17,7 +16,7 @@ const NavBar = ({ props, drawerNavigation, logOutUser }) => {
   return (
     <View>
       <Appbar.Header>
-
+        {/*Change top left button based on which navigator it is in*/}
         {props.previous
           ?
           <Appbar.BackAction onPress={() => props.navigation.goBack()} />
@@ -36,6 +35,7 @@ const NavBar = ({ props, drawerNavigation, logOutUser }) => {
           <Menu.Item onPress={() => {
             deleteCredentials()
             logOutUser()
+            rootNavigation.navigate('Auth')
           }}
           title="Logout" />
         </Menu>

@@ -1,7 +1,7 @@
 import { LOADING, LOGIN, LOG_OUT_USER, RESET_PASSWORD, RESET_PASSWORD_COMPLETED } from '../actionType'
 import * as encryptor from '../../../encryption/SecureStore.js'
 
-const ipPort = "http://10.0.0.156:3000"
+const ipPort = "http://10.0.0.128:3000"
 const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
 const userLoginUrl = `${ipPort}/api/v1/login`
 const tokenVerificationUrl = `${ipPort}/api/v1/profile`
@@ -28,8 +28,8 @@ function verifyUserData(userObj) {
             body: JSON.stringify(userObj)
         }
         dispatch(loading())
-        fetch(userLoginUrl, userConfigObj).then(res => res.json())
-        .then(async (data) => {
+        return fetch(userLoginUrl, userConfigObj).then(res => res.json())
+        .then((data) => {
             if (!data.error) {
                 if (encryptor.isSecureStorageAvailable()) {
                     if (data.user.resetting_password) {
@@ -38,12 +38,15 @@ function verifyUserData(userObj) {
                     } else {
                         encryptor.setCredentials(data.jwt)
                         dispatch(loginUser(data.user))
+                        return true
                     }
                 } else {
                     alert("Cannot store credentials on your device. Update your device to continue.")
+                    return false
                 }
             } else {
                 alert(data.message)
+                return false
         }})
         .catch(error => alert(error))
     }
