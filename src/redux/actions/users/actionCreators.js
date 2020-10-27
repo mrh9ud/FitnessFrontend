@@ -1,7 +1,7 @@
-import { LOADING, LOGIN, LOG_OUT_USER, RESET_PASSWORD, RESET_PASSWORD_COMPLETED } from '../actionType'
+import { LOADING, LOGIN, LOG_OUT_USER, PASSWORD_RESET_EMAIL_RESENT, RESET_PASSWORD, RESET_PASSWORD_COMPLETED, RESET_PASSWORD_PERIOD_EXPIRED } from '../actionType'
 import * as encryptor from '../../../encryption/SecureStore.js'
 
-const ipPort = "http://10.0.0.70:3000"
+const ipPort = "http://10.0.0.68:3000"
 const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
 const userLoginUrl = `${ipPort}/api/v1/login`
 const tokenVerificationUrl = `${ipPort}/api/v1/profile`
@@ -17,6 +17,10 @@ function loginUser(data) { return { type: LOGIN, payload: data } }
 function logOutUser() { return { type: LOG_OUT_USER } }
 
 function resetPassword() { return { type: RESET_PASSWORD } }
+
+function resetPasswordPeriodExpired(data) { return { type: RESET_PASSWORD_PERIOD_EXPIRED, payload: data } }
+
+function passwordResetEmailResent() { return { type: PASSWORD_RESET_EMAIL_RESENT } }
 
 function resetPasswordCompleted() { return { type: RESET_PASSWORD_COMPLETED } }
 
@@ -117,6 +121,7 @@ function verifyEmailUsername(userData) {
             .then(data => {
                 if (!data.error) {
                     if (encryptor.isSecureStorageAvailable()) {
+                        dispatch(passwordResetEmailResent())
                         alert(data.message)
                     } else {
                         alert("Cannot store credentials on your device. Update your device to continue.")
@@ -138,8 +143,10 @@ function createNewPassword(userData) {
         }
         dispatch(loading())
         fetch(createNewPasswordUrl, userConfigObj).then(resp => resp.json())
-            .then(data => {
-                if (!data.error) {
+            .then( data => {
+                if (data.expired) {
+                    dispatch(resetPasswordPeriodExpired(data))
+                } else if (!data.error) {
                     if (encryptor.isSecureStorageAvailable()) {
                         encryptor.setCredentials(data.jwt)
                         dispatch(resetPasswordCompleted())
