@@ -128,6 +128,6 @@ const styles= StyleSheet.create({
   })
 
 const mapStateToProps = store => ({ currentUser: store.currentUser})
-const mapDispatchToProps = dispatch => { return { submitWorkoutQuestionnaire: answers => dispatch(submitWorkoutQuestionnaire(answers)) } }
+const mapDispatchToProps = dispatch => { return { submitWorkoutQuestionnaire: (answers, currentUser) => dispatch(submitWorkoutQuestionnaire(answers, currentUser)) } }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutQuestionForm)
