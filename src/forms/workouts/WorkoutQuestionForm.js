@@ -7,7 +7,7 @@ import { DURATION } from '../../helpers/FormKeyType'
 import { submitWorkoutQuestionnaire } from '../../redux/actions/workouts/actionCreators'
 import { workoutQuestionsValidations } from '../../helpers/Validations'
 
-const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser }) => {
+const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, workoutPending, navigation }) => {
 
   const [workoutBeginner, setWorkoutBeginner] = useState(false)
   const [workoutIntermediate, setWorkoutIntermediate] = useState(false)
@@ -102,8 +102,11 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser }) => {
         <View style={styles.button}>
           <Button
             mode="contained" 
-            onPress={() => handleSubmit(values.duration)}
-            disabled={!isValid}
+            onPress={() => {
+              handleSubmit(values.duration)
+              navigation.navigate("Potential Workout Screen")
+            }}
+            disabled={!isValid || (!workoutBeginner && !workoutIntermediate && !workoutAdvanced) || (!workoutStrFocus && !workoutCardioFocus) || values.duration.length < 2}
             >Generate New Workout
           </Button>
         </View>
@@ -127,7 +130,7 @@ const styles= StyleSheet.create({
     }
   })
 
-const mapStateToProps = store => ({ currentUser: store.currentUser})
+const mapStateToProps = store => ({ currentUser: store.currentUser, workoutPending: store.workoutPending})
 const mapDispatchToProps = dispatch => { return { submitWorkoutQuestionnaire: (answers, currentUser) => dispatch(submitWorkoutQuestionnaire(answers, currentUser)) } }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutQuestionForm)
