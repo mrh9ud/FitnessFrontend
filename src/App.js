@@ -5,14 +5,19 @@ import { Provider } from 'react-redux';
 import store from './redux/store'
 import { NavigationContainer } from "@react-navigation/native";
 import SwitchNavigator from "./navigators/SwitchNavigator";
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
 
 const App = () => {
   return (
     <Provider store={store}>
       <PaperProvider>
-          <NavigationContainer>
-              <SwitchNavigator/>
-          </NavigationContainer>
+        <NavigationContainer>
+          <SwitchNavigator/>
+        </NavigationContainer>
       </PaperProvider>
     </Provider>
   );
