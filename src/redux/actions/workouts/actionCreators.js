@@ -1,6 +1,6 @@
 import { CREATE_NEW_WORKOUT, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_POTENTIAL_WORKOUT, GET_NEXT_POTENTIAL_EXERCISE, GET_PREVIOUS_POTENTIAL_EXERCISE } from '../actionType'
 
-const ipPort = "http://10.0.0.68:3000"
+const ipPort = "http://10.0.0.128:3000"
 const workoutCreationUrl = `${ipPort}/api/v1/generate_potential_workout`
 const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
 
