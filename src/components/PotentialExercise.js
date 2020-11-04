@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native'
 import { getNextPotentialExercise, getPreviousPotentialExercise } from '../redux/actions/workouts/actionCreators'
 import { connect } from 'react-redux'
 
-const PotentialExercise = ({ exercise, currentUser, getNextPotentialExercise }) => {
+const PotentialExercise = ({ exercise, currentUser, getPreviousPotentialExercise, getNextPotentialExercise }) => {
 
   const [visible, setVisible] = useState(false)
   const closeModal = () => setVisible(false)

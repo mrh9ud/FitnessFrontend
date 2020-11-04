@@ -1,8 +1,9 @@
 import React from 'react'
-import { ActivityIndicator, StatusBar, StyleSheet, View } from "react-native";
+import { StatusBar, StyleSheet, View } from "react-native";
 import * as encryptor from '../encryption/SecureStore'
 import {verifyToken} from "../redux/actions/users/actionCreators";
 import {connect} from "react-redux";
+import { ActivityIndicator } from 'react-native-paper'
 
 class AuthLoadingScreen extends React.Component {
 
@@ -26,13 +27,25 @@ class AuthLoadingScreen extends React.Component {
 
     render() {
         return (
-            <View>
-                <ActivityIndicator />
+            <View style={[styles.container, styles.horizontal]}>
+                <ActivityIndicator animating={true} />
                 <StatusBar barStyle='default' />
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: "center"
+    },
+    horizontal: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        padding: 10
+    }
+});
 
 const mapDispatchToProps = dispatch => { return { verifyToken: token => dispatch(verifyToken(token)) } }
 

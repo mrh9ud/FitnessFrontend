@@ -7,7 +7,7 @@ import { StyleSheet, View, ScrollView } from 'react-native'
 const PotentialWorkoutScreen = ({ workoutPending }) => {
 
   const renderExercises = () => {
-    if (workoutPending) {
+    if (workoutPending.current_exercises) {
       return (
         <ScrollView>
           <Title>Current Generated Workout</Title>
