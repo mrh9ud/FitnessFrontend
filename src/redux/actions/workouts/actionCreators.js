@@ -1,4 +1,4 @@
-import { CREATE_NEW_WORKOUT, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_POTENTIAL_WORKOUT } from '../actionType'
+import { CREATE_NEW_WORKOUT, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_POTENTIAL_WORKOUT, GET_NEXT_POTENTIAL_EXERCISE, GET_PREVIOUS_POTENTIAL_EXERCISE } from '../actionType'
 
 const ipPort = "http://10.0.0.68:3000"
 const workoutCreationUrl = `${ipPort}/api/v1/generate_potential_workout`
@@ -11,6 +11,10 @@ function createNewWorkout(data) { return { type: CREATE_NEW_WORKOUT, payload: da
 function clearPotentialWorkout() { return { type: CLEAR_POTENTIAL_WORKOUT } }
 
 function createPotentialWorkout(data) { return { type: CREATE_POTENTIAL_WORKOUT, payload: data } }
+
+function getNextPotentialExercise(exerciseId) { return { type: GET_NEXT_POTENTIAL_EXERCISE, payload: exerciseId } }
+
+function getPreviousPotentialExercise(exerciseId) { return { type: GET_PREVIOUS_POTENTIAL_EXERCISE, payload: exerciseId } }
 
 function submitWorkoutQuestionnaire(answersObj, userObj) {
     return dispatch => {
@@ -33,4 +37,5 @@ function submitWorkoutQuestionnaire(answersObj, userObj) {
     }
 }
 
-export { submitWorkoutQuestionnaire }
+
+export { submitWorkoutQuestionnaire, getNextPotentialExercise, getPreviousPotentialExercise }

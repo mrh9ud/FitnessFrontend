@@ -18,7 +18,7 @@ const HomeNavigator = ({ route, navigation }) => {
     >
       <Stack.Screen name={'Home'} component={HomeScreen} />
       <Stack.Screen name={"Workout Questionnaire"} component={WorkoutQuestionForm} />
-      <Stack.Screen name={"Potential Workout Screen"} component={PotentialWorkoutScreen} />
+      <Stack.Screen name={"Potential Workout"} component={PotentialWorkoutScreen} />
     </Stack.Navigator>
   )
 }
