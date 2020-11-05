@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import { List, Button, Divider } from 'react-native-paper'
 import PotentialExerciseModal from './PotentialExerciseModal'
 import { StyleSheet, View } from 'react-native'
-import { getNextPotentialExercise, getPreviousPotentialExercise } from '../redux/actions/workouts/actionCreators'
+import {
+  getNextPotentialExercise,
+  getPreviousPotentialExercise,
+  setNextPotentialExercise
+} from '../redux/actions/workouts/actionCreators'
 import { connect } from 'react-redux'
 
-const PotentialExercise = ({ exercise, currentUser, getPreviousPotentialExercise, getNextPotentialExercise, potentialExercises }) => {
+const PotentialExercise = ({ exercise, index, setNextPotentialExercise, currentUser, getPreviousPotentialExercise, getNextPotentialExercise, potentialExercises }) => {
 
   const [visible, setVisible] = useState(false)
 
@@ -14,6 +18,10 @@ const PotentialExercise = ({ exercise, currentUser, getPreviousPotentialExercise
   const [currentExercise, setCurrentExercise] = useState(exercise)
   let cycleIndex = 0
   const closeModal = () => setVisible(false)
+
+  useEffect(() => {
+    setNextPotentialExercise(currentExercise, index)
+  }, [currentExercise])
 
   const cycleNextExercise = () => {
     for (let i = 0; i < potentialExercises.length; i++) {
@@ -62,7 +70,6 @@ const PotentialExercise = ({ exercise, currentUser, getPreviousPotentialExercise
         >Back
       </Button>
       <Button
-        // onPress={() => getNextPotentialExercise(exercise.id)}
         onPress={() => cycleNextExercise()}
         icon="arrow-right-bold"
         >Next
@@ -88,7 +95,8 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch => { 
   return { 
     getNextPotentialExercise: exerciseId => dispatch(getNextPotentialExercise(exerciseId)),
-    getPreviousPotentialExercise: exerciseId => dispatch(getPreviousPotentialExercise(exerciseId))
+    getPreviousPotentialExercise: exerciseId => dispatch(getPreviousPotentialExercise(exerciseId)),
+    setNextPotentialExercise: (exercise, index) => dispatch(setNextPotentialExercise(exercise, index))
   } 
 }
 
