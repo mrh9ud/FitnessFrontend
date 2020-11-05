@@ -1,4 +1,4 @@
-import {  SET_WORKOUT_QUESTION_RESPONSES, CLEAR_WORKOUT_QUESTION_RESPONSES } from '../actions/actionType'
+import { SET_WORKOUT_QUESTION_RESPONSES, CLEAR_WORKOUT_QUESTION_RESPONSES } from '../actions/actionType'
 
 const workoutQuestionReducer = (state=null, action) => {
   switch(action.type) {

@@ -6,7 +6,7 @@ import { StyleSheet, View, ScrollView } from 'react-native'
 import { submitWorkoutQuestionnaire, createNewWorkout } from '../redux/actions/workouts/actionCreators'
 import PageLoading from '../components/PageLoading'
 
-const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, submitWorkoutQuestionnaire, currentUser, createNewWorkout, navigation }) => {
+const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, submitWorkoutQuestionnaire, currentUser, createNewWorkout, navigation, loading }) => {
 
   const renderExercises = () => {
     if (workoutPending.current_exercises) {
@@ -17,7 +17,7 @@ const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, subm
           <View style={styles.button}>
             <Button
               mode="contained"
-              onPress={() => submitWorkoutQuestionnaire(workoutQuestionResponses['workout'], currentUser)}
+              onPress={() => submitWorkoutQuestionnaire(workoutQuestionResponses, currentUser)}
               >Try Again
             </Button>
             <Button

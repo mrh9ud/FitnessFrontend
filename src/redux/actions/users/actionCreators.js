@@ -42,11 +42,11 @@ function verifyUserData(userObj) {
                     if (data.user.resetting_password) {
                         dispatch(loginUser(data.user))
                         dispatch(resetPassword())
-                        dispatch(loadingComplete())
                         return 'PASSWORD_RESET'
                     } else {
                         encryptor.setCredentials(data.jwt)
                         dispatch(loginUser(data.user))
+                        dispatch(loadingComplete())
                         return 'SUCCESS'
                     }
                 } else {
@@ -72,10 +72,7 @@ function verifyToken(token) {
             }
         }).then(res => res.json())
         .then(data => { return data })
-        .then(data => {
-            dispatch(loginUser(data))
-            dispatch(loadingComplete())
-        })
+        .then(data => dispatch(loginUser(data)))
         .catch(error => alert(error))
     }
 }
@@ -91,6 +88,7 @@ function createNewUser(userData) {
         fetch(userCreationUrl, userConfigObj).then(resp => resp.json())
             .then(data => {
                 if (!data.error) {
+                    dispatch(loadingComplete())
                     alert(data.message)
                 } else {
                     alert(data.message.message)
@@ -135,6 +133,7 @@ function verifyEmailUsername(userData) {
                 if (!data.error) {
                     if (encryptor.isSecureStorageAvailable()) {
                         dispatch(passwordResetEmailResent())
+                        dispatch(loadingComplete())
                         alert(data.message)
                     } else {
                         alert("Cannot store credentials on your device. Update your device to continue.")
@@ -165,7 +164,6 @@ function createNewPassword(userData) {
                         encryptor.setCredentials(data.jwt)
                         dispatch(resetPasswordCompleted())
                         dispatch(loginUser(data.user))
-                        dispatch(loadingComplete())
                     } else {
                         alert("Cannot store credentials on your device. Update your device to continue.")
                     }
@@ -188,6 +186,7 @@ function changePassword(userData, userId) {
         fetch(changePasswordUrl, userConfigObj).then(resp => resp.json())
             .then(data => {
                 if (!data.error) {
+                    dispatch(loadingComplete())
                     alert(data.message)
                 } else {
                     alert(data.message)

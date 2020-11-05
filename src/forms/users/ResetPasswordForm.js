@@ -7,8 +7,9 @@ import { createNewPassword } from '../../redux/actions/users/actionCreators'
 import { resetPasswordFormValidations } from '../../helpers/Validations'
 import { connect } from 'react-redux'
 import ResendResetPassEmail from '../../components/ResendResetPassEmail'
+import PageLoading from "../../components/PageLoading"
 
-const ResetPasswordForm = ({ route, createNewPassword, resetPassEmailExpired }) => {
+const ResetPasswordForm = ({ route, createNewPassword, resetPassEmailExpired, loading }) => {
 
   const { rootNavigation } = route.params
   const [visible, setVisible] = useState(false)
@@ -26,6 +27,10 @@ const ResetPasswordForm = ({ route, createNewPassword, resetPassEmailExpired }) 
     : 
     null}
     
+    {loading
+    ?
+    <PageLoading />
+    :
     <Formik
       initialValues={{
         [USERNAME]: '',
@@ -88,6 +93,7 @@ const ResetPasswordForm = ({ route, createNewPassword, resetPassEmailExpired }) 
       </View>
       )}
     </Formik>
+    }
     </>
   )
 }
@@ -106,7 +112,7 @@ const styles= StyleSheet.create({
   }
 })
 
-const mapStateToProps = store => ({ resetPassEmailExpired: store.resetPassEmailExpired })
+const mapStateToProps = store => ({ resetPassEmailExpired: store.resetPassEmailExpired, loading: store.loading })
 const mapDispatchToProps = dispatch => { return { createNewPassword: userData => dispatch(createNewPassword(userData))} }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetPasswordForm)

@@ -4,7 +4,7 @@ import { verifyToken } from "../redux/actions/users/actionCreators";
 import { connect } from "react-redux";
 import PageLoading from "../components/PageLoading"
 
-class PageLoding extends React.Component {
+class AuthLoadingScreen extends React.Component {
 
   componentDidMount() { this._bootstrapAsync() }
 
@@ -28,4 +28,4 @@ class PageLoding extends React.Component {
 
 const mapDispatchToProps = dispatch => { return { verifyToken: token => dispatch(verifyToken(token)) } }
 
-export default connect(null, mapDispatchToProps)(PageLoding)
+export default connect(null, mapDispatchToProps)(AuthLoadingScreen)
