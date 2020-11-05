@@ -1,8 +1,9 @@
 import { ADD_WORKOUT, LOADING_COMPLETE, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, SET_WORKOUT_QUESTION_RESPONSES, GET_NEXT_POTENTIAL_EXERCISE, GET_PREVIOUS_POTENTIAL_EXERCISE } from '../actionType'
 
-const ipPort = "http://10.0.0.68:3000"
+const ipPort = "http://10.0.0.128:3000"
 const potentialWorkoutCreationUrl = `${ipPort}/api/v1/generate_potential_workout`
 const workoutCreationUrl = `${ipPort}/api/v1/workouts`
+
 const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
 
 function loading() { return { type: LOADING } }
@@ -13,9 +14,7 @@ function clearPotentialWorkout() { return { type: CLEAR_POTENTIAL_WORKOUT } }
 
 function createPotentialWorkout(data) { return { type: CREATE_POTENTIAL_WORKOUT, payload: data } }
 
-function getNextPotentialExercise(exerciseId) { return { type: GET_NEXT_POTENTIAL_EXERCISE, payload: exerciseId } }
-
-function getPreviousPotentialExercise(exerciseId) { return { type: GET_PREVIOUS_POTENTIAL_EXERCISE, payload: exerciseId } }
+function setNextPotentialExercise(exercise, index) { return { type: SET_NEXT_POTENTIAL_EXERCISE, payload: { exercise, index } } }
 
 function setWorkoutQuestionResponses(data) { return { type: SET_WORKOUT_QUESTION_RESPONSES, payload: data } }
 
@@ -69,5 +68,4 @@ function createNewWorkout(currentExercises, workoutQuestionResponses, currentUse
     }
 }
 
-
-export { submitWorkoutQuestionnaire, getNextPotentialExercise, getPreviousPotentialExercise, createNewWorkout }
+export { submitWorkoutQuestionnaire, createNewWorkout }
