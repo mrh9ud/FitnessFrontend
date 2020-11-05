@@ -1,12 +1,13 @@
-import { CREATE_NEW_WORKOUT, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_POTENTIAL_WORKOUT, GET_NEXT_POTENTIAL_EXERCISE, GET_PREVIOUS_POTENTIAL_EXERCISE } from '../actionType'
+import { ADD_WORKOUT, LOADING_COMPLETE, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, SET_WORKOUT_QUESTION_RESPONSES, GET_NEXT_POTENTIAL_EXERCISE, GET_PREVIOUS_POTENTIAL_EXERCISE } from '../actionType'
 
 const ipPort = "http://10.0.0.68:3000"
-const workoutCreationUrl = `${ipPort}/api/v1/generate_potential_workout`
+const potentialWorkoutCreationUrl = `${ipPort}/api/v1/generate_potential_workout`
+const workoutCreationUrl = `${ipPort}/api/v1/workouts`
 const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
 
 function loading() { return { type: LOADING } }
 
-function createNewWorkout(data) { return { type: CREATE_NEW_WORKOUT, payload: data }}
+function loadingComplete() { return { type: LOADING_COMPLETE } }
 
 function clearPotentialWorkout() { return { type: CLEAR_POTENTIAL_WORKOUT } }
 
@@ -16,6 +17,12 @@ function getNextPotentialExercise(exerciseId) { return { type: GET_NEXT_POTENTIA
 
 function getPreviousPotentialExercise(exerciseId) { return { type: GET_PREVIOUS_POTENTIAL_EXERCISE, payload: exerciseId } }
 
+function setWorkoutQuestionResponses(data) { return { type: SET_WORKOUT_QUESTION_RESPONSES, payload: data } }
+
+function addWorkoutToUser(data) { return { type: ADD_WORKOUT, payload: data } }
+
+function clearWorkoutQuestionResponses() { return { type: CLEAR_WORKOUT_QUESTION_RESPONSES } }
+
 function submitWorkoutQuestionnaire(answersObj, userObj) {
     return dispatch => {
         const answersConfigObj = {
@@ -24,11 +31,35 @@ function submitWorkoutQuestionnaire(answersObj, userObj) {
             body: JSON.stringify({ workout: answersObj, id: userObj.id})
         }
         dispatch(loading())
-        fetch(workoutCreationUrl, answersConfigObj).then(resp => resp.json())
+        fetch(potentialWorkoutCreationUrl, answersConfigObj).then(resp => resp.json())
             .then(data => {
                 if (!data.error) {
-                    console.log(data)
                     dispatch(createPotentialWorkout(data))
+                    dispatch(setWorkoutQuestionResponses(answersObj))
+                    dispatch(loadingComplete())
+                } else {
+                    alert(data.message)
+                }
+            })
+            .catch(error => alert(error))
+    }
+}
+
+function createNewWorkout(currentExercises, workoutQuestionResponses, currentUser) {
+    return dispatch => {
+        const workoutExercisesConfigObj = {
+            method: "POST",
+            headers: fetchHeaders,
+            body: JSON.stringify({ exercises: currentExercises, workout: workoutQuestionResponses, user: currentUser })
+        }
+        dispatch(loading())
+        fetch(workoutCreationUrl, workoutExercisesConfigObj).then(resp => resp.json())
+            .then(data => {
+                if (!data.error) {
+                    dispatch(clearPotentialWorkout())
+                    dispatch(clearWorkoutQuestionResponses())
+                    dispatch(addWorkoutToUser(data))
+                    dispatch(loadingComplete())
                 } else {
                     alert(data.message)
                 }
@@ -38,4 +69,4 @@ function submitWorkoutQuestionnaire(answersObj, userObj) {
 }
 
 
-export { submitWorkoutQuestionnaire, getNextPotentialExercise, getPreviousPotentialExercise }
+export { submitWorkoutQuestionnaire, getNextPotentialExercise, getPreviousPotentialExercise, createNewWorkout }

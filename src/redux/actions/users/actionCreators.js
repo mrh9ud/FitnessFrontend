@@ -1,7 +1,7 @@
-import { LOADING, LOGIN, LOG_OUT_USER, PASSWORD_RESET_EMAIL_RESENT, RESET_PASSWORD, RESET_PASSWORD_COMPLETED, RESET_PASSWORD_PERIOD_EXPIRED } from '../actionType'
+import { LOADING, LOGIN, LOADING_COMPLETE, LOG_OUT_USER, PASSWORD_RESET_EMAIL_RESENT, RESET_PASSWORD, RESET_PASSWORD_COMPLETED, RESET_PASSWORD_PERIOD_EXPIRED } from '../actionType'
 import * as encryptor from '../../../encryption/SecureStore.js'
 
-const ipPort = "http://10.0.0.128:3000"
+const ipPort = "http://10.0.0.68:3000"
 const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
 const userLoginUrl = `${ipPort}/api/v1/login`
 const tokenVerificationUrl = `${ipPort}/api/v1/profile`
@@ -12,6 +12,8 @@ const createNewPasswordUrl = `${ipPort}/api/v1/reset_password`
 const changePasswordUrl = `${ipPort}/api/v1/change_password`
 
 function loading() { return { type: LOADING } }
+
+function loadingComplete() { return { type: LOADING_COMPLETE } }
 
 function loginUser(data) { return { type: LOGIN, payload: data } }
 
@@ -40,6 +42,7 @@ function verifyUserData(userObj) {
                     if (data.user.resetting_password) {
                         dispatch(loginUser(data.user))
                         dispatch(resetPassword())
+                        dispatch(loadingComplete())
                         return 'PASSWORD_RESET'
                     } else {
                         encryptor.setCredentials(data.jwt)
@@ -69,7 +72,10 @@ function verifyToken(token) {
             }
         }).then(res => res.json())
         .then(data => { return data })
-        .then(data => dispatch(loginUser(data)))
+        .then(data => {
+            dispatch(loginUser(data))
+            dispatch(loadingComplete())
+        })
         .catch(error => alert(error))
     }
 }
@@ -106,6 +112,7 @@ function updateUser(userData, userId) {
           .then(data => {
               if (!data.error) {
                   dispatch(loginUser(data))
+                  dispatch(loadingComplete())
                   alert("Information Updated Successfully")
                 } else {
                   alert(data.message.message) 
@@ -158,6 +165,7 @@ function createNewPassword(userData) {
                         encryptor.setCredentials(data.jwt)
                         dispatch(resetPasswordCompleted())
                         dispatch(loginUser(data.user))
+                        dispatch(loadingComplete())
                     } else {
                         alert("Cannot store credentials on your device. Update your device to continue.")
                     }

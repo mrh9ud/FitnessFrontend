@@ -3,8 +3,10 @@ import { connect } from 'react-redux'
 import PotentialExercise from '../components/PotentialExercise'
 import { Title, Button } from 'react-native-paper'
 import { StyleSheet, View, ScrollView } from 'react-native'
+import { submitWorkoutQuestionnaire, createNewWorkout } from '../redux/actions/workouts/actionCreators'
+import PageLoading from '../components/PageLoading'
 
-const PotentialWorkoutScreen = ({ workoutPending }) => {
+const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, submitWorkoutQuestionnaire, currentUser, createNewWorkout, navigation }) => {
 
   const renderExercises = () => {
     if (workoutPending.current_exercises) {
@@ -14,14 +16,17 @@ const PotentialWorkoutScreen = ({ workoutPending }) => {
           {workoutPending.current_exercises.map(exercise => <PotentialExercise key={exercise.id} exercise={exercise} />)}
           <View style={styles.button}>
             <Button
-            mode="contained"
-
-            >Try Again
+              mode="contained"
+              onPress={() => submitWorkoutQuestionnaire(workoutQuestionResponses['workout'], currentUser)}
+              >Try Again
             </Button>
             <Button
-            mode="contained"
-
-            >Accept
+              mode="contained"
+              onPress={() => {
+                createNewWorkout(workoutPending.current_exercises, workoutQuestionResponses, currentUser)
+                navigation.navigate('Workout')
+              }}
+              >Accept
             </Button>
           </View>
         </ScrollView>
@@ -30,9 +35,13 @@ const PotentialWorkoutScreen = ({ workoutPending }) => {
     return null
   }
 
-  return (
-    renderExercises()
-  )
+  if (loading) {
+    return <PageLoading />
+  } else {
+    return (
+      renderExercises()
+    )
+  }
 }
 
 const styles= StyleSheet.create({
@@ -41,6 +50,17 @@ const styles= StyleSheet.create({
   }
 })
 
-const mapStateToProps = store => ({ workoutPending: store.workoutPending })
+const mapStateToProps = store => ({ 
+  workoutPending: store.workoutPending, 
+  workoutQuestionResponses: store.workoutQuestionResponses,
+  currentUser: store.currentUser,
+  loading: store.loading
+})
+const mapDispatchToProps = dispatch => { 
+  return { 
+    submitWorkoutQuestionnaire: (workoutQuestionResponses, currentUser) => dispatch(submitWorkoutQuestionnaire(workoutQuestionResponses, currentUser)),
+    createNewWorkout: (currentExercises, workoutQuestionResponses, currentUser) => dispatch(createNewWorkout(currentExercises, workoutQuestionResponses, currentUser))
+  } 
+}
 
-export default connect(mapStateToProps)(PotentialWorkoutScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(PotentialWorkoutScreen)

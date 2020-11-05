@@ -6,7 +6,7 @@ const setCredentials = async (jwtToken) => {
     try {
         await SecureStore.setItemAsync('token', jwtToken)
     } catch (error) {
-        console.log(error)
+        alert(error)
     }
 }
 
@@ -15,7 +15,7 @@ const getCredentials = async key => {
         const credentials = await SecureStore.getItemAsync(key)
         return credentials
     } catch(error) {
-        console.log(error)
+        alert(error)
     }
 }
 
@@ -23,7 +23,7 @@ const deleteCredentials = async () => {
     try {
         await SecureStore.deleteItemAsync('token')
     } catch(error) {
-        console.log(error)
+        alert(error)
     }
 }
 export { setCredentials, getCredentials, isSecureStorageAvailable, deleteCredentials }

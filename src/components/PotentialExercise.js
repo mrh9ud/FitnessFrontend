@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native'
 import { getNextPotentialExercise, getPreviousPotentialExercise } from '../redux/actions/workouts/actionCreators'
 import { connect } from 'react-redux'
 
-const PotentialExercise = ({ exercise, currentUser, getPreviousPotentialExercise, getNextPotentialExercise }) => {
+const PotentialExercise = ({ exercise, getPreviousPotentialExercise, getNextPotentialExercise }) => {
 
   const [visible, setVisible] = useState(false)
   const closeModal = () => setVisible(false)
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = store => ({ currentUser: store.currentUser })
 const mapDispatchToProps = dispatch => { 
   return { 
     getNextPotentialExercise: exerciseId => dispatch(getNextPotentialExercise(exerciseId)),
@@ -59,4 +58,4 @@ const mapDispatchToProps = dispatch => {
   } 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PotentialExercise)
+export default connect(null, mapDispatchToProps)(PotentialExercise)

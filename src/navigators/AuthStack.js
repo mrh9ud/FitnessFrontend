@@ -10,6 +10,7 @@ const AuthStack = ({ navigation }) => {
   const rootNavigation = {
     rootNavigation: navigation
   }
+
     return (
         <Stack.Navigator>
           <Stack.Screen name="Login" component={LoginForm} initialParams={{...rootNavigation}} />
