@@ -4,7 +4,6 @@ import HomeNavigator from "./HomeNavigator";
 import MyWorkoutNavigator from "./MyWorkoutNavigator";
 import StatisticsNavigator from "./StatisticsNavigator";
 import SettingsNavigator from "./SettingsNavigator";
-import { connect } from 'react-redux'
 
 const MainNavigator = ({ navigation }) => {
  const Drawer = createDrawerNavigator()
@@ -31,6 +30,5 @@ const MainNavigator = ({ navigation }) => {
   )
 }
 
-const mapStateToProps = store => ({ currentUser: store.currentUser, passwordResetting: store.passwordResetting })
 
-export default connect(mapStateToProps)(MainNavigator)
+export default MainNavigator

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native'
 import { TextInput, Text, Button } from "react-native-paper";
 import { Formik } from 'formik'
@@ -6,15 +6,18 @@ import { createNewUser } from '../../redux/actions/users/actionCreators'
 import { connect } from 'react-redux'
 import { USERNAME, PASSWORD, CONFIRM_PASSWORD, FIRST_NAME, LAST_NAME, EMAIL } from '../../helpers/FormKeyType'
 import { registrationFormValidations } from "../../helpers/Validations";
-import PageLoading from "../../components/PageLoading"
 
 const RegisterForm = ({ createNewUser, loading, navigation }) => {
+
+  useEffect(() => {
+
+  }, [])
+
+  useEffect(() => {
+
+  }, [loading])
+
   return (
-    <>
-    {loading
-    ?
-    <PageLoading />
-    :
     <ScrollView>
       <Formik
         initialValues={{
@@ -25,7 +28,10 @@ const RegisterForm = ({ createNewUser, loading, navigation }) => {
           [LAST_NAME]: '',
           [EMAIL]: '',
         }}
-        onSubmit={values => createNewUser(values)}
+        onSubmit={values => {
+          createNewUser(values)
+          navigation.navigate("Login")
+        }}
         validationSchema={registrationFormValidations}
         >
         {({handleChange, handleSubmit, errors, isValid, values}) => (
@@ -101,10 +107,7 @@ const RegisterForm = ({ createNewUser, loading, navigation }) => {
             <View style={styles.button}>
               <Button
                 mode="contained"
-                onPress={() => {
-                  handleSubmit()
-                  navigation.navigate("Login")
-                }}
+                onPress={handleSubmit}
                 disabled={!isValid}
                 >Submit
               </Button>
@@ -113,8 +116,6 @@ const RegisterForm = ({ createNewUser, loading, navigation }) => {
           )}
         </Formik>
     </ScrollView>
-    }
-    </>
   )
 }
 

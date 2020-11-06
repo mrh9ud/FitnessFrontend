@@ -34,7 +34,6 @@ function submitWorkoutQuestionnaire(answersObj, userObj) {
         fetch(potentialWorkoutCreationUrl, answersConfigObj).then(resp => resp.json())
             .then(data => {
                 if (!data.error) {
-                    console.log(answersObj)
                     dispatch(createPotentialWorkout(data))
                     dispatch(setWorkoutQuestionResponses(answersObj))
                     dispatch(loadingComplete())

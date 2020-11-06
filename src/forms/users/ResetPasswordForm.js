@@ -10,7 +10,6 @@ import ResendResetPassEmail from '../../components/ResendResetPassEmail'
 import PageLoading from "../../components/PageLoading"
 
 const ResetPasswordForm = ({ route, createNewPassword, resetPassEmailExpired, loading }) => {
-
   const { rootNavigation } = route.params
   const [visible, setVisible] = useState(false)
   const hideResendEmailModal = () => setVisible(false)
@@ -27,10 +26,10 @@ const ResetPasswordForm = ({ route, createNewPassword, resetPassEmailExpired, lo
     : 
     null}
     
-    {loading
+    {/* {loading
     ?
     <PageLoading />
-    :
+    : */}
     <Formik
       initialValues={{
         [USERNAME]: '',
@@ -93,7 +92,7 @@ const ResetPasswordForm = ({ route, createNewPassword, resetPassEmailExpired, lo
       </View>
       )}
     </Formik>
-    }
+    {/* } */}
     </>
   )
 }

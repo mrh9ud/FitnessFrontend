@@ -6,8 +6,6 @@ const loadingReducer = (state=false, action) => {
         return true
       case LOADING_COMPLETE:
         return false
-      case LOGIN:
-        return false
       default:
         return state
     }

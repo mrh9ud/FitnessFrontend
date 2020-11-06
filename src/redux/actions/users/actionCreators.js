@@ -46,7 +46,6 @@ function verifyUserData(userObj) {
                     } else {
                         encryptor.setCredentials(data.jwt)
                         dispatch(loginUser(data.user))
-                        dispatch(loadingComplete())
                         return 'SUCCESS'
                     }
                 } else {
@@ -91,6 +90,7 @@ function createNewUser(userData) {
                     dispatch(loadingComplete())
                     alert(data.message)
                 } else {
+                    dispatch(loadingComplete())
                     alert(data.message.message)
                 }
             })
