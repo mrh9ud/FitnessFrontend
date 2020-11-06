@@ -1,6 +1,5 @@
 import React from 'react'
 import { Text } from 'react-native-paper'
-import PageLoading from "../components/PageLoading"
 import { connect } from "react-redux"
 
 const WorkoutScreen = () => {

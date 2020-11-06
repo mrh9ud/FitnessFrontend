@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native'
 import { TextInput, Text, Button } from "react-native-paper";
 import { Formik } from 'formik'
@@ -7,15 +7,7 @@ import { connect } from 'react-redux'
 import { USERNAME, PASSWORD, CONFIRM_PASSWORD, FIRST_NAME, LAST_NAME, EMAIL } from '../../helpers/FormKeyType'
 import { registrationFormValidations } from "../../helpers/Validations";
 
-const RegisterForm = ({ createNewUser, loading, navigation }) => {
-
-  useEffect(() => {
-
-  }, [])
-
-  useEffect(() => {
-
-  }, [loading])
+const RegisterForm = ({ createNewUser, navigation }) => {
 
   return (
     <ScrollView>
@@ -29,8 +21,8 @@ const RegisterForm = ({ createNewUser, loading, navigation }) => {
           [EMAIL]: '',
         }}
         onSubmit={values => {
+          navigation.navigate("Loading")
           createNewUser(values)
-          navigation.navigate("Login")
         }}
         validationSchema={registrationFormValidations}
         >
@@ -133,7 +125,6 @@ const styles= StyleSheet.create({
   }
 })
 
-const mapStateToProps = store => ({ loading: store.loading })
 const mapDispatchToProps = dispatch => { return { createNewUser: userData => dispatch(createNewUser(userData)) } }
 
 export default connect(null, mapDispatchToProps)(RegisterForm)

@@ -7,7 +7,8 @@ import { forgotPasswordFormValidations } from '../../helpers/Validations'
 import { connect } from 'react-redux'
 import { Formik } from 'formik'
 
-const ForgotPasswordForm = ({ verifyEmailUsername, hideForgotPasswordForm, visible }) => {
+const ForgotPasswordForm = ({ verifyEmailUsername, hideForgotPasswordForm, visible, navigation }) => {
+
   return (
     <Portal>
       <Formik
@@ -15,7 +16,10 @@ const ForgotPasswordForm = ({ verifyEmailUsername, hideForgotPasswordForm, visib
             [USERNAME]: '',
             [EMAIL]: ''
         }}
-        onSubmit={values => verifyEmailUsername(values)} 
+        onSubmit={values => {
+          navigation.navigate("Loading")
+          verifyEmailUsername(values)
+        }} 
         validationSchema={() => forgotPasswordFormValidations}
       >
         {({handleChange, handleSubmit, errors, isValid, values}) => (

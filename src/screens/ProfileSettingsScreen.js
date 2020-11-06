@@ -4,7 +4,6 @@ import { ScrollView } from "react-native";
 import { connect } from 'react-redux'
 import EditUserForm from "../forms/users/EditUserForm";
 import { USERNAME, PASSWORD, FIRST_NAME, LAST_NAME, EMAIL } from '../helpers/FormKeyType'
-import PageLoading from "../components/PageLoading"
 
 const ProfileSettingsScreen = ({ currentUser, loading }) => {
   const [visible, setVisible] = useState(false)
@@ -24,11 +23,6 @@ const ProfileSettingsScreen = ({ currentUser, loading }) => {
   }
 
   return (
-    <>
-    {loading
-    ?
-    <PageLoading />
-    :
     <ScrollView>
       {formKey
       ?
@@ -76,8 +70,6 @@ const ProfileSettingsScreen = ({ currentUser, loading }) => {
         <Divider />
       </List.Section>
     </ScrollView>
-    }
-    </>
   )
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native'
 import { Text, TextInput, Button } from "react-native-paper";
 import { Formik } from 'formik'
@@ -8,21 +8,11 @@ import ForgotPasswordForm from './ForgotPasswordForm'
 import { verifyUserData } from '../../redux/actions/users/actionCreators'
 import { connect } from 'react-redux'
 
-
-const LoginForm = ({ route, navigation, verifyUserData, currentUser, passwordResetting }) => {
-  const { rootNavigation } = route.params
-
+const LoginForm = ({ navigation, verifyUserData }) => {
+  
   const [visible, setVisible] = useState(false)
   const hideForgotPasswordForm = () => setVisible(false)
   const showForgotPasswordForm = () => setVisible(true);
-
-  useEffect(() => {
-    if (passwordResetting) {
-      navigation.navigate("Reset Password")
-    } else if (currentUser) {
-      rootNavigation.navigate("App")
-    }
-  }, [currentUser, passwordResetting])
 
   return (
     <View>
@@ -31,6 +21,7 @@ const LoginForm = ({ route, navigation, verifyUserData, currentUser, passwordRes
       <ForgotPasswordForm
         hideForgotPasswordForm={hideForgotPasswordForm}
         visible={visible}
+        navigation={navigation}
       />
       :
       null
@@ -118,7 +109,6 @@ const styles= StyleSheet.create({
   }
 })
 
-const mapStateToProps = store => ({ passwordResetting: store.passwordResetting, currentUser: store.currentUser })
 const mapDispatchToProps = dispatch => { return ({ verifyUserData: (userData) => dispatch(verifyUserData(userData)) }) }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)
+export default connect(null, mapDispatchToProps)(LoginForm)

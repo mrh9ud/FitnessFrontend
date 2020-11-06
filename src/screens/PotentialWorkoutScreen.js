@@ -4,7 +4,6 @@ import PotentialExercise from '../components/PotentialExercise'
 import { Title, Button } from 'react-native-paper'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import { submitWorkoutQuestionnaire, createNewWorkout } from '../redux/actions/workouts/actionCreators'
-import PageLoading from '../components/PageLoading'
 
 const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, submitWorkoutQuestionnaire, currentUser, createNewWorkout, navigation, loading }) => {
 
@@ -35,13 +34,9 @@ const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, subm
     return null
   }
 
-  if (loading) {
-    return <PageLoading />
-  } else {
     return (
       renderExercises()
     )
-  }
 }
 
 const styles= StyleSheet.create({

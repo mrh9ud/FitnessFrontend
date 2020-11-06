@@ -1,4 +1,4 @@
-import { LOADING, LOGIN, LOADING_COMPLETE, LOG_OUT_USER, PASSWORD_RESET_EMAIL_RESENT, RESET_PASSWORD, RESET_PASSWORD_COMPLETED, RESET_PASSWORD_PERIOD_EXPIRED } from '../actionType'
+import { LOADING, LOGIN_ERROR, CLEAR_LOGIN_ERROR, RESET_PASSWORD_FORM_ERROR, CLEAR_RESET_PASSWORD_FORM_ERROR, LOGIN, EMAIL_SENT, EMAIL_PENDING, LOADING_COMPLETE, LOG_OUT_USER, PASSWORD_RESET_EMAIL_RESENT, RESET_PASSWORD, RESET_PASSWORD_COMPLETED, RESET_PASSWORD_PERIOD_EXPIRED } from '../actionType'
 import * as encryptor from '../../../encryption/SecureStore.js'
 
 const ipPort = "http://10.0.0.68:3000"
@@ -13,7 +13,19 @@ const changePasswordUrl = `${ipPort}/api/v1/change_password`
 
 function loading() { return { type: LOADING } }
 
+function loginError() { return { type: LOGIN_ERROR } }
+
+function resetPasswordFormError() { return { type: RESET_PASSWORD_FORM_ERROR } }
+
+function clearResetPasswordFormError() { return { type: CLEAR_RESET_PASSWORD_FORM_ERROR } }
+
+function clearLoginError() { return { type: CLEAR_LOGIN_ERROR } }
+
 function loadingComplete() { return { type: LOADING_COMPLETE } }
+
+function emailPending() { return { type: EMAIL_PENDING } }
+
+function emailSent() {  return { type: EMAIL_SENT } }
 
 function loginUser(data) { return { type: LOGIN, payload: data } }
 
@@ -35,26 +47,24 @@ function verifyUserData(userObj) {
             body: JSON.stringify(userObj)
         }
         dispatch(loading())
-        return fetch(userLoginUrl, userConfigObj).then(res => res.json())
+        fetch(userLoginUrl, userConfigObj).then(res => res.json())
         .then((data) => {
             if (!data.error) {
                 if (encryptor.isSecureStorageAvailable()) {
                     if (data.user.resetting_password) {
-                        dispatch(loginUser(data.user))
+                        dispatch(loadingComplete())
                         dispatch(resetPassword())
-                        return 'PASSWORD_RESET'
                     } else {
+                        dispatch(loadingComplete())
                         encryptor.setCredentials(data.jwt)
                         dispatch(loginUser(data.user))
-                        return 'SUCCESS'
                     }
                 } else {
                     alert("Cannot store credentials on your device. Update your device to continue.")
-                    return false
                 }
             } else {
+                dispatch(loginError())
                 alert(data.message)
-                return false
         }})
         .catch(error => alert(error))
     }
@@ -87,7 +97,7 @@ function createNewUser(userData) {
         fetch(userCreationUrl, userConfigObj).then(resp => resp.json())
             .then(data => {
                 if (!data.error) {
-                    dispatch(loadingComplete())
+                    dispatch(emailPending())
                     alert(data.message)
                 } else {
                     dispatch(loadingComplete())
@@ -132,13 +142,14 @@ function verifyEmailUsername(userData) {
             .then(data => {
                 if (!data.error) {
                     if (encryptor.isSecureStorageAvailable()) {
+                        dispatch(emailPending())
                         dispatch(passwordResetEmailResent())
-                        dispatch(loadingComplete())
                         alert(data.message)
                     } else {
                         alert("Cannot store credentials on your device. Update your device to continue.")
                     }
                 } else {
+                    dispatch(loginError())
                     alert(data.message)
                 }
             })
@@ -158,7 +169,6 @@ function createNewPassword(userData) {
             .then( data => {
                 if (data.expired) {
                     dispatch(resetPasswordPeriodExpired(data))
-                    return 'EXPIRED'
                 } else if (!data.error) {
                     if (encryptor.isSecureStorageAvailable()) {
                         encryptor.setCredentials(data.jwt)
@@ -168,6 +178,7 @@ function createNewPassword(userData) {
                         alert("Cannot store credentials on your device. Update your device to continue.")
                     }
                 } else {
+                    dispatch(resetPasswordFormError())
                     alert(data.message)
                 }
             })
@@ -196,4 +207,4 @@ function changePassword(userData, userId) {
     }
 }
 
-export { verifyUserData, verifyToken, createNewUser, logOutUser, updateUser, verifyEmailUsername, createNewPassword, changePassword }
+export { verifyUserData, resetPasswordCompleted, clearLoginError, clearResetPasswordFormError, emailSent, verifyToken, createNewUser, logOutUser, updateUser, verifyEmailUsername, createNewPassword, changePassword, loadingComplete }
