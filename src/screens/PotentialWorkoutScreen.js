@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PotentialExercise from '../components/PotentialExercise'
 import { Title, Button } from 'react-native-paper'
 import { StyleSheet, View, ScrollView } from 'react-native'
-import PageLoading from '../components/PageLoading'
+import { submitWorkoutQuestionnaire, createNewWorkout } from '../redux/actions/workouts/actionCreators'
 
 const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, submitWorkoutQuestionnaire, currentUser, createNewWorkout, navigation, loading }) => {
 
@@ -37,13 +37,9 @@ const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, subm
     return null
   }
 
-  if (loading) {
-    return <PageLoading />
-  } else {
     return (
       renderExercises()
     )
-  }
 }
 
 const styles= StyleSheet.create({

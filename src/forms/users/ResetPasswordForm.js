@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Text, TextInput, Button } from 'react-native-paper'
 import { Formik } from 'formik'
@@ -7,30 +7,29 @@ import { createNewPassword } from '../../redux/actions/users/actionCreators'
 import { resetPasswordFormValidations } from '../../helpers/Validations'
 import { connect } from 'react-redux'
 import ResendResetPassEmail from '../../components/ResendResetPassEmail'
-import PageLoading from "../../components/PageLoading"
 
-const ResetPasswordForm = ({ route, createNewPassword, resetPassEmailExpired, loading }) => {
-
-  const { rootNavigation } = route.params
+const ResetPasswordForm = ({ navigation, createNewPassword, resetPassEmailExpired }) => {
   const [visible, setVisible] = useState(false)
   const hideResendEmailModal = () => setVisible(false)
 
+  useEffect(() => {
+    if (resetPassEmailExpired) {
+      setVisible(true)
+    }
+  }, [resetPassEmailExpired])
+
   return (
     <>
-    {resetPassEmailExpired
+    {visible
     ? 
     <ResendResetPassEmail 
       hideResendEmailModal={hideResendEmailModal}
-      visible={true}
+      visible={visible}
       resetPassEmailExpired={resetPassEmailExpired}
       />    
     : 
     null}
     
-    {loading
-    ?
-    <PageLoading />
-    :
     <Formik
       initialValues={{
         [USERNAME]: '',
@@ -38,10 +37,8 @@ const ResetPasswordForm = ({ route, createNewPassword, resetPassEmailExpired, lo
         [CONFIRM_PASSWORD]: ''
       }}
       onSubmit={values => {
-        const expired = createNewPassword(values)
-        if (expired !== 'EXPIRED') {
-          rootNavigation.navigate('App')
-        }
+        navigation.navigate("Loading")
+        createNewPassword(values)
       }}
       validationSchema={resetPasswordFormValidations}
     >
@@ -93,7 +90,6 @@ const ResetPasswordForm = ({ route, createNewPassword, resetPassEmailExpired, lo
       </View>
       )}
     </Formik>
-    }
     </>
   )
 }
@@ -112,7 +108,7 @@ const styles= StyleSheet.create({
   }
 })
 
-const mapStateToProps = store => ({ resetPassEmailExpired: store.resetPassEmailExpired, loading: store.loading })
+const mapStateToProps = store => ({ resetPassEmailExpired: store.resetPassEmailExpired })
 const mapDispatchToProps = dispatch => { return { createNewPassword: userData => dispatch(createNewPassword(userData))} }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetPasswordForm)

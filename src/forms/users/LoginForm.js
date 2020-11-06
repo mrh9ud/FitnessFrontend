@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native'
 import { Text, TextInput, Button } from "react-native-paper";
 import { Formik } from 'formik'
-import { connect } from 'react-redux'
-import { verifyUserData } from '../../redux/actions/users/actionCreators'
 import { loginFormValidations } from '../../helpers/Validations'
 import { USERNAME, PASSWORD } from '../../helpers/FormKeyType'
 import ForgotPasswordForm from './ForgotPasswordForm'
+import { verifyUserData } from '../../redux/actions/users/actionCreators'
+import { connect } from 'react-redux'
 
-const LoginForm = ({ verifyUserData, route, navigation }) => {
-  const { rootNavigation } = route.params
-
+const LoginForm = ({ navigation, verifyUserData }) => {
+  
   const [visible, setVisible] = useState(false)
   const hideForgotPasswordForm = () => setVisible(false)
   const showForgotPasswordForm = () => setVisible(true);
@@ -22,6 +21,7 @@ const LoginForm = ({ verifyUserData, route, navigation }) => {
       <ForgotPasswordForm
         hideForgotPasswordForm={hideForgotPasswordForm}
         visible={visible}
+        navigation={navigation}
       />
       :
       null
@@ -29,10 +29,9 @@ const LoginForm = ({ verifyUserData, route, navigation }) => {
 
       <Formik
         initialValues={{[USERNAME]: '', [PASSWORD]: ''}}
-        onSubmit={async (values, passwordResettingResponse) => {
-          const loggedIn = await verifyUserData(values, passwordResettingResponse)
-          if (loggedIn === 'SUCCESS') rootNavigation.navigate('App')
-          else if (loggedIn === 'PASSWORD_RESET') navigation.navigate('Reset Password')
+        onSubmit={ values => {
+          navigation.navigate("Loading")
+          verifyUserData(values)
         }}
         validationSchema={loginFormValidations}
       >

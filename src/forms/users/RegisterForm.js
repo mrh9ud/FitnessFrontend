@@ -6,15 +6,10 @@ import { createNewUser } from '../../redux/actions/users/actionCreators'
 import { connect } from 'react-redux'
 import { USERNAME, PASSWORD, CONFIRM_PASSWORD, FIRST_NAME, LAST_NAME, EMAIL } from '../../helpers/FormKeyType'
 import { registrationFormValidations } from "../../helpers/Validations";
-import PageLoading from "../../components/PageLoading"
 
-const RegisterForm = ({ createNewUser, loading, navigation }) => {
+const RegisterForm = ({ createNewUser, navigation }) => {
+
   return (
-    <>
-    {loading
-    ?
-    <PageLoading />
-    :
     <ScrollView>
       <Formik
         initialValues={{
@@ -25,7 +20,10 @@ const RegisterForm = ({ createNewUser, loading, navigation }) => {
           [LAST_NAME]: '',
           [EMAIL]: '',
         }}
-        onSubmit={values => createNewUser(values)}
+        onSubmit={values => {
+          navigation.navigate("Loading")
+          createNewUser(values)
+        }}
         validationSchema={registrationFormValidations}
         >
         {({handleChange, handleSubmit, errors, isValid, values}) => (
@@ -101,10 +99,7 @@ const RegisterForm = ({ createNewUser, loading, navigation }) => {
             <View style={styles.button}>
               <Button
                 mode="contained"
-                onPress={() => {
-                  handleSubmit()
-                  navigation.navigate("Login")
-                }}
+                onPress={handleSubmit}
                 disabled={!isValid}
                 >Submit
               </Button>
@@ -113,8 +108,6 @@ const RegisterForm = ({ createNewUser, loading, navigation }) => {
           )}
         </Formik>
     </ScrollView>
-    }
-    </>
   )
 }
 
@@ -132,7 +125,6 @@ const styles= StyleSheet.create({
   }
 })
 
-const mapStateToProps = store => ({ loading: store.loading })
 const mapDispatchToProps = dispatch => { return { createNewUser: userData => dispatch(createNewUser(userData)) } }
 
 export default connect(null, mapDispatchToProps)(RegisterForm)

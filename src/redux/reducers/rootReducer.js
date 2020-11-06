@@ -6,6 +6,8 @@ import resettingPasswordReducer from "./resettingPasswordReducer"
 import resetPassEmailExpiredReducer from "./resetPassEmailExpiredReducer"
 import potentialWorkoutReducer from './potentialWorkoutReducer'
 import workoutQuestionReducer from './workoutQuestionReducer'
+import emailConfirmationReducer from './emailConfirmationReducer'
+import errorReducer from "./errorReducer";
 
 const rootReducer = combineReducers({
   currentUser: userReducer,
@@ -14,7 +16,9 @@ const rootReducer = combineReducers({
   passwordResetting: resettingPasswordReducer,
   resetPassEmailExpired: resetPassEmailExpiredReducer,
   workoutPending: potentialWorkoutReducer,
-  workoutQuestionResponses: workoutQuestionReducer
+  workoutQuestionResponses: workoutQuestionReducer,
+  emailPending: emailConfirmationReducer,
+  error: errorReducer
 })
 
 export default rootReducer
