@@ -109,6 +109,6 @@ const styles= StyleSheet.create({
   }
 })
 
-const mapDispatchToProps = dispatch => { return ({ verifyUserData: (userData) => dispatch(verifyUserData(userData)) }) }
+const mapDispatchToProps = dispatch => { return ({ verifyUserData: (userData) => dispatch(verifyUserData(userData)), resetPasswordCompleted: () => dispatch(resetPasswordCompleted()) }) }
 
 export default connect(null, mapDispatchToProps)(LoginForm)

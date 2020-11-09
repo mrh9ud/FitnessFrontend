@@ -109,6 +109,6 @@ const styles= StyleSheet.create({
 })
 
 const mapStateToProps = store => ({ resetPassEmailExpired: store.resetPassEmailExpired })
-const mapDispatchToProps = dispatch => { return { createNewPassword: userData => dispatch(createNewPassword(userData))} }
+const mapDispatchToProps = dispatch => { return { createNewPassword: userData => dispatch(createNewPassword(userData)) } }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetPasswordForm)
