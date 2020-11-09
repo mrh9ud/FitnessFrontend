@@ -1,7 +1,14 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Divider, List } from "react-native-paper";
+import {setMenuOptions} from "../redux/actions/navBar/actionCreators";
+import { connect } from 'react-redux'
 
-const SettingsScreen = ({ navigation }) => {
+const SettingsScreen = ({ navigation, setMenuOptions }) => {
+
+  useEffect(() => {
+    setMenuOptions()
+  })
+
   return (
     <List.Section>
       <List.Subheader>Account Settings</List.Subheader>
@@ -16,4 +23,8 @@ const SettingsScreen = ({ navigation }) => {
   )
 }
 
-export default SettingsScreen
+const mapDispatchToProps = dispatch => ({
+  setMenuOptions: data => dispatch(setMenuOptions(data))
+})
+
+export default connect(null, mapDispatchToProps)(SettingsScreen)
