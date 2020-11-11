@@ -1,10 +1,10 @@
-import { LOGIN, LOG_OUT_USER } from '../actions/actionType'
+import { LOGIN, CLEAR_USER_DATA } from '../actions/actionType'
 
 function userReducer(state = null, action) {
   switch(action.type) {
     case LOGIN:
       return action.payload
-    case LOG_OUT_USER:
+    case CLEAR_USER_DATA:
       return null
     default:
       return state

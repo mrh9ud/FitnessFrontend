@@ -3,7 +3,6 @@ import { Appbar, Menu } from "react-native-paper";
 import { View } from 'react-native';
 import { logOutUser } from '../redux/actions/users/actionCreators'
 import { connect } from 'react-redux'
-import { deleteCredentials } from '../encryption/SecureStore'
 
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical'
 
@@ -33,7 +32,6 @@ const NavBar = ({ props, drawerNavigation, rootNavigation, logOutUser }) => {
               color="white" />
           }>
           <Menu.Item onPress={() => {
-            deleteCredentials()
             logOutUser()
             rootNavigation.navigate('Auth')
           }}

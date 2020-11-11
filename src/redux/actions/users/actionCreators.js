@@ -1,4 +1,4 @@
-import { LOADING, LOGIN_ERROR, CLEAR_LOGIN_ERROR, RESET_PASSWORD_FORM_ERROR, CLEAR_RESET_PASSWORD_FORM_ERROR, LOGIN, EMAIL_SENT, EMAIL_PENDING, LOADING_COMPLETE, LOG_OUT_USER, PASSWORD_RESET_EMAIL_RESENT, RESET_PASSWORD, RESET_PASSWORD_COMPLETED, RESET_PASSWORD_PERIOD_EXPIRED } from '../actionType'
+import { LOADING, LOGIN_ERROR, SET_USER_WORKOUTS, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, CLEAR_USER_WORKOUTS, CLEAR_LOGIN_ERROR, RESET_PASSWORD_FORM_ERROR, CLEAR_RESET_PASSWORD_FORM_ERROR, LOGIN, EMAIL_SENT, EMAIL_PENDING, LOADING_COMPLETE, CLEAR_USER_DATA, PASSWORD_RESET_EMAIL_RESENT, RESET_PASSWORD, RESET_PASSWORD_COMPLETED, RESET_PASSWORD_PERIOD_EXPIRED } from '../actionType'
 import * as encryptor from '../../../encryption/SecureStore.js'
 
 const ipPort = "http://10.0.0.68:3000"
@@ -15,6 +15,14 @@ function loading() { return { type: LOADING } }
 
 function loginError() { return { type: LOGIN_ERROR } }
 
+function clearUserWorkouts() { return { type: CLEAR_USER_WORKOUTS } }
+
+function setUserWorkouts(data) { return { type: SET_USER_WORKOUTS, payload: data } }
+
+function clearPotentialWorkout() { return { type: CLEAR_POTENTIAL_WORKOUT } }
+
+function clearWorkoutQuestionResponses() { return { type: CLEAR_WORKOUT_QUESTION_RESPONSES } }
+
 function resetPasswordFormError() { return { type: RESET_PASSWORD_FORM_ERROR } }
 
 function clearResetPasswordFormError() { return { type: CLEAR_RESET_PASSWORD_FORM_ERROR } }
@@ -29,8 +37,6 @@ function emailSent() {  return { type: EMAIL_SENT } }
 
 function loginUser(data) { return { type: LOGIN, payload: data } }
 
-function logOutUser() { return { type: LOG_OUT_USER } }
-
 function resetPassword() { return { type: RESET_PASSWORD } }
 
 function resetPasswordPeriodExpired(data) { return { type: RESET_PASSWORD_PERIOD_EXPIRED, payload: data } }
@@ -38,6 +44,18 @@ function resetPasswordPeriodExpired(data) { return { type: RESET_PASSWORD_PERIOD
 function passwordResetEmailResent() { return { type: PASSWORD_RESET_EMAIL_RESENT } }
 
 function resetPasswordCompleted() { return { type: RESET_PASSWORD_COMPLETED } }
+
+function clearUserData() { return { type: CLEAR_USER_DATA } }
+
+function logOutUser() { 
+    return dispatch => {
+        encryptor.deleteCredentials()
+        dispatch(clearPotentialWorkout())
+        dispatch(clearWorkoutQuestionResponses())
+        dispatch(clearUserWorkouts())
+        dispatch(clearUserData())
+    }
+}
 
 function verifyUserData(userObj) {
     return dispatch => {
@@ -58,6 +76,7 @@ function verifyUserData(userObj) {
                         dispatch(loadingComplete())
                         encryptor.setCredentials(data.jwt)
                         dispatch(loginUser(data.user))
+                        dispatch(setUserWorkouts(data.workouts))
                     }
                 } else {
                     alert("Cannot store credentials on your device. Update your device to continue.")
@@ -80,8 +99,11 @@ function verifyToken(token) {
                 "Authentication": token
             }
         }).then(res => res.json())
-        .then(data => { return data })
-        .then(data => dispatch(loginUser(data)))
+        .then(data => {
+            dispatch(setUserWorkouts(data.workouts))
+            dispatch(loginUser(data.user))
+            return data
+        })
         .catch(error => alert(error))
     }
 }
@@ -119,7 +141,8 @@ function updateUser(userData, userId) {
         fetch(`${userUpdateUrl}${userId}`, userConfigObj).then(resp => resp.json())
           .then(data => {
               if (!data.error) {
-                  dispatch(loginUser(data))
+                  dispatch(loginUser(data.user))
+                  dispatch(setUserWorkouts(data.workouts))
                   dispatch(loadingComplete())
                   alert("Information Updated Successfully")
                 } else {
@@ -174,6 +197,7 @@ function createNewPassword(userData) {
                         encryptor.setCredentials(data.jwt)
                         dispatch(resetPasswordCompleted())
                         dispatch(loginUser(data.user))
+                        dispatch(setUserWorkouts(data.workouts))
                     } else {
                         alert("Cannot store credentials on your device. Update your device to continue.")
                     }
