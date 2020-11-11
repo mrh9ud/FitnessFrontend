@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical'
 
 
-const NavBar = ({ props, drawerNavigation, rootNavigation, logOutUser }) => {
+const NavBar = ({ props, drawerNavigation, rootNavigation, logOutUser, menuOptions }) => {
   const [menuVisible, setMenuVisible] = React.useState(false)
   const openMenu = () => setMenuVisible(true)
   const closeMenu = () => setMenuVisible(false)
@@ -20,7 +20,8 @@ const NavBar = ({ props, drawerNavigation, rootNavigation, logOutUser }) => {
           ?
           <Appbar.BackAction onPress={() => props.navigation.goBack()} />
           :
-          <Appbar.Action icon='menu' onPress={() => drawerNavigation.openDrawer()} />}
+          <Appbar.Action icon='menu' onPress={() => drawerNavigation.openDrawer()} />
+        }
         <Appbar.Content title={props.scene.route.name} />
         <Menu
           visible={menuVisible}
@@ -31,6 +32,10 @@ const NavBar = ({ props, drawerNavigation, rootNavigation, logOutUser }) => {
               onPress={openMenu}
               color="white" />
           }>
+
+          {menuOptions.map(option => <Menu.Item onPress={() => option.execFunc()} title={option.title} />)}
+
+          {/*Always have the logout button in the navbar menu*/}
           <Menu.Item onPress={() => {
             logOutUser()
             rootNavigation.navigate('Auth')
@@ -42,6 +47,11 @@ const NavBar = ({ props, drawerNavigation, rootNavigation, logOutUser }) => {
   )
 };
 
-const mapDispatchToProps = dispatch => { return { logOutUser: () => dispatch(logOutUser()) } }
+const mapStateToProps = store => ({
+  menuOptions: store.navBarMenuOptions
+})
+const mapDispatchToProps = dispatch => ({
+  logOutUser: () => dispatch(logOutUser())
+})
 
-export default connect(null, mapDispatchToProps)(NavBar)
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

@@ -12,11 +12,16 @@ const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, subm
       return (
         <ScrollView>
           <Title>Current Generated Workout</Title>
-          {workoutPending.current_exercises.map(exercise => <PotentialExercise key={exercise.id} exercise={exercise} />)}
+          {workoutPending.current_exercises.map((exercise, index) => <PotentialExercise
+            index={index}
+            exercise={exercise} />)
+          }
           <View style={styles.button}>
             <Button
               mode="contained"
-              onPress={() => submitWorkoutQuestionnaire(workoutQuestionResponses, currentUser)}
+              onPress={() => {
+                submitWorkoutQuestionnaire(workoutQuestionResponses, currentUser)
+              }}
               >Try Again
             </Button>
             <Button
