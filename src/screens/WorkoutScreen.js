@@ -1,8 +1,9 @@
 import React from 'react'
-import { Text, List, Divider } from 'react-native-paper'
+import { List, Divider } from 'react-native-paper'
 import { connect } from "react-redux"
 
-const WorkoutScreen = () => {
+const WorkoutScreen = ({ workouts, currentUser }) => {
+    console.log(workouts)
     return (
       <>
         <List.Section
@@ -24,6 +25,6 @@ const WorkoutScreen = () => {
     )
 }
 
-const mapStateToProps = store => ({ loading: store.loading })
+const mapStateToProps = store => ({ workouts: store.workouts, currentUser: store.currentUser })
 
 export default connect(mapStateToProps)(WorkoutScreen)

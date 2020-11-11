@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
-import { ActivityIndicator } from 'react-native-paper'
-import { StatusBar, StyleSheet, View } from "react-native";
 import { connect } from 'react-redux'
 import { emailSent, clearLoginError, clearResetPasswordFormError } from "../redux/actions/users/actionCreators"
+import LoadingIndicator from './LoadingIndicator';
 
-const PageLoading = ({ emailPending, workoutPending, clearResetPasswordFormError, clearLoginError, error, currentUser, resetPassEmailExpired, emailSent, route, passwordResetting, navigation }) => {
+const LoginPageLoading = ({ emailPending, clearResetPasswordFormError, clearLoginError, error, currentUser, resetPassEmailExpired, emailSent, route, passwordResetting, navigation }) => {
   const { rootNavigation } = route.params
 
   useEffect(() => {
@@ -14,10 +13,6 @@ const PageLoading = ({ emailPending, workoutPending, clearResetPasswordFormError
     } else if (passwordResetting) {
       navigation.navigate("Reset Password")
     } else if (currentUser) {
-      if (workoutPending.current_exercises) {
-        debugger
-        navigation.navigate("Potential Workout")
-      }
       rootNavigation.navigate("App")
     } else if (error.login) {
       navigation.navigate("Login")
@@ -28,35 +23,17 @@ const PageLoading = ({ emailPending, workoutPending, clearResetPasswordFormError
       navigation.navigate("Reset Password")
       clearResetPasswordFormError()
     }
-  }, [emailPending, error, workoutPending, currentUser, resetPassEmailExpired, passwordResetting])
+  }, [emailPending, error, currentUser, resetPassEmailExpired, passwordResetting])
 
-  return (
-    <View style={[styles.container, styles.horizontal]}>
-      <ActivityIndicator animating={true} />
-      <StatusBar barStyle='default' />
-    </View>
-  )
+  return <LoadingIndicator />
 }
-
-const styles = StyleSheet.create({
-  container: {
-      flex: 1,
-      justifyContent: "center"
-  },
-  horizontal: {
-      flexDirection: "row",
-      justifyContent: "space-around",
-      padding: 10
-  }
-});
 
 const mapStateToProps = store => ({ 
   emailPending: store.emailPending, 
   passwordResetting: store.passwordResetting, 
   currentUser: store.currentUser,
   error: store.error,
-  resetPassEmailExpired: store.resetPassEmailExpired,
-  workoutPending: store.workoutPending
+  resetPassEmailExpired: store.resetPassEmailExpired
 })
 const mapDispatchToProps = dispatch => { 
   return { 
@@ -65,4 +42,4 @@ const mapDispatchToProps = dispatch => {
     clearResetPasswordFormError: () => dispatch(clearResetPasswordFormError())
   } }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageLoading)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPageLoading)

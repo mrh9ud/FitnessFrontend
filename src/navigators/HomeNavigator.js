@@ -5,7 +5,7 @@ import NavBar from "./NavBar";
 import WorkoutQuestionForm from '../forms/workouts/WorkoutQuestionForm'
 import PotentialWorkoutScreen from '../screens/PotentialWorkoutScreen'
 import WorkoutScreen from '../screens/WorkoutScreen'
-import PageLoading from '../components/PageLoading'
+import WorkoutPageLoading from '../components/WorkoutPageLoading'
 
 const Stack = createStackNavigator()
 
@@ -23,12 +23,7 @@ const HomeNavigator = ({ route, navigation }) => {
       <Stack.Screen name={"Workout Questionnaire"} component={WorkoutQuestionForm} />
       <Stack.Screen name={"Potential Workout"} component={PotentialWorkoutScreen} />
       <Stack.Screen name={"Workout"} component={WorkoutScreen} />
-      <Stack.Screen 
-        name={"Page Loading"}
-        component={PageLoading} 
-        options={{ headerShown: false, animationEnabled: false }}
-        initialParams={{...rootNavigation}} 
-      />
+      <Stack.Screen name={"Workout Loading"} options={{ headerShown: false, animationEnabled: false }} component={WorkoutPageLoading} />
     </Stack.Navigator>
   )
 }

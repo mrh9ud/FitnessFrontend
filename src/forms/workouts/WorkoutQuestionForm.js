@@ -33,7 +33,7 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
       duration: durationInt,
       ...difficulty
     }
-    navigation.navigate("Page Loading")
+    navigation.navigate("Potential Workout")
     submitWorkoutQuestionnaire(workoutObj, currentUser)
   }
 
