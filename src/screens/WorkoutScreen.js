@@ -1,8 +1,6 @@
-import React, {useEffect, useState} from 'react'
-import { Text, List, Divider } from 'react-native-paper'
-import { connect } from "react-redux"
+import React from 'react'
 
-const WorkoutScreen = ({ exercises }) => {
+const WorkoutScreen = ({ workout }) => {
   return (
     <>
     </>

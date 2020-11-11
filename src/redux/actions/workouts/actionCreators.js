@@ -1,4 +1,4 @@
-import { ADD_WORKOUT, SET_NEXT_POTENTIAL_EXERCISE, LOADING_COMPLETE, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, SET_WORKOUT_QUESTION_RESPONSES, GET_NEXT_POTENTIAL_EXERCISE, GET_PREVIOUS_POTENTIAL_EXERCISE } from '../actionType'
+import { ADD_WORKOUT, SET_NEXT_POTENTIAL_EXERCISE, LOADING_COMPLETE, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, SET_WORKOUT_QUESTION_RESPONSES } from '../actionType'
 
 const ipPort = "http://10.0.0.128:3000"
 const potentialWorkoutCreationUrl = `${ipPort}/api/v1/generate_potential_workout`
@@ -37,6 +37,7 @@ function submitWorkoutQuestionnaire(answersObj, userObj) {
                     dispatch(setWorkoutQuestionResponses(answersObj))
                     dispatch(loadingComplete())
                 } else {
+                    dispatch(loadingComplete())
                     alert(data.message)
                 }
             })

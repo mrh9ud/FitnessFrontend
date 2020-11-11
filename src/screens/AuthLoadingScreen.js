@@ -15,10 +15,7 @@ class AuthLoadingScreen extends React.Component {
 
   async checkToken() {
     const token = await encryptor.getCredentials('token')
-    if (token) {
-      let response = await this.props.verifyToken(token)
-      return response.payload
-    }
+    if (token) return await this.props.verifyToken(token)
   }
 
   render() {

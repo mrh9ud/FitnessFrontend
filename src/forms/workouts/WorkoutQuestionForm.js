@@ -33,6 +33,7 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
       duration: durationInt,
       ...difficulty
     }
+    navigation.navigate("Potential Workout")
     submitWorkoutQuestionnaire(workoutObj, currentUser)
   }
 
@@ -102,10 +103,7 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
         <View style={styles.button}>
           <Button
             mode="contained" 
-            onPress={() => {
-              handleSubmit(values.duration)
-              navigation.navigate("Potential Workout")
-            }}
+            onPress={() => handleSubmit(values.duration)}
             disabled={!isValid || (!workoutBeginner && !workoutIntermediate && !workoutAdvanced) || (!workoutStrFocus && !workoutCardioFocus) || values.duration.length < 2}
             >Generate New Workout
           </Button>

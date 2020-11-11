@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
-import { ActivityIndicator } from 'react-native-paper'
-import { StatusBar, StyleSheet, View } from "react-native";
 import { connect } from 'react-redux'
 import { emailSent, clearLoginError, clearResetPasswordFormError } from "../redux/actions/users/actionCreators"
+import LoadingIndicator from './LoadingIndicator';
 
-const PageLoading = ({ emailPending, clearResetPasswordFormError, clearLoginError, error, currentUser, resetPassEmailExpired, emailSent, route, passwordResetting, navigation }) => {
+const LoginPageLoading = ({ emailPending, clearResetPasswordFormError, clearLoginError, error, currentUser, resetPassEmailExpired, emailSent, route, passwordResetting, navigation }) => {
   const { rootNavigation } = route.params
 
   useEffect(() => {
@@ -26,25 +25,8 @@ const PageLoading = ({ emailPending, clearResetPasswordFormError, clearLoginErro
     }
   }, [emailPending, error, currentUser, resetPassEmailExpired, passwordResetting])
 
-  return (
-    <View style={[styles.container, styles.horizontal]}>
-      <ActivityIndicator animating={true} />
-      <StatusBar barStyle='default' />
-    </View>
-  )
+  return <LoadingIndicator />
 }
-
-const styles = StyleSheet.create({
-  container: {
-      flex: 1,
-      justifyContent: "center"
-  },
-  horizontal: {
-      flexDirection: "row",
-      justifyContent: "space-around",
-      padding: 10
-  }
-});
 
 const mapStateToProps = store => ({ 
   emailPending: store.emailPending, 
@@ -60,4 +42,4 @@ const mapDispatchToProps = dispatch => {
     clearResetPasswordFormError: () => dispatch(clearResetPasswordFormError())
   } }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageLoading)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPageLoading)
