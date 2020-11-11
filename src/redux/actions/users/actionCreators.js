@@ -73,7 +73,6 @@ function verifyUserData(userObj) {
                         dispatch(loadingComplete())
                         dispatch(resetPassword())
                     } else {
-                        console.log(data)
                         dispatch(loadingComplete())
                         encryptor.setCredentials(data.jwt)
                         dispatch(loginUser(data.user))
