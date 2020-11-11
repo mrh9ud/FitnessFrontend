@@ -4,6 +4,7 @@ import PotentialExercise from '../components/PotentialExercise'
 import { Title, Button } from 'react-native-paper'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import { submitWorkoutQuestionnaire, createNewWorkout } from '../redux/actions/workouts/actionCreators'
+import { CommonActions } from '@react-navigation/native'
 
 const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, submitWorkoutQuestionnaire, currentUser, createNewWorkout, navigation }) => {
 
@@ -28,7 +29,16 @@ const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, subm
               mode="contained"
               onPress={() => {
                 createNewWorkout(workoutPending.current_exercises, workoutQuestionResponses, currentUser)
-                navigation.navigate('Workout')
+                // reset the home switch navigator history
+                navigation.dispatch(
+                  CommonActions.reset({
+                    index: 1,
+                    routes: [
+                      { name: "Home"}
+                    ]
+                  })
+                )
+                navigation.navigate('My Workouts')
               }}
               >Accept
             </Button>
