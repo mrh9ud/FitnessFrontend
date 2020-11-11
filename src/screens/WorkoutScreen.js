@@ -1,6 +1,8 @@
 import React from 'react'
 
-const WorkoutScreen = ({ workout }) => {
+const WorkoutScreen = ({ route }) => {
+  const { workout } = route.params
+  debugger
   return (
     <>
     </>
