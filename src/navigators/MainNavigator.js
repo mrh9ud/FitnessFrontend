@@ -14,7 +14,7 @@ const MainNavigator = ({ navigation }) => {
                      component={HomeNavigator}
                      initialParams={{rootNavigation: navigation}}
       />
-      <Drawer.Screen name="My Workout"
+      <Drawer.Screen name="My Workouts"
                      component={MyWorkoutNavigator}
                      initialParams={{rootNavigation: navigation}}
       />

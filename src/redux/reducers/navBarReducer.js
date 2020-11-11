@@ -7,7 +7,7 @@ function navBarReducer(state=[], action) {
     case CLEAR_MENU_OPTIONS:
       return []
     default:
-      return []
+      return state
   }
 }
 
