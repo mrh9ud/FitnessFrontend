@@ -3,14 +3,14 @@ import { Text } from "react-native-paper";
 import { View } from "react-native";
 import { setMenuOptions } from "../redux/actions/navBar/actionCreators";
 import { connect } from "react-redux";
-
+import { useFocusEffect } from '@react-navigation/native'
 
 const StatisticsScreen = ({ setMenuOptions }) => {
 
-  useEffect(() => {
+  useFocusEffect(() => {
     let test = [{
-      execFunc: () => console.log("test"),
-      title: "test"
+      execFunc: () => console.log("Stats Screen"),
+      title: "Stats Screen"
     }]
     setMenuOptions(test)
   })

@@ -1,15 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { List, Button, Divider } from 'react-native-paper'
 import PotentialExerciseModal from './PotentialExerciseModal'
 import { StyleSheet, View } from 'react-native'
-import {
-  getNextPotentialExercise,
-  getPreviousPotentialExercise,
-  setNextPotentialExercise
-} from '../redux/actions/workouts/actionCreators'
+import { setNextPotentialExercise } from '../redux/actions/workouts/actionCreators'
 import { connect } from 'react-redux'
 
-const PotentialExercise = ({ exercise, index, setNextPotentialExercise, currentUser, getPreviousPotentialExercise, getNextPotentialExercise, potentialExercises }) => {
+const PotentialExercise = ({ exercise, index, setNextPotentialExercise, potentialExercises }) => {
 
   const [visible, setVisible] = useState(false)
 
@@ -22,6 +18,10 @@ const PotentialExercise = ({ exercise, index, setNextPotentialExercise, currentU
   useEffect(() => {
     setNextPotentialExercise(currentExercise, index)
   }, [currentExercise])
+
+  useEffect(() => {
+    setCurrentExercise(exercise)
+  }, [exercise])
 
   const cycleNextExercise = () => {
     for (let i = 0; i < potentialExercises.length; i++) {
@@ -93,12 +93,9 @@ const mapStateToProps = store => ({
   potentialExercises: store.workoutPending.potential_exercises
 })
 
-const mapDispatchToProps = dispatch => {
-  return { 
-    getNextPotentialExercise: exerciseId => dispatch(getNextPotentialExercise(exerciseId)),
-    getPreviousPotentialExercise: exerciseId => dispatch(getPreviousPotentialExercise(exerciseId)),
-    setNextPotentialExercise: (exercise, index) => dispatch(setNextPotentialExercise(exercise, index))
-  } 
-}
+const mapDispatchToProps = dispatch => ({
+  setNextPotentialExercise: (exercise, index) => dispatch(setNextPotentialExercise(exercise, index))
+})
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(PotentialExercise)

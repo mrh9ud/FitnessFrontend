@@ -1,12 +1,17 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import { Divider, List } from "react-native-paper";
-import {setMenuOptions} from "../redux/actions/navBar/actionCreators";
+import { setMenuOptions } from "../redux/actions/navBar/actionCreators";
 import { connect } from 'react-redux'
+import { useFocusEffect } from '@react-navigation/native'
 
 const SettingsScreen = ({ navigation, setMenuOptions }) => {
 
-  useEffect(() => {
-    setMenuOptions()
+  useFocusEffect(() => {
+      let test = [{
+        execFunc: () => console.log("Settings Screen"),
+        title: "Settings Screen"
+      }]
+      setMenuOptions(test)
   })
 
   return (

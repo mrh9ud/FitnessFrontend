@@ -19,7 +19,9 @@ const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, subm
           <View style={styles.button}>
             <Button
               mode="contained"
-              onPress={() => submitWorkoutQuestionnaire(workoutQuestionResponses, currentUser)}
+              onPress={() => {
+                submitWorkoutQuestionnaire(workoutQuestionResponses, currentUser)
+              }}
               >Try Again
             </Button>
             <Button
