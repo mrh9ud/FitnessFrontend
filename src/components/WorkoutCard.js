@@ -2,7 +2,6 @@ import React from 'react'
 import {List, Divider} from 'react-native-paper'
 import { focusHelper } from "../helpers/Functions";
 import {StyleSheet, View} from "react-native";
-import { Avatar } from "react-native-paper";
 
 const WorkoutCard = ({ workout, navigation }) => {
   const focusObj = focusHelper(workout)
