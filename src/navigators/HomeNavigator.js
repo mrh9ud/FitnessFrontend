@@ -4,7 +4,7 @@ import HomeScreen from "../screens/HomeScreen";
 import NavBar from "./NavBar";
 import WorkoutQuestionForm from '../forms/workouts/WorkoutQuestionForm'
 import PotentialWorkoutScreen from '../screens/PotentialWorkoutScreen'
-import WorkoutScreen from '../screens/WorkoutScreen'
+import WorkoutScreen from '../containers/WorkoutScreen'
 import WorkoutPageLoading from '../components/WorkoutPageLoading'
 
 const Stack = createStackNavigator()

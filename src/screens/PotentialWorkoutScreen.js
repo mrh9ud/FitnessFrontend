@@ -1,15 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import PotentialExercise from '../components/PotentialExercise'
 import { Title, Button } from 'react-native-paper'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import { submitWorkoutQuestionnaire, createNewWorkout } from '../redux/actions/workouts/actionCreators'
 
-const PotentialWorkoutScreen = ({ workoutPending, workouts, workoutQuestionResponses, submitWorkoutQuestionnaire, currentUser, createNewWorkout, navigation }) => {
-
-  useEffect(() => {
-    navigation.navigate("Workout", { id: workouts[workouts.length - 1].id })
-  }, [workouts])
+const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, submitWorkoutQuestionnaire, currentUser, createNewWorkout, navigation }) => {
 
   const renderExercises = () => {
     if (workoutPending.current_exercises) {
@@ -31,7 +27,8 @@ const PotentialWorkoutScreen = ({ workoutPending, workouts, workoutQuestionRespo
             <Button
               mode="contained"
               onPress={() => {
-                createNewWorkout(workoutPending.current_exercises, workoutQuestionResponses, currentUser)              
+                createNewWorkout(workoutPending.current_exercises, workoutQuestionResponses, currentUser)
+                navigation.navigate("Workout Loading")
               }}
               >Accept
             </Button>
@@ -56,8 +53,7 @@ const styles= StyleSheet.create({
 const mapStateToProps = store => ({ 
   workoutPending: store.workoutPending, 
   workoutQuestionResponses: store.workoutQuestionResponses,
-  currentUser: store.currentUser,
-  workouts: store.workouts
+  currentUser: store.currentUser
 })
 const mapDispatchToProps = dispatch => { 
   return { 

@@ -1,4 +1,4 @@
-import { LOADING, LOGIN, LOADING_COMPLETE } from '../actions/actionType'
+import { LOADING, LOADING_COMPLETE } from '../actions/actionType'
 
 const loadingReducer = (state=false, action) => {
     switch (action.type) {
