@@ -6,7 +6,7 @@ import WorkoutCard from "../components/WorkoutCard";
 
 const MyWorkoutScreen = ({ workouts, navigation }) => {
   return (
-    <ScrollView>
+    <ScrollView bounces={true}>
       {workouts.length !== 0 ?
         // <Text>You have workouts!</Text>
         workouts.map(workout => <WorkoutCard workout={workout} navigation={navigation} />)

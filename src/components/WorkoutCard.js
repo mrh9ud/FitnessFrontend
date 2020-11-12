@@ -1,26 +1,31 @@
 import React from 'react'
-import { Card } from 'react-native-paper'
+import {List, Divider} from 'react-native-paper'
+import { focusHelper } from "../helpers/Functions";
+import {StyleSheet, View} from "react-native";
+import { Avatar } from "react-native-paper";
 
 const WorkoutCard = ({ workout, navigation }) => {
-  const focusHelper = () => {
-    const focus = []
-    if (workout.strength)
-      focus.push("Strength")
-    if (workout.cardio)
-      focus.push("Cardio")
-    if (workout.flexibility)
-      focus.push("Flexibility")
-    return focus.join(", ")
-  }
+  const focusObj = focusHelper(workout)
   return (
-    <>
-      <Card onPress={() => navigation.navigate("Workout", {
+    <View style={styleSheet.cards}>
+      <List.Item
+        title={"Workout " + workout.id}
+        description={focusObj.focus}
+        right={props => focusObj.icons.map(icon => <List.Icon {...props} icon={icon} />)}
+        onPress={() => navigation.navigate("Workout", {
         workout
       })}>
-        <Card.Title title={"Workout " + workout.id} subtitle={focusHelper()}/>
-      </Card>
-    </>
+        <Divider />
+      </List.Item>
+    </View>
   )
 }
+
+const styleSheet = StyleSheet.create({
+  cards: {
+    paddingHorizontal: '2%',
+    paddingVertical: '1%'
+  }
+})
 
 export default WorkoutCard
