@@ -17,8 +17,6 @@ const MyWorkoutScreen = ({ workouts, navigation }) => {
   )
 }
 
-const mapStateToProps = store => ({
-  workouts: store.workouts
-})
+const mapStateToProps = store => ({ workouts: store.workouts })
 
 export default connect(mapStateToProps)(MyWorkoutScreen)
