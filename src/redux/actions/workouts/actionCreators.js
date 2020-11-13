@@ -1,14 +1,17 @@
-import { ADD_WORKOUT, SET_NEXT_POTENTIAL_EXERCISE, LOADING_COMPLETE, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, SET_WORKOUT_QUESTION_RESPONSES } from '../actionType'
+import { ADD_WORKOUT, SET_NEXT_POTENTIAL_EXERCISE, UPDATE_WORKOUT_NAME, LOADING_COMPLETE, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, SET_WORKOUT_QUESTION_RESPONSES } from '../actionType'
 
-const ipPort = "http://10.0.0.128:3000"
+const ipPort = "http://10.0.0.68:3000"
 const potentialWorkoutCreationUrl = `${ipPort}/api/v1/generate_potential_workout`
 const workoutCreationUrl = `${ipPort}/api/v1/workouts`
+const workoutNameUpdateUrl = `${ipPort}/api/v1/workouts/`
 
 const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
 
 function loading() { return { type: LOADING } }
 
 function loadingComplete() { return { type: LOADING_COMPLETE } }
+
+function updateWorkoutName(data) { return { type: UPDATE_WORKOUT_NAME, payload: data } }
 
 function clearPotentialWorkout() { return { type: CLEAR_POTENTIAL_WORKOUT } }
 
@@ -37,8 +40,8 @@ function submitWorkoutQuestionnaire(answersObj, userObj) {
                     dispatch(setWorkoutQuestionResponses(answersObj))
                     dispatch(loadingComplete())
                 } else {
-                    dispatch(loadingComplete())
                     alert(data.message)
+                    dispatch(loadingComplete())
                 }
             })
             .catch(error => alert(error))
@@ -68,4 +71,26 @@ function createNewWorkout(currentExercises, workoutQuestionResponses, currentUse
     }
 }
 
-export { submitWorkoutQuestionnaire, createNewWorkout, setNextPotentialExercise }
+function changeWorkoutName(id, workoutName) {
+    return dispatch => {
+        const editWorkoutNameConfigObj = {
+            method: "PATCH",
+            headers: fetchHeaders,
+            body: JSON.stringify({ workout: { ...workoutName, id } })
+        }
+        dispatch(loading())
+        fetch(`${workoutNameUpdateUrl}${id}`, editWorkoutNameConfigObj).then(resp => resp.json())
+            .then(data => {
+                if (!data.error) {
+                    dispatch(updateWorkoutName(data))
+                    dispatch(loadingComplete())
+                } else {
+                    alert(data.message)
+                    dispatch(loadingComplete())
+                }
+            })
+            .catch(error => alert(error))
+    }
+}
+
+export { submitWorkoutQuestionnaire, createNewWorkout, changeWorkoutName, setNextPotentialExercise }

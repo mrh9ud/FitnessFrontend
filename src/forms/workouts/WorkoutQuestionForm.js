@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native'
 import { Text, TextInput, Button, Switch, Title, Checkbox } from "react-native-paper";
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
-import { DURATION } from '../../helpers/FormKeyType'
+import { DURATION, WORKOUT_NAME } from '../../helpers/FormKeyType'
 import { submitWorkoutQuestionnaire } from '../../redux/actions/workouts/actionCreators'
 import { workoutQuestionsValidations } from '../../helpers/Validations'
 
@@ -15,7 +15,7 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
   const [workoutStrFocus, setWorkoutStrFocus] = useState(false)
   const [workoutCardioFocus, setWorkoutCardioFocus] = useState(false)
 
-  const handleSubmit = duration => {
+  const handleSubmit = ({ duration, name }) => {
     const difficulty = {}
     if (workoutBeginner) {
       difficulty['difficulty'] = 'beginner'
@@ -31,7 +31,8 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
       strength: workoutStrFocus,
       cardio: workoutCardioFocus,
       duration: durationInt,
-      ...difficulty
+      ...difficulty,
+      name
     }
     navigation.navigate("Potential Workout")
     submitWorkoutQuestionnaire(workoutObj, currentUser)
@@ -40,14 +41,24 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
   return (
     <Formik
       initialValues={{
-        [DURATION]: ''
+        [DURATION]: '',
+        [WORKOUT_NAME]: ''
       }}
       validationSchema={workoutQuestionsValidations}
     >
     {({isValid, errors, handleChange, values}) => (
       <View>
-        <Title>Workout Focus</Title>
+        <Title>Name:</Title>
+      <TextInput 
+        mode="outlined"
+        placeholder="My workout name here!"
+        value={values.name}
+        onChangeText={handleChange('name')}
+      />
+      {errors.name &&
+        <Text style={styles.error}>{errors.name}</Text>}
 
+        <Title>Workout Focus</Title>
         <Text>Strength</Text>
         <Switch 
           value={workoutStrFocus}
@@ -103,7 +114,7 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
         <View style={styles.button}>
           <Button
             mode="contained" 
-            onPress={() => handleSubmit(values.duration)}
+            onPress={() => handleSubmit(values)}
             disabled={!isValid || (!workoutBeginner && !workoutIntermediate && !workoutAdvanced) || (!workoutStrFocus && !workoutCardioFocus) || values.duration.length < 2}
             >Generate New Workout
           </Button>

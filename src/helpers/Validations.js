@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, USERNAME, DURATION, CONFIRM_PASSWORD } from "./FormKeyType";
+import { EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, USERNAME, DURATION, WORKOUT_NAME, CONFIRM_PASSWORD } from "./FormKeyType";
 
 const usernameRegisterValidation = {
   [USERNAME]: yup
@@ -67,6 +67,17 @@ const firstNameValidation = {
       .matches(/^\d+$/g, { message: "Numbers only!", excludeEmptyString: true })
   }
 
+  const workoutNameValidation = {
+    [WORKOUT_NAME]: yup
+      .string().required("Your workout needs a name")
+      .min(3, "Must have at least 3 characters")
+      .max(30, "No more than 30 characters")
+      .matches(/^([A-Za-z](\s?|-|'))+[A-Za-z]$/g, {
+        message: "No special characters or extra spaces",
+        excludeEmptyString: true
+      })
+  }
+
 const loginFormValidations = yup.object().shape({
   ...loginUsernameValidation,
   ...loginPasswordValidation
@@ -82,7 +93,8 @@ const registrationFormValidations = yup.object().shape({
 })
 
 const workoutQuestionsValidations = yup.object().shape({
-  ...workoutDurationValidation
+  ...workoutDurationValidation,
+  ...workoutNameValidation
 })
 
 const forgotPasswordFormValidations = yup.object().shape({
@@ -94,6 +106,10 @@ const resetPasswordFormValidations = yup.object().shape({
   ...loginUsernameValidation,
   ...passwordRegisterValidation,
   ...confirmPasswordValidation
+})
+
+const editNameFormValidations = yup.object().shape({
+  ...workoutNameValidation
 })
 
 const editFormValidations = (key) => {
@@ -122,4 +138,4 @@ const editFormValidations = (key) => {
   }
 }
 
-export { registrationFormValidations, editFormValidations, loginFormValidations, workoutQuestionsValidations, forgotPasswordFormValidations, resetPasswordFormValidations }
+export { registrationFormValidations, editFormValidations, editNameFormValidations, loginFormValidations, workoutQuestionsValidations, forgotPasswordFormValidations, resetPasswordFormValidations }

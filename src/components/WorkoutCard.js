@@ -8,7 +8,7 @@ const WorkoutCard = ({ workout, navigation }) => {
   return (
     <View style={styleSheet.cards}>
       <List.Item
-        title={"Workout " + workout.id}
+        title={workout.name ? workout.name : "Created before name was required"}
         description={focusObj.focus}
         right={props => focusObj.icons.map(icon => <List.Icon {...props} icon={icon} />)}
         onPress={() => navigation.navigate("Workout", {

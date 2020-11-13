@@ -26,12 +26,13 @@ const ProfileSettingsScreen = ({ currentUser, loading }) => {
     <ScrollView>
       {formKey
       ?
-      <EditUserForm visible={visible}
-                  hideDialog={hideDialog}
-                  title={formTitle}
-                  formKey={formKey}
-                  value={formValue}
-                  userId={currentUser.id}
+      <EditUserForm 
+        visible={visible}
+        hideDialog={hideDialog}
+        title={formTitle}
+        formKey={formKey}
+        value={formValue}
+        userId={currentUser.id}
       />
       :
       null}
