@@ -10,9 +10,9 @@ const WorkoutCard = ({ workout, navigation }) => {
       <List.Item
         title={workout.name ? workout.name : "Created before name was required"}
         description={focusObj.focus}
-        right={props => focusObj.icons.map(icon => <List.Icon {...props} icon={icon} />)}
+        right={props => focusObj.icons.map(icon => <List.Icon {...props} key={Math.random()} icon={icon} />)}
         onPress={() => navigation.navigate("Workout", {
-        workout
+        workoutId: workout.id
       })}>
         <Divider />
       </List.Item>

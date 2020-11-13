@@ -101,6 +101,7 @@ function verifyToken(token) {
         .then(data => {
             dispatch(setUserWorkouts(data.workouts))
             dispatch(loginUser(data.user))
+            dispatch(loadingComplete())
             return data
         })
         .catch(error => alert(error))
