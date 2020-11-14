@@ -1,10 +1,34 @@
-import React from 'react'
-import {List, Divider} from 'react-native-paper'
+import React, { useState } from 'react'
+import { List, Divider, Button } from 'react-native-paper'
 import { focusHelper } from "../helpers/Functions";
-import {StyleSheet, View} from "react-native";
+import { StyleSheet, View, Alert } from "react-native";
+import { connect } from 'react-redux'
+import { deleteWorkout } from '../redux/actions/workouts/actionCreators'
+import LoadingIndicator from './LoadingIndicator'
 
-const WorkoutCard = ({ workout, navigation }) => {
+const WorkoutCard = ({ workout, navigation, deleteWorkout }) => {
+  
   const focusObj = focusHelper(workout)
+  const [loading, setLoading] = useState(false)
+
+  const confirmWorkoutDeletion = () => {
+    Alert.alert(
+      "Workout Deletion Confirmation",
+      `Are you sure you want to remove "${workout.name}"?`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        { text: "Confirm", onPress: () => {
+          setLoading(true)
+          deleteWorkout(workout.id) 
+        }}
+      ],
+      { cancelable: false }
+    );
+  }
+
   return (
     <View style={styleSheet.cards}>
       <List.Item
@@ -14,8 +38,18 @@ const WorkoutCard = ({ workout, navigation }) => {
         onPress={() => navigation.navigate("Workout", {
         workoutId: workout.id
       })}>
-        <Divider />
+      <Divider />
       </List.Item>
+      {loading
+      ?
+      <LoadingIndicator />
+      :
+      <Button
+        mode="text"
+        icon="trash-can"
+        onPress={confirmWorkoutDeletion}>
+      </Button>
+      }
     </View>
   )
 }
@@ -27,4 +61,6 @@ const styleSheet = StyleSheet.create({
   }
 })
 
-export default WorkoutCard
+const mapDispatchToProps = dispatch => { return { deleteWorkout: workoutId => dispatch(deleteWorkout(workoutId)) } }
+
+export default connect(null, mapDispatchToProps)(WorkoutCard)

@@ -1,16 +1,19 @@
-import { ADD_WORKOUT, SET_NEXT_POTENTIAL_EXERCISE, SWAP_EXERCISE, UPDATE_WORKOUT_NAME, LOADING_COMPLETE, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, SET_WORKOUT_QUESTION_RESPONSES } from '../actionType'
+import { ADD_WORKOUT, SET_NEXT_POTENTIAL_EXERCISE, REMOVE_WORKOUT, SWAP_EXERCISE, UPDATE_WORKOUT_NAME, LOADING_COMPLETE, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, SET_WORKOUT_QUESTION_RESPONSES } from '../actionType'
 
 const ipPort = "http://10.0.0.68:3000"
 const potentialWorkoutCreationUrl = `${ipPort}/api/v1/generate_potential_workout`
 const workoutCreationUrl = `${ipPort}/api/v1/workouts`
 const workoutNameUpdateUrl = `${ipPort}/api/v1/workouts/`
 const swapWorkoutExerciseUrl = `${ipPort}/api/v1/swap_workout_exercise`
+const deleteWorkoutUrl = `${ipPort}/api/v1/workouts/`
 
 const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
 
 function loading() { return { type: LOADING } }
 
 function loadingComplete() { return { type: LOADING_COMPLETE } }
+
+function removeWorkout(data) { return { type: REMOVE_WORKOUT, payload: data } }
 
 function swapExercise(data) { return { type: SWAP_EXERCISE, payload: data } }
 
@@ -118,4 +121,27 @@ function swapWorkoutExercise(workoutId, exerciseId) {
     }
 }
 
-export { submitWorkoutQuestionnaire, swapWorkoutExercise, createNewWorkout, changeWorkoutName, setNextPotentialExercise }
+function deleteWorkout(workoutId) {
+    return dispatch => {
+        const deleteWorkoutConfigObj = {
+            method: "DELETE",
+            headers: fetchHeaders      
+        }
+        dispatch(loading())
+        fetch(`${deleteWorkoutUrl}${workoutId}`, deleteWorkoutConfigObj)
+            .then(resp => resp.json())
+            .then(data => {
+                if (!data.error) {
+                    const integerId  = parseInt(data.id, 10)
+                    dispatch(removeWorkout(integerId))
+                    dispatch(loadingComplete())
+                } else {
+                    alert(data.message)
+                    dispatch(loadingComplete())
+                }
+            })
+            .catch(error => alert(error))
+    }
+}
+
+export { submitWorkoutQuestionnaire, deleteWorkout, swapWorkoutExercise, createNewWorkout, changeWorkoutName, setNextPotentialExercise }

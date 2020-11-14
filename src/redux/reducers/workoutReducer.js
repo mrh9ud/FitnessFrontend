@@ -1,4 +1,4 @@
-import { ADD_WORKOUT, CLEAR_USER_WORKOUTS, SWAP_EXERCISE, UPDATE_WORKOUT_NAME, SET_USER_WORKOUTS } from "../actions/actionType";
+import { ADD_WORKOUT, CLEAR_USER_WORKOUTS, REMOVE_WORKOUT, SWAP_EXERCISE, UPDATE_WORKOUT_NAME, SET_USER_WORKOUTS } from "../actions/actionType";
 
 function workoutReducer(state = [], action) {
   switch(action.type) {
@@ -30,6 +30,9 @@ function workoutReducer(state = [], action) {
           return workout
         })
       return workoutExerciseSwapped
+    case REMOVE_WORKOUT:
+      const oneWorkoutFewer = state.filter(workout => workout.id !== action.payload)
+      return oneWorkoutFewer
     case CLEAR_USER_WORKOUTS:
       return []
     default:
