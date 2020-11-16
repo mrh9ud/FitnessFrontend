@@ -2,7 +2,7 @@ import React from 'react'
 import {Text} from "react-native-paper";
 import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
-import WorkoutCard from "../components/WorkoutCard";
+import WorkoutCard from "../../components/WorkoutCard";
 
 const MyWorkoutScreen = ({ workouts, navigation }) => {
   return (

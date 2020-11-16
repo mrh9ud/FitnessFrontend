@@ -1,6 +1,7 @@
 import { ADD_WORKOUT, SET_NEXT_POTENTIAL_EXERCISE, REMOVE_WORKOUT, SWAP_EXERCISE, UPDATE_WORKOUT_NAME, LOADING_COMPLETE, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, SET_WORKOUT_QUESTION_RESPONSES } from '../actionType'
+import ip from '../../../helpers/ip'
 
-const ipPort = "http://10.0.0.68:3000"
+const ipPort = ip
 const potentialWorkoutCreationUrl = `${ipPort}/api/v1/generate_potential_workout`
 const workoutCreationUrl = `${ipPort}/api/v1/workouts`
 const workoutNameUpdateUrl = `${ipPort}/api/v1/workouts/`

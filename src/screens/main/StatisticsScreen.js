@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text } from "react-native-paper";
 import { View } from "react-native";
-import { setMenuOptions } from "../redux/actions/navBar/actionCreators";
+import { setMenuOptions } from "../../redux/actions/navBar/actionCreators";
 import { connect } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native'
 

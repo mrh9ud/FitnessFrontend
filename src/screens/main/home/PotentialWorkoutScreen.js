@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import PotentialExercise from '../components/PotentialExercise'
+import PotentialExercise from '../../../components/PotentialExercise'
 import { Title, Button } from 'react-native-paper'
 import { StyleSheet, View, ScrollView } from 'react-native'
-import { submitWorkoutQuestionnaire, createNewWorkout } from '../redux/actions/workouts/actionCreators'
+import { submitWorkoutQuestionnaire, createNewWorkout } from '../../../redux/actions/workouts/actionCreators'
 
 const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, submitWorkoutQuestionnaire, currentUser, createNewWorkout, navigation }) => {
 

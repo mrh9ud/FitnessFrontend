@@ -1,9 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
-import NavBar from "./NavBar";
-import MyWorkoutScreen from "../screens/MyWorkoutScreen";
-import WorkoutScreen from "../containers/WorkoutScreen";
-import WorkoutPageLoading from '../components/WorkoutPageLoading';
+import NavBar from "../NavBar";
+import MyWorkoutScreen from "../../screens/main/MyWorkoutScreen";
+import WorkoutScreen from "../../containers/WorkoutScreen";
+import WorkoutPageLoading from '../../components/WorkoutPageLoading';
 
 const Stack = createStackNavigator()
 

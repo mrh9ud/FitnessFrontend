@@ -1,7 +1,7 @@
 import React from 'react'
 import { ActivityIndicator } from 'react-native-paper'
-import { StatusBar, StyleSheet, View } from "react-native";import * as encryptor from '../encryption/SecureStore'
-import { verifyToken } from "../redux/actions/users/actionCreators";
+import { StatusBar, StyleSheet, View } from "react-native";import * as encryptor from '../../encryption/SecureStore'
+import { verifyToken } from "../../redux/actions/users/actionCreators";
 import { connect } from "react-redux";
 
 class AuthLoadingScreen extends React.Component {

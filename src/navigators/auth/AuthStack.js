@@ -1,9 +1,9 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import LoginForm from "../forms/users/LoginForm";
+import LoginForm from "../../forms/users/LoginForm";
 import React from "react";
-import RegisterForm from "../forms/users/RegisterForm";
-import ResetPasswordForm from "../forms/users/ResetPasswordForm";
-import LoginPageLoading from "../components/LoginPageLoading"
+import RegisterForm from "../../forms/users/RegisterForm";
+import ResetPasswordForm from "../../forms/users/ResetPasswordForm";
+import LoginPageLoading from "../../components/LoginPageLoading"
 
 const Stack = createStackNavigator()
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Divider, List } from "react-native-paper";
-import { setMenuOptions } from "../redux/actions/navBar/actionCreators";
+import { setMenuOptions } from "../../../redux/actions/navBar/actionCreators";
 import { connect } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
 
