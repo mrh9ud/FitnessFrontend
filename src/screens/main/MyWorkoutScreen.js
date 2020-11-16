@@ -13,7 +13,7 @@ const MyWorkoutScreen = ({ workouts, navigation }) => {
         <Text>You currently don't have any workouts. Click the button below to generate a new workout.</Text>
       }
       <Button onPress={() => navigation.navigate("Home", { screen: "Workout Questionnaire"})}>
-        Create New Workout
+        Generate New Workout
       </Button>
     </ScrollView>
   )

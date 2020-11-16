@@ -48,8 +48,10 @@ const WorkoutCard = ({ workout, navigation, deleteWorkout }) => {
         mode="text"
         icon="trash-can"
         onPress={confirmWorkoutDeletion}>
+        Delete
       </Button>
       }
+      <Divider />
     </View>
   )
 }
