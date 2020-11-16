@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { List, Divider, Button } from 'react-native-paper'
+import {Title, Card, List, Divider, Button, Paragraph} from 'react-native-paper'
 import { focusHelper } from "../helpers/Functions";
 import { StyleSheet, View, Alert } from "react-native";
 import { connect } from 'react-redux'
@@ -31,27 +31,37 @@ const WorkoutCard = ({ workout, navigation, deleteWorkout }) => {
 
   return (
     <View style={styleSheet.cards}>
-      <List.Item
-        title={workout.name ? workout.name : "Created before name was required"}
-        description={focusObj.focus}
-        right={props => focusObj.icons.map(icon => <List.Icon {...props} key={Math.random()} icon={icon} />)}
-        onPress={() => navigation.navigate("Workout", {
-        workoutId: workout.id
-      })}>
-      <Divider />
-      </List.Item>
-      {loading
-      ?
-      <LoadingIndicator />
-      :
-      <Button
-        mode="text"
-        icon="trash-can"
-        onPress={confirmWorkoutDeletion}>
-        Delete
-      </Button>
-      }
-      <Divider />
+      <Card
+        onPress={() => navigation.navigate("Workout", { workoutId: workout.id })}
+      >
+        <Card.Title
+          title={workout.name ? workout.name : "Created before name was required"}
+          subtitle={focusObj.focus}
+          right={props => focusObj.icons.map(icon => <List.Icon {...props} key={Math.random()} icon={icon} />)}
+        />
+        <Card.Actions>
+          {loading
+            ?
+            <LoadingIndicator />
+            :
+            <>
+              <Button
+                onPress={() => navigation.navigate("Edit Workout", { workoutId: workout.id })}
+              >
+                Edit
+              </Button>
+              <Button
+                icon="trash-can"
+                onPress={confirmWorkoutDeletion}
+              >
+                Delete
+              </Button>
+            </>
+          }
+          <Divider />
+        </Card.Actions>
+        <Divider />
+      </Card>
     </View>
   )
 }

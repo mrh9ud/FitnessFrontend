@@ -1,59 +1,43 @@
 import React, { useState } from 'react'
-import { List, Button } from 'react-native-paper'
+import { List, Divider } from 'react-native-paper'
 import ExerciseModal from './ExerciseModal'
-import { StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 import { swapWorkoutExercise } from '../redux/actions/workouts/actionCreators'
-import LoadingIndicator from './LoadingIndicator'
 
-const Exercise = ({ exercise, swapWorkoutExercise, workoutId }) => {
+const Exercise = ({ exercise, divide=false }) => {
 
   const [visible, setVisible] = useState(false)
   const closeModal = () => setVisible(false)
-  const [loading, setLoading] = useState(false)
 
   return (
     <>
-    {visible
-    ?
-    <ExerciseModal 
-      visible={visible}
-      closeModal={closeModal}
-      exercise={exercise}
-    />
-    :
-    <>
-    <List.Item 
-      title={exercise.name}
-      description="Press for more info."
-      onPress={() => setVisible(true)}
-    />
-    <View style={styles.inline}>
-      {loading
-      ? 
-      <LoadingIndicator />
+      {visible
+      ?
+      <ExerciseModal
+        visible={visible}
+        closeModal={closeModal}
+        exercise={exercise}
+      />
       :
-      <Button
-        mode="outlined"
-        onPress={() => {
-          swapWorkoutExercise(workoutId, exercise.id)
-          setLoading(true)
-        }}
-        >Swap
-      </Button>
+      null
       }
-    </View>
-    </>
-    }
+      <>
+        <List.Item
+          title={exercise.name}
+          description="Press for more info."
+          onPress={() => setVisible(true)}
+        />
+      </>
+      {divide
+      ?
+      <Divider />
+      :
+      null
+      }
     </>
   )
 }
 
-const styles = StyleSheet.create({
-  inline: {
-    flexDirection:'row', 
-  }
-})
 
 const mapDispatchToProps = dispatch => { return { swapWorkoutExercise: (workoutId, exerciseId) => dispatch(swapWorkoutExercise(workoutId, exerciseId)) } }
 

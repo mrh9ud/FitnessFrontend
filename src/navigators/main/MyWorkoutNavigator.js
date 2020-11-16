@@ -4,6 +4,7 @@ import NavBar from "../NavBar";
 import MyWorkoutScreen from "../../screens/main/MyWorkoutScreen";
 import WorkoutScreen from "../../containers/WorkoutScreen";
 import WorkoutPageLoading from '../../components/WorkoutPageLoading';
+import EditWorkoutForm from "../../forms/workouts/EditWorkoutForm";
 
 const Stack = createStackNavigator()
 
@@ -18,6 +19,7 @@ const MyWorkoutNavigator = ({ route, navigation }) => {
     >
       <Stack.Screen name='My Workout' component={MyWorkoutScreen} />
       <Stack.Screen name='Workout' component={WorkoutScreen} />
+      <Stack.Screen name='Edit Workout' component={EditWorkoutForm} />
       <Stack.Screen 
         name="Workout Loading" 
         component={WorkoutPageLoading} 
