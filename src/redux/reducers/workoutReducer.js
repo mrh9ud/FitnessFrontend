@@ -7,13 +7,13 @@ function workoutReducer(state = [], action) {
     case SET_USER_WORKOUTS:
       return [...state, ...action.payload]
     case UPDATE_WORKOUT_NAME:
-      const updatedWorkouts = [
-        ...state, state.map(workout => {
+      const updatedWorkouts =
+        state.map(workout => {
           if (workout.id === action.payload.id) {
             workout.name = action.payload.name
           }
+          return workout
         })
-      ]
       return updatedWorkouts
     case SWAP_EXERCISE:
       const workoutExerciseSwapped = 
