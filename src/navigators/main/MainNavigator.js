@@ -4,12 +4,13 @@ import HomeNavigator from "./HomeNavigator";
 import MyWorkoutNavigator from "./MyWorkoutNavigator";
 import StatisticsNavigator from "./StatisticsNavigator";
 import SettingsNavigator from "./SettingsNavigator";
+import DrawerContent from "../../components/DrawerContent";
 
 const MainNavigator = ({ navigation }) => {
  const Drawer = createDrawerNavigator()
 
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator drawerContent={(props) => <DrawerContent props={props} rootNavigation={navigation} />}>
       <Drawer.Screen name="Home"
                      component={HomeNavigator}
                      initialParams={{rootNavigation: navigation}}
