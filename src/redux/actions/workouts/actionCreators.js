@@ -1,11 +1,11 @@
 import { ADD_WORKOUT, SET_NEXT_POTENTIAL_EXERCISE, REMOVE_WORKOUT, SWAP_EXERCISE, UPDATE_WORKOUT_NAME, LOADING_COMPLETE, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, SET_WORKOUT_QUESTION_RESPONSES } from '../actionType'
-import { ip } from '../../../helpers/ipPort'
+import { ipPort } from '../../../helpers/ipPort'
 
-const potentialWorkoutCreationUrl = `${ip}/api/v1/generate_potential_workout`
-const workoutCreationUrl = `${ip}/api/v1/workouts`
-const workoutNameUpdateUrl = `${ip}/api/v1/workouts/`
-const swapWorkoutExerciseUrl = `${ip}/api/v1/swap_workout_exercise`
-const deleteWorkoutUrl = `${ip}/api/v1/workouts/`
+const potentialWorkoutCreationUrl = `${ipPort}/api/v1/generate_potential_workout`
+const workoutCreationUrl = `${ipPort}/api/v1/workouts`
+const workoutNameUpdateUrl = `${ipPort}/api/v1/workouts/`
+const swapWorkoutExerciseUrl = `${ipPort}/api/v1/swap_workout_exercise`
+const deleteWorkoutUrl = `${ipPort}/api/v1/workouts/`
 
 const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
 
