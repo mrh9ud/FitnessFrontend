@@ -1,16 +1,21 @@
 import { LOADING, LOGIN_ERROR, SET_USER_WORKOUTS, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, CLEAR_USER_WORKOUTS, CLEAR_LOGIN_ERROR, RESET_PASSWORD_FORM_ERROR, CLEAR_RESET_PASSWORD_FORM_ERROR, LOGIN, EMAIL_SENT, EMAIL_PENDING, LOADING_COMPLETE, CLEAR_USER_DATA, PASSWORD_RESET_EMAIL_RESENT, RESET_PASSWORD, RESET_PASSWORD_COMPLETED, RESET_PASSWORD_PERIOD_EXPIRED } from '../actionType'
 import * as encryptor from '../../../encryption/SecureStore.js'
+<<<<<<< HEAD
 import ip from '../../../helpers/ip'
 
 const ipPort = ip
+=======
+import { ip } from '../../../helpers/ipPort'
+
+>>>>>>> adding-muscle-groups
 const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
-const userLoginUrl = `${ipPort}/api/v1/login`
-const tokenVerificationUrl = `${ipPort}/api/v1/profile`
-const userCreationUrl = `${ipPort}/api/v1/users`
-const userUpdateUrl = `${ipPort}/api/v1/users/`
-const verifyUserEmailUsernameUrl = `${ipPort}/api/v1/verify_email_username`
-const createNewPasswordUrl = `${ipPort}/api/v1/reset_password`
-const changePasswordUrl = `${ipPort}/api/v1/change_password`
+const userLoginUrl = `${ip}/api/v1/login`
+const tokenVerificationUrl = `${ip}/api/v1/profile`
+const userCreationUrl = `${ip}/api/v1/users`
+const userUpdateUrl = `${ip}/api/v1/users/`
+const verifyUserEmailUsernameUrl = `${ip}/api/v1/verify_email_username`
+const createNewPasswordUrl = `${ip}/api/v1/reset_password`
+const changePasswordUrl = `${ip}/api/v1/change_password`
 
 function loading() { return { type: LOADING } }
 

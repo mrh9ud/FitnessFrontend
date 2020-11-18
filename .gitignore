@@ -61,6 +61,4 @@ buck-out/
 # Expo
 .expo/*
 web-build/
-
-#ip
-ip.js
+ipPort.js
