@@ -46,6 +46,7 @@ const WorkoutCard = ({ workout, navigation, deleteWorkout }) => {
             :
             <>
               <Button
+                icon="square-edit-outline"
                 onPress={() => navigation.navigate("Edit Workout", { workoutId: workout.id })}
               >
                 Edit
