@@ -6,8 +6,10 @@ const WorkoutPageLoading = ({ workouts, loading, navigation }) => {
 
   useEffect(() => {
     if (!loading)
-    
-    navigation.navigate("Workout", { workoutId: workouts[workouts.length - 1].id })
+      navigation.navigate("My Workouts", {
+        screen: "Workout",
+        params: { workoutId: workouts[workouts.length - 1].id }
+      })
   }, [loading])
 
   return <LoadingIndicator />

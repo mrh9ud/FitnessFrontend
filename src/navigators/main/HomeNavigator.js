@@ -22,7 +22,6 @@ const HomeNavigator = ({ route, navigation }) => {
       <Stack.Screen name={'Home'} component={HomeScreen} />
       <Stack.Screen name={"Workout Questionnaire"} component={WorkoutQuestionForm} />
       <Stack.Screen name={"Potential Workout"} component={PotentialWorkoutScreen} />
-      <Stack.Screen name={"Workout"} component={WorkoutScreen} />
       <Stack.Screen name={"Workout Loading"} options={{ headerShown: false, animationEnabled: false }} component={WorkoutPageLoading} />
     </Stack.Navigator>
   )
