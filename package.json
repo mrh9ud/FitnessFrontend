@@ -25,6 +25,7 @@
     "react-native": "0.63.3",
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-gesture-handler": "~1.7.0",
+    "react-native-grid-component": "^2.0.1",
     "react-native-paper": "^4.2.0",
     "react-native-reanimated": "~1.13.0",
     "react-native-router-flux": "^4.2.0",

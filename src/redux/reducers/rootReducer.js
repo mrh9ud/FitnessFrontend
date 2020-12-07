@@ -9,6 +9,8 @@ import workoutQuestionReducer from './workoutQuestionReducer'
 import emailConfirmationReducer from './emailConfirmationReducer'
 import errorReducer from "./errorReducer";
 import navBarReducer from "./navBarReducer";
+import muscleCategoriesReducer from "./muscleCategoriesReducer"
+import exerciseReducer from "./exerciseReducer";
 
 const rootReducer = combineReducers({
   currentUser: userReducer,
@@ -20,7 +22,9 @@ const rootReducer = combineReducers({
   workoutQuestionResponses: workoutQuestionReducer,
   emailPending: emailConfirmationReducer,
   error: errorReducer,
-  navBarMenuOptions: navBarReducer
+  navBarMenuOptions: navBarReducer,
+  muscleCategories: muscleCategoriesReducer,
+  exercises: exerciseReducer
 })
 
 export default rootReducer

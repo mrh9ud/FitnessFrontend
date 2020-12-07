@@ -125,7 +125,7 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
   )
 }
 
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
     inputField: {
       paddingHorizontal: '5%', 
       paddingVertical: '5%'

@@ -1,3 +1,5 @@
+import { LOADING, LOADING_COMPLETE } from '../redux/actions/actionType'
+
 const focusHelper = (workout) => {
   let focus = []
   let focusIcons = []
@@ -14,7 +16,12 @@ const focusHelper = (workout) => {
     focusIcons.push("star-three-points")
   }
   return { focus: focus.join(", "), icons: focusIcons }
-
 }
 
-export { focusHelper }
+function loading() { return { type: LOADING } }
+
+function loadingComplete() { return { type: LOADING_COMPLETE } }
+
+const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
+
+export { focusHelper, loading, loadingComplete, fetchHeaders }

@@ -1,8 +1,8 @@
-import { LOADING, LOGIN_ERROR, SET_USER_WORKOUTS, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, CLEAR_USER_WORKOUTS, CLEAR_LOGIN_ERROR, RESET_PASSWORD_FORM_ERROR, CLEAR_RESET_PASSWORD_FORM_ERROR, LOGIN, EMAIL_SENT, EMAIL_PENDING, LOADING_COMPLETE, CLEAR_USER_DATA, PASSWORD_RESET_EMAIL_RESENT, RESET_PASSWORD, RESET_PASSWORD_COMPLETED, RESET_PASSWORD_PERIOD_EXPIRED } from '../actionType'
+import { LOGIN_ERROR, SET_USER_WORKOUTS, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, CLEAR_USER_WORKOUTS, CLEAR_LOGIN_ERROR, RESET_PASSWORD_FORM_ERROR, CLEAR_RESET_PASSWORD_FORM_ERROR, LOGIN, EMAIL_SENT, EMAIL_PENDING, CLEAR_USER_DATA, PASSWORD_RESET_EMAIL_RESENT, RESET_PASSWORD, RESET_PASSWORD_COMPLETED, RESET_PASSWORD_PERIOD_EXPIRED } from '../actionType'
 import * as encryptor from '../../../encryption/SecureStore.js'
 import { ip } from '../../../helpers/ipPort'
+import { fetchHeaders, loading, loadingComplete } from '../../../helpers/Functions'
 
-const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
 const userLoginUrl = `${ip}/api/v1/login`
 const tokenVerificationUrl = `${ip}/api/v1/profile`
 const userCreationUrl = `${ip}/api/v1/users`
@@ -10,8 +10,6 @@ const userUpdateUrl = `${ip}/api/v1/users/`
 const verifyUserEmailUsernameUrl = `${ip}/api/v1/verify_email_username`
 const createNewPasswordUrl = `${ip}/api/v1/reset_password`
 const changePasswordUrl = `${ip}/api/v1/change_password`
-
-function loading() { return { type: LOADING } }
 
 function loginError() { return { type: LOGIN_ERROR } }
 
@@ -28,8 +26,6 @@ function resetPasswordFormError() { return { type: RESET_PASSWORD_FORM_ERROR } }
 function clearResetPasswordFormError() { return { type: CLEAR_RESET_PASSWORD_FORM_ERROR } }
 
 function clearLoginError() { return { type: CLEAR_LOGIN_ERROR } }
-
-function loadingComplete() { return { type: LOADING_COMPLETE } }
 
 function emailPending() { return { type: EMAIL_PENDING } }
 

@@ -9,8 +9,17 @@ const HomeScreen = ({ navigation }) => {
         <Card elevation={2}>
           <Card.Title title="Today's Workout" subtitle="Arms, Lower Back"/>
           <Card.Content>
-            <Title>Want a New Workout?</Title>
-            <Button onPress={() => navigation.navigate("Workout Questionnaire")}>Start Now</Button>
+
+            <Title>Generate a Workout</Title>
+            <Card.Actions>
+              <Button mode="outlined" onPress={() => navigation.navigate("Workout Questionnaire")}>Start Now</Button>
+            </Card.Actions>
+
+            <Title>Create Your Own Workout</Title>
+            <Card.Actions>
+              <Button mode="outlined" onPress={() => navigation.navigate("Create a Workout")}>Start Now</Button>
+            </Card.Actions>
+
           </Card.Content>
           <Card.Actions>
             <Button>View</Button>
@@ -23,8 +32,8 @@ const HomeScreen = ({ navigation }) => {
 
 const styleSheet = StyleSheet.create({
   cards: {
-    paddingHorizontal: '5%',
-    paddingVertical: '2%'
+    paddingHorizontal: '3%',
+    paddingVertical: '5%'
   }
 })
 
