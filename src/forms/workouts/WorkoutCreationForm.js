@@ -27,10 +27,12 @@ const WorkoutCreationForm = ({ fetchMuscleRelatedInfo, queryExercises, loading, 
       setMuscleGroups([ ...muscleGroups, { name, id } ])
     } else {
       let muscleGroupToRemove = muscleGroups.find(muscleGroup => muscleGroup.id === id)
-      if (muscleGroupToRemove) 
+      if (muscleGroupToRemove) {
         setMuscleGroups(muscleGroups.filter(muscleGroup => muscleGroup.id !== muscleGroupToRemove.id)) 
-      else
+      }
+      else {
         setMuscleGroups([ ...muscleGroups, { name, id } ])
+      }
     }     
   }
 
@@ -51,7 +53,7 @@ const WorkoutCreationForm = ({ fetchMuscleRelatedInfo, queryExercises, loading, 
       <View>
         <Checkbox.Item 
           label={item.name} 
-          status={muscleGroups.includes(item.name) ? 'checked' : 'unchecked'} 
+          status={muscleGroups.some(muscleGroup => muscleGroup.name === item.name) ? 'checked' : 'unchecked'}
           mode={'android' | 'ios'} 
           onPress={() => onChangeMuscleGroups(item.name, item.id)}
           keyExtractor={item => item.id}
