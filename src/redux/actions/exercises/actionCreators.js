@@ -24,20 +24,20 @@ function fetchExercises() {
   }
 }
 
-function queryExercises(muscleGroups, focus, searchQuery) {
+function queryExercises(muscleGroups, focus, searchQuery, difficulty) {
   const exerciseQueryConfigObj = {
     method: "POST",
     headers: fetchHeaders,
-    body: JSON.stringify({muscle_groups: muscleGroups, focus: focus, search_query: searchQuery })
+    body: JSON.stringify({difficulty: difficulty, muscle_groups: muscleGroups, focus: focus, search_query: searchQuery })
   }
-  console.log(muscleGroups, focus, searchQuery)
+  console.log(muscleGroups, focus, searchQuery, difficulty)
   return dispatch => {
     dispatch(loading())
     dispatch(clearExercises())
     fetch(exerciseQueryUrl, exerciseQueryConfigObj).then(resp => resp.json())
       .then(data => {
         console.log(data)
-        dispatch(setExercises(data))
+        dispatch(setExercises(data.exercises))
         dispatch(loadingComplete())
       })
       .catch(() => alert("Exercise Query Fetch Error"))

@@ -22,15 +22,15 @@ const WorkoutCreationForm = ({ fetchMuscleRelatedInfo, queryExercises, loading, 
   const [muscleGroups, setMuscleGroups] = useState([])
   const [difficulty, setDifficulty] = useState('beginner')
 
-  const onChangeMuscleGroups = name => {
+  const onChangeMuscleGroups = (name, id) => {
     if (muscleGroups.length === 0) {
-      setMuscleGroups([ ...muscleGroups, name ])
+      setMuscleGroups([ ...muscleGroups, { name, id } ])
     } else {
-      let groupToRemove = muscleGroups.find(muscleGroup => muscleGroup === name)
-      if (groupToRemove) 
-        setMuscleGroups(muscleGroups.filter(muscleGroup => muscleGroup !== groupToRemove)) 
+      let muscleGroupToRemove = muscleGroups.find(muscleGroup => muscleGroup.id === id)
+      if (muscleGroupToRemove) 
+        setMuscleGroups(muscleGroups.filter(muscleGroup => muscleGroup.id !== muscleGroupToRemove.id)) 
       else
-        setMuscleGroups([ ...muscleGroups, name ])
+        setMuscleGroups([ ...muscleGroups, { name, id } ])
     }     
   }
 
@@ -53,7 +53,7 @@ const WorkoutCreationForm = ({ fetchMuscleRelatedInfo, queryExercises, loading, 
           label={item.name} 
           status={muscleGroups.includes(item.name) ? 'checked' : 'unchecked'} 
           mode={'android' | 'ios'} 
-          onPress={() => onChangeMuscleGroups(item.name)}
+          onPress={() => onChangeMuscleGroups(item.name, item.id)}
           keyExtractor={item => item.id}
         />
       </View>
@@ -81,20 +81,20 @@ const WorkoutCreationForm = ({ fetchMuscleRelatedInfo, queryExercises, loading, 
   return (
     <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <Subheading>Search Exercises</Subheading>
+        <Subheading>Search Exercises by Name</Subheading>
         <Searchbar 
           placeholder="Barbell Bench Press"
           value={searchQuery}
           onChangeText={onChangeSearch}
         />
-        <Subheading>Focus</Subheading>
+        <Subheading>Filter by Focus</Subheading>
         <FlatList
           style={styles.container}
           renderItem={renderExerciseFocus}
           data={exerciseFocus}
           numColumns={numColumns}
         />
-        <Subheading>Difficulty Level</Subheading>
+        <Subheading>Filter by Difficulty Level</Subheading>
         <RadioButton.Group onValueChange={value => setDifficulty(value)} value={difficulty}>
           <FlatList
             style={styles.container}
@@ -103,7 +103,7 @@ const WorkoutCreationForm = ({ fetchMuscleRelatedInfo, queryExercises, loading, 
             numColumns={numColumns}
           />
         </RadioButton.Group>
-        <Subheading>Muscle Groups</Subheading>
+        <Subheading>Filter by Muscle Groups</Subheading>
         {muscleCategories
         ?
         <>
@@ -117,7 +117,7 @@ const WorkoutCreationForm = ({ fetchMuscleRelatedInfo, queryExercises, loading, 
           mode="contained"
           loading={loading}
           disabled={loading}
-          onPress={() => queryExercises(muscleGroups, focus, searchQuery)}
+          onPress={() => queryExercises(muscleGroups, focus, searchQuery, difficulty)}
           >Search Exercises
         </Button>
         </>
@@ -142,7 +142,7 @@ const mapDispatchToProps = dispatch => {
   return { 
     fetchMuscleRelatedInfo: () => dispatch(fetchMuscleRelatedInfo()),
     fetchExercises: () => dispatch(fetchExercises()),
-    queryExercises: (muscleGroups, focus, searchQuery) => dispatch(queryExercises(muscleGroups, focus, searchQuery))
+    queryExercises: (muscleGroups, focus, searchQuery, difficulty) => dispatch(queryExercises(muscleGroups, focus, searchQuery, difficulty))
   } }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutCreationForm)
