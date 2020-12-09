@@ -11,29 +11,29 @@ const Exercise = ({ exercise, divide=false }) => {
 
   return (
     <>
-      {visible
-      ?
-      <ExerciseModal
-        visible={visible}
-        closeModal={closeModal}
-        exercise={exercise}
+    {visible
+    ?
+    <ExerciseModal
+      visible={visible}
+      closeModal={closeModal}
+      exercise={exercise}
+    />
+    :
+    null
+    }
+    <>
+      <List.Item
+        title={exercise.name}
+        description="Press for more info."
+        onPress={() => setVisible(true)}
       />
-      :
-      null
-      }
-      <>
-        <List.Item
-          title={exercise.name}
-          description="Press for more info."
-          onPress={() => setVisible(true)}
-        />
-      </>
-      {divide
-      ?
-      <Divider />
-      :
-      null
-      }
+    </>
+    {divide
+    ?
+    <Divider />
+    :
+    null
+    }
     </>
   )
 }

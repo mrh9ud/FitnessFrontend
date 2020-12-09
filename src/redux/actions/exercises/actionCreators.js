@@ -1,6 +1,6 @@
 import { ip } from '../../../helpers/ipPort'
 import { loading, loadingComplete, fetchHeaders } from '../../../helpers/Functions'
-import { SET_EXERCISES, CLEAR_EXERCISES } from '../actionType'
+import { SET_EXERCISES, CLEAR_EXERCISES, SET_EXERCISE, CLEAR_EXERCISE, ADD_POTENTIAL_EXERCISE, REMOVE_POTENTIAL_EXERCISE, CLEAR_POTENTIAL_EXERCISES } from '../actionType'
 
 const exercisesUrl = `${ip}/api/v1/exercises`
 const exerciseQueryUrl = `${ip}/api/v1/exercise_query`
@@ -9,20 +9,27 @@ function setExercises(data) { return { type: SET_EXERCISES, payload: data } }
 
 function clearExercises() { return { type: CLEAR_EXERCISES } }
 
+function setExercise(data) { return { type: SET_EXERCISE, payload: data } }
+
+function clearExercise() { return { type: CLEAR_EXERCISE } }
+
+
 function fetchExercises() {
   return dispatch => {
     dispatch(loading())
     fetch(exercisesUrl).then(resp => resp.json())
-      .then(data => {
-        dispatch(setExercises(data.exercises))
-        dispatch(loadingComplete())
-      })
-      .catch(() => {
-        dispatch(loadingComplete())
-        alert("Exercise Fetch Error")
-      })
+    .then(data => {
+      dispatch(setExercises(data.exercises))
+      dispatch(loadingComplete())
+    })
+    .catch(() => {
+      dispatch(loadingComplete())
+      alert("Exercise Fetch Error")
+    })
   }
 }
+
+function addPotentialExercise(exerciseId) { return { type: ADD_POTENTIAL_EXERCISE, payload: exerciseId } }
 
 function queryExercises(muscleGroups, focus, searchQuery, difficulty) {
   const exerciseQueryConfigObj = {
@@ -42,4 +49,4 @@ function queryExercises(muscleGroups, focus, searchQuery, difficulty) {
   }
 }
 
-export { fetchExercises, queryExercises }
+export { fetchExercises, queryExercises, setExercise, clearExercise, addPotentialExercise }

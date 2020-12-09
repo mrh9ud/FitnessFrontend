@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import { Subheading, Checkbox, Searchbar, List, Button, Title, RadioButton } from 'react-native-paper'
-import { View, StyleSheet, SafeAreaView, FlatList, ScrollView } from 'react-native'
+import { Subheading, Checkbox, Searchbar, List, Button, Title, RadioButton, Colors } from 'react-native-paper'
+import { View, StyleSheet, SafeAreaView, FlatList, ScrollView, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { fetchMuscleRelatedInfo } from '../../redux/actions/workouts/actionCreators'
 import LoadingIndicator from '../../components/LoadingIndicator'
-import { fetchExercises, queryExercises } from '../../redux/actions/exercises/actionCreators'
+import { fetchExercises, queryExercises, setExercise, clearExercise, addPotentialExercise } from '../../redux/actions/exercises/actionCreators'
+import ExerciseDescription from '../../components/ExerciseDescription'
+import ExerciseModal from '../../components/ExerciseModal'
 
-const WorkoutCreationForm = ({ fetchMuscleRelatedInfo, queryExercises, loading, fetchExercises, muscleCategories, exercises, navigation }) => {
+const WorkoutCreationForm = ({ fetchMuscleRelatedInfo, exercise, setExercise, clearExercise, queryExercises, loading, fetchExercises, muscleCategories, exercises }) => {
   const numColumns = 3
   const exerciseFocus = [{id: 1, focus: 'strength'}, {id: 2, focus: 'cardio'}, {id: 3, focus: 'flexibility'}]
-  const exerciseDifficulty = [{id: 1, name: 'beginner'}, {id: 2, name: 'intermediate'}, {id: 3, name: 'advanced'}]
+  const exerciseDifficulty = [{id: 1, name: 'beginner'}, {id: 2, name: 'intermediate'}, {id: 3, name: 'advanced'}, {id: 4, name: 'all'}]
 
   useEffect(() => {
-    fetchMuscleRelatedInfo()
-    fetchExercises()
+    if (!muscleCategories)
+      fetchMuscleRelatedInfo()
+    if (exercises.length === 0)
+      fetchExercises()
   }, [])
 
   const [searchQuery, setSearchQuery] = useState('')
   const onChangeSearch = query => setSearchQuery(query)
   const [focus, setFocus] = useState([])
   const [muscleGroups, setMuscleGroups] = useState([])
-  const [difficulty, setDifficulty] = useState('beginner')
+  const [difficulty, setDifficulty] = useState('all')
+  const [visible, setVisible] = useState(false)
+  const closeModal = () => setVisible(false)
 
   const onChangeMuscleGroups = (name, id) => {
     if (muscleGroups.length === 0) {
@@ -78,9 +84,34 @@ const WorkoutCreationForm = ({ fetchMuscleRelatedInfo, queryExercises, loading, 
 
   const renderDifficulty = ({ item }) => <RadioButton.Item label={item.name} value={item.name} />
 
-  const renderExercises = () => exercises.map(exercise => <List.Item key={exercise.id} title={exercise.name} description={exercise.focus}/>)
+  const renderExercises = () => exercises.map(exercise => {
+    return (
+      <List.Item 
+        key={exercise.id} 
+        title={exercise.name} 
+        description={<ExerciseDescription focus={exercise.focus} />}
+        onPress={() => {
+          setExercise(exercise)
+          setVisible(true)
+        }}
+        right={props => <TouchableOpacity onPress={() => addPotentialExercise(exercise)}>
+                          <List.Icon {...props} color={Colors.black500} icon="plus-box"/>
+                        </TouchableOpacity>}
+      />
+  )})
 
-  return (
+return (
+    <>
+    {visible
+    ?
+    <ExerciseModal 
+      visible={visible}
+      closeModal={closeModal}
+      exercise={exercise}
+    />
+    :
+    null
+    }
     <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <Subheading>Search Exercises by Name</Subheading>
@@ -130,6 +161,7 @@ const WorkoutCreationForm = ({ fetchMuscleRelatedInfo, queryExercises, loading, 
       {renderExercises()}
       </ScrollView>
     </SafeAreaView>
+    </>
   )
 }
 
@@ -139,12 +171,20 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = store => ({ muscleCategories: store.muscleCategories, exercises: store.exercises, loading: store.loading })
+const mapStateToProps = store => ({ 
+  muscleCategories: store.muscleCategories, 
+  exercises: store.exercises, 
+  loading: store.loading,
+  exercise: store.exercise
+})
 const mapDispatchToProps = dispatch => { 
   return { 
     fetchMuscleRelatedInfo: () => dispatch(fetchMuscleRelatedInfo()),
     fetchExercises: () => dispatch(fetchExercises()),
-    queryExercises: (muscleGroups, focus, searchQuery, difficulty) => dispatch(queryExercises(muscleGroups, focus, searchQuery, difficulty))
+    queryExercises: (muscleGroups, focus, searchQuery, difficulty) => dispatch(queryExercises(muscleGroups, focus, searchQuery, difficulty)),
+    addPotentialExercise: exercise => dispatch(addPotentialExercise(exercise)),
+    setExercise: exercise => dispatch(setExercise(exercise)),
+    clearExercise: () => dispatch(clearExercise())
   } }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutCreationForm)
