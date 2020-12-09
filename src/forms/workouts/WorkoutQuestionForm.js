@@ -16,11 +16,11 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
   const [workoutCardioFocus, setWorkoutCardioFocus] = useState(false)
   const [workoutFlexibilityFocus, setWorkoutFlexibilityFocus] = useState(false)
 
-  const [workoutTargetAreas, setWorkoutTargetAreas] = useState([])
   const [firstTargetArea, setFirstTargetArea] = useState('')
   const [secondTargetArea, setSecondTargetArea] = useState('')
 
   const handleSubmit = ({ duration, name }) => {
+    const muscleGroups = [firstTargetArea, secondTargetArea]
     const difficulty = {}
     if (workoutBeginner) {
       difficulty['difficulty'] = 'beginner'
@@ -38,28 +38,10 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
       duration: durationInt,
       ...difficulty,
       name,
-      target: workoutTargetArea
+      muscle_groups: muscleGroups
     }
     navigation.navigate("Potential Workout")
     submitWorkoutQuestionnaire(workoutObj, currentUser)
-  }
-
-  const targetAreaDropdownList = (targetArea, setTargetArea) => {
-    return (
-      <Picker
-        selectedValue={targetArea}
-        style={{ width: 150 }}
-        mode={"dropdown"}
-        onValueChange={itemValue => setTargetArea(itemValue)}
-      >
-        <Picker.Item label="Shoulders" value="shoulders" />
-        <Picker.Item label="Chest" value="chest" />
-        <Picker.Item label="Arms" value="arms" />
-        <Picker.Item label="Back" value="back" />
-        <Picker.Item label="Waist" value="waist" />
-        <Picker.Item label="Legs" value="legs" />
-      </Picker>
-    )
   }
 
   return (
@@ -67,11 +49,13 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
       <Formik
         initialValues={{
           [DURATION]: '',
-          [WORKOUT_NAME]: ''
+          [WORKOUT_NAME]: '',
+          firstTargetArea: 'Select a Value...',
+          secondTargetArea: 'Select a Value...'
         }}
         validationSchema={workoutQuestionsValidations}
       >
-      {({isValid, errors, handleChange, values}) => (
+      {({isValid, errors, handleChange, values, setFieldValue}) => (
         <View>
           <Title>Name:</Title>
         <TextInput
@@ -144,9 +128,42 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
 
           <Title>Workout Target Areas</Title>
           <Headline>First Target Area: </Headline>
-          {targetAreaDropdownList(firstTargetArea, setFirstTargetArea)}
+          <Picker
+            selectedValue={firstTargetArea}
+            style={{ width: 200 }}
+            mode={"dropdown"}
+            onValueChange={itemValue => {
+              setFieldValue('firstTargetArea', itemValue)
+              setFirstTargetArea(itemValue)
+            }}
+          >
+            <Picker.Item label="Select a Value..." value="Select a Value..." />
+            <Picker.Item label="Shoulders" value="shoulders" />
+            <Picker.Item label="Chest" value="chest" />
+            <Picker.Item label="Arms" value="arms" />
+            <Picker.Item label="Back" value="back" />
+            <Picker.Item label="Waist" value="waist" />
+            <Picker.Item label="Legs" value="legs" />
+          </Picker>
+
           <Headline>Second Target Area: </Headline>
-          {targetAreaDropdownList(secondTargetArea, setSecondTargetArea)}
+          <Picker
+            selectedValue={secondTargetArea}
+            style={{ width: 200 }}
+            mode={"dropdown"}
+            onValueChange={itemValue => {
+              setFieldValue('secondTargetArea', itemValue)
+              setSecondTargetArea(itemValue)
+            }}
+          >
+            <Picker.Item label="Select a Value..." value="Select a Value..." />
+            <Picker.Item label="Shoulders" value="shoulders" />
+            <Picker.Item label="Chest" value="chest" />
+            <Picker.Item label="Arms" value="arms" />
+            <Picker.Item label="Back" value="back" />
+            <Picker.Item label="Waist" value="waist" />
+            <Picker.Item label="Legs" value="legs" />
+          </Picker>
 
           <View style={styles.button}>
             <Button
@@ -164,7 +181,7 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
   )
 }
 
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
     inputField: {
       paddingHorizontal: '5%', 
       paddingVertical: '5%'

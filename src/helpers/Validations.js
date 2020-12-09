@@ -78,6 +78,17 @@ const firstNameValidation = {
       })
   }
 
+  const workoutTargetAreaValidation = {
+    firstTargetArea: yup
+      .string().matches(/^((?!Select a Value...).)*$/g, {
+        message: "Select a muscle group"
+      }),
+    secondTargetArea: yup
+      .string().matches(/^((?!Select a Value...).)*$/g, {
+        message: "Select a muscle group"
+      })
+  }
+
 const loginFormValidations = yup.object().shape({
   ...loginUsernameValidation,
   ...loginPasswordValidation
@@ -94,7 +105,8 @@ const registrationFormValidations = yup.object().shape({
 
 const workoutQuestionsValidations = yup.object().shape({
   ...workoutDurationValidation,
-  ...workoutNameValidation
+  ...workoutNameValidation,
+  ...workoutTargetAreaValidation
 })
 
 const forgotPasswordFormValidations = yup.object().shape({
