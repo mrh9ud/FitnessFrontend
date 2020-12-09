@@ -1,12 +1,18 @@
 import { ip } from '../../../helpers/ipPort'
 import { loading, loadingComplete, fetchHeaders } from '../../../helpers/Functions'
-import { SET_EXERCISES, CLEAR_EXERCISES } from '../actionType'
+import { SET_EXERCISES, CLEAR_EXERCISES, SET_EXERCISE, CLEAR_EXERCISE, ADD_POTENTIAL_EXERCISE, REMOVE_POTENTIAL_EXERCISE, CLEAR_POTENTIAL_EXERCISES } from '../actionType'
 
 const exerciseQueryUrl = `${ip}/api/v1/exercise_query`
 
 function setExercises(data) { return { type: SET_EXERCISES, payload: data } }
 
 function clearExercises() { return { type: CLEAR_EXERCISES } }
+
+function setExercise(data) { return { type: SET_EXERCISE, payload: data } }
+
+function clearExercise() { return { type: CLEAR_EXERCISE } }
+
+function addPotentialExercise(exerciseId) { return { type: ADD_POTENTIAL_EXERCISE, payload: exerciseId } }
 
 function queryExercises(muscleGroups, focus, searchQuery, difficulty) {
   const exerciseQueryConfigObj = {
@@ -26,4 +32,4 @@ function queryExercises(muscleGroups, focus, searchQuery, difficulty) {
   }
 }
 
-export { queryExercises }
+export { queryExercises, setExercise, clearExercise, addPotentialExercise }
