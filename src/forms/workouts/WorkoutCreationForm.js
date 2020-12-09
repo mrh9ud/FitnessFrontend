@@ -4,16 +4,15 @@ import { View, StyleSheet, SafeAreaView, FlatList, ScrollView } from 'react-nati
 import { connect } from 'react-redux'
 import { fetchMuscleRelatedInfo } from '../../redux/actions/workouts/actionCreators'
 import LoadingIndicator from '../../components/LoadingIndicator'
-import { fetchExercises, queryExercises } from '../../redux/actions/exercises/actionCreators'
+import { queryExercises } from '../../redux/actions/exercises/actionCreators'
 
-const WorkoutCreationForm = ({ fetchMuscleRelatedInfo, queryExercises, loading, fetchExercises, muscleCategories, exercises, navigation }) => {
+const WorkoutCreationForm = ({ fetchMuscleRelatedInfo, queryExercises, loading, muscleCategories, exercises, navigation }) => {
   const numColumns = 3
   const exerciseFocus = [{id: 1, focus: 'strength'}, {id: 2, focus: 'cardio'}, {id: 3, focus: 'flexibility'}]
   const exerciseDifficulty = [{id: 1, name: 'beginner'}, {id: 2, name: 'intermediate'}, {id: 3, name: 'advanced'}]
 
   useEffect(() => {
     fetchMuscleRelatedInfo()
-    fetchExercises()
   }, [])
 
   const [searchQuery, setSearchQuery] = useState('')
@@ -144,8 +143,7 @@ const mapStateToProps = store => ({ muscleCategories: store.muscleCategories, ex
 const mapDispatchToProps = dispatch => { 
   return { 
     fetchMuscleRelatedInfo: () => dispatch(fetchMuscleRelatedInfo()),
-    fetchExercises: () => dispatch(fetchExercises()),
     queryExercises: (muscleGroups, focus, searchQuery, difficulty) => dispatch(queryExercises(muscleGroups, focus, searchQuery, difficulty))
-  } }
+  }}
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutCreationForm)
