@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { View, StyleSheet } from 'react-native'
-import { Text, TextInput, Button, Switch, Title, Checkbox } from "react-native-paper";
+import {View, StyleSheet, ScrollView, Picker} from 'react-native'
+import {Text, TextInput, Button, Switch, Title, Checkbox, Headline} from "react-native-paper";
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
 import { DURATION, WORKOUT_NAME } from '../../helpers/FormKeyType'
@@ -14,8 +14,13 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
   const [workoutAdvanced, setWorkoutAdvanced] = useState(false)
   const [workoutStrFocus, setWorkoutStrFocus] = useState(false)
   const [workoutCardioFocus, setWorkoutCardioFocus] = useState(false)
+  const [workoutFlexibilityFocus, setWorkoutFlexibilityFocus] = useState(false)
+
+  const [firstTargetArea, setFirstTargetArea] = useState('')
+  const [secondTargetArea, setSecondTargetArea] = useState('')
 
   const handleSubmit = ({ duration, name }) => {
+    const muscleGroups = [firstTargetArea, secondTargetArea]
     const difficulty = {}
     if (workoutBeginner) {
       difficulty['difficulty'] = 'beginner'
@@ -32,96 +37,147 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
       cardio: workoutCardioFocus,
       duration: durationInt,
       ...difficulty,
-      name
+      name,
+      muscle_groups: muscleGroups
     }
     navigation.navigate("Potential Workout")
     submitWorkoutQuestionnaire(workoutObj, currentUser)
   }
 
   return (
-    <Formik
-      initialValues={{
-        [DURATION]: '',
-        [WORKOUT_NAME]: ''
-      }}
-      validationSchema={workoutQuestionsValidations}
-    >
-    {({isValid, errors, handleChange, values}) => (
-      <View>
-        <Title>Name:</Title>
-      <TextInput 
-        mode="outlined"
-        placeholder="My workout name here!"
-        value={values.name}
-        onChangeText={handleChange('name')}
-      />
-      {errors.name &&
-        <Text style={styles.error}>{errors.name}</Text>}
-
-        <Title>Workout Focus</Title>
-        <Text>Strength</Text>
-        <Switch 
-          value={workoutStrFocus}
-          onValueChange={() => setWorkoutStrFocus(!workoutStrFocus)}
-        />
-
-        <Text>Cardio</Text>
-        <Switch
-          value={workoutCardioFocus}
-          onValueChange={() => setWorkoutCardioFocus(!workoutCardioFocus)}
-        />
-        
-        <Title>Duration</Title>
+    <ScrollView>
+      <Formik
+        initialValues={{
+          [DURATION]: '',
+          [WORKOUT_NAME]: '',
+          firstTargetArea: 'Select a Value...',
+          secondTargetArea: 'Select a Value...'
+        }}
+        validationSchema={workoutQuestionsValidations}
+      >
+      {({isValid, errors, handleChange, values, setFieldValue}) => (
+        <View>
+          <Title>Name:</Title>
         <TextInput
           mode="outlined"
-          placeholder="Enter duration in minutes"
-          keyboardType={'numeric'}
-          value={values.duration}
-          onChangeText={handleChange('duration')}
+          placeholder="My workout name here!"
+          value={values.name}
+          onChangeText={handleChange('name')}
         />
-        {errors.duration &&
-          <Text style={styles.error}>{errors.duration}</Text>}
+        {errors.name &&
+          <Text style={styles.error}>{errors.name}</Text>}
 
-        <Title>Workout Complexity Level</Title>
-        <Checkbox.Item
-          label="Beginner"
-          status={workoutBeginner ? 'checked' : 'unchecked'}
-          onPress={() => {
-            setWorkoutBeginner(!workoutBeginner)
-            setWorkoutIntermediate(false)
-            setWorkoutAdvanced(false)
-          }}
-        />
-         <Checkbox.Item
-          label="Intermediate"
-          status={workoutIntermediate ? 'checked' : 'unchecked'}
-          onPress={() => {
-            setWorkoutIntermediate(!workoutIntermediate)
-            setWorkoutBeginner(false)
-            setWorkoutAdvanced(false)
-          }}
-        />
-         <Checkbox.Item
-          label="Advanced"
-          status={workoutAdvanced ? 'checked' : 'unchecked'}
-          onPress={() => {
-            setWorkoutAdvanced(!workoutAdvanced)
-            setWorkoutBeginner(false)
-            setWorkoutIntermediate(false)
-          }}
-        />
+          <Title>Workout Focus</Title>
+          <Text>Strength</Text>
+          <Switch
+            value={workoutStrFocus}
+            onValueChange={() => setWorkoutStrFocus(!workoutStrFocus)}
+          />
 
-        <View style={styles.button}>
-          <Button
-            mode="contained" 
-            onPress={() => handleSubmit(values)}
-            disabled={!isValid || (!workoutBeginner && !workoutIntermediate && !workoutAdvanced) || (!workoutStrFocus && !workoutCardioFocus) || values.duration.length < 2}
-            >Generate New Workout
-          </Button>
+          <Text>Cardio</Text>
+          <Switch
+            value={workoutCardioFocus}
+            onValueChange={() => setWorkoutCardioFocus(!workoutCardioFocus)}
+          />
+
+          <Text>Flexibility</Text>
+          <Switch
+            value={workoutFlexibilityFocus}
+            onValueChange={() => setWorkoutFlexibilityFocus(!workoutFlexibilityFocus)}
+          />
+
+          <Title>Duration</Title>
+          <TextInput
+            mode="outlined"
+            placeholder="Enter duration in minutes"
+            keyboardType={'numeric'}
+            value={values.duration}
+            onChangeText={handleChange('duration')}
+          />
+          {errors.duration &&
+            <Text style={styles.error}>{errors.duration}</Text>}
+
+          <Title>Workout Complexity Level</Title>
+          <Checkbox.Item
+            label="Beginner"
+            status={workoutBeginner ? 'checked' : 'unchecked'}
+            onPress={() => {
+              setWorkoutBeginner(!workoutBeginner)
+              setWorkoutIntermediate(false)
+              setWorkoutAdvanced(false)
+            }}
+          />
+           <Checkbox.Item
+            label="Intermediate"
+            status={workoutIntermediate ? 'checked' : 'unchecked'}
+            onPress={() => {
+              setWorkoutIntermediate(!workoutIntermediate)
+              setWorkoutBeginner(false)
+              setWorkoutAdvanced(false)
+            }}
+          />
+           <Checkbox.Item
+            label="Advanced"
+            status={workoutAdvanced ? 'checked' : 'unchecked'}
+            onPress={() => {
+              setWorkoutAdvanced(!workoutAdvanced)
+              setWorkoutBeginner(false)
+              setWorkoutIntermediate(false)
+            }}
+          />
+
+          <Title>Workout Target Areas</Title>
+          <Headline>First Target Area: </Headline>
+          <Picker
+            selectedValue={firstTargetArea}
+            style={{ width: 200 }}
+            mode={"dropdown"}
+            onValueChange={itemValue => {
+              setFieldValue('firstTargetArea', itemValue)
+              setFirstTargetArea(itemValue)
+            }}
+          >
+            <Picker.Item label="Select a Value..." value="Select a Value..." />
+            <Picker.Item label="Shoulders" value="shoulders" />
+            <Picker.Item label="Chest" value="chest" />
+            <Picker.Item label="Arms" value="arms" />
+            <Picker.Item label="Back" value="back" />
+            <Picker.Item label="Waist" value="waist" />
+            <Picker.Item label="Legs" value="legs" />
+          </Picker>
+
+          <Headline>Second Target Area: </Headline>
+          <Picker
+            selectedValue={secondTargetArea}
+            style={{ width: 200 }}
+            mode={"dropdown"}
+            onValueChange={itemValue => {
+              setFieldValue('secondTargetArea', itemValue)
+              setSecondTargetArea(itemValue)
+            }}
+          >
+            <Picker.Item label="Select a Value..." value="Select a Value..." />
+            <Picker.Item label="Shoulders" value="shoulders" />
+            <Picker.Item label="Chest" value="chest" />
+            <Picker.Item label="Arms" value="arms" />
+            <Picker.Item label="Back" value="back" />
+            <Picker.Item label="Waist" value="waist" />
+            <Picker.Item label="Legs" value="legs" />
+          </Picker>
+
+          <View style={styles.button}>
+            <Button
+              mode="contained"
+              onPress={() => handleSubmit(values)}
+              disabled={!isValid || (!workoutBeginner && !workoutIntermediate && !workoutAdvanced) ||
+                (!workoutStrFocus && !workoutCardioFocus && !workoutFlexibilityFocus) || values.duration.length < 2}
+              >Generate New Workout
+            </Button>
+          </View>
         </View>
-      </View>
-    )}
-    </Formik>
+      )}
+      </Formik>
+    </ScrollView>
   )
 }
 
