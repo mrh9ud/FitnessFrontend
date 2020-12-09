@@ -88,6 +88,7 @@ const WorkoutCreationForm = ({ fetchMuscleRelatedInfo, queryExercises, loading, 
           placeholder="Barbell Bench Press"
           value={searchQuery}
           onChangeText={onChangeSearch}
+          onSubmitEditing={() => queryExercises(muscleGroups, focus, searchQuery, difficulty)}
         />
         <Subheading>Filter by Focus</Subheading>
         <FlatList
