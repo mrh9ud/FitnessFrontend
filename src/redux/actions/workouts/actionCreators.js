@@ -1,4 +1,4 @@
-import { ADD_WORKOUT, SET_MUSCLE_CATEGORIES, SET_NEXT_POTENTIAL_EXERCISE, REMOVE_WORKOUT, SWAP_EXERCISE, UPDATE_WORKOUT_NAME, LOADING_COMPLETE, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, SET_WORKOUT_QUESTION_RESPONSES } from '../actionType'
+import { ADD_WORKOUT, SET_NEXT_POTENTIAL_EXERCISE, REMOVE_WORKOUT, SWAP_EXERCISE, UPDATE_WORKOUT_NAME, CREATE_POTENTIAL_WORKOUT, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, SET_WORKOUT_QUESTION_RESPONSES } from '../actionType'
 import { ip } from '../../../helpers/ipPort'
 import { loading, loadingComplete, fetchHeaders } from '../../../helpers/Functions'
 
@@ -7,9 +7,6 @@ const workoutCreationUrl = `${ip}/api/v1/workouts`
 const workoutNameUpdateUrl = `${ip}/api/v1/workouts/`
 const swapWorkoutExerciseUrl = `${ip}/api/v1/swap_workout_exercise`
 const deleteWorkoutUrl = `${ip}/api/v1/workouts/`
-const muscleRelatedInfoUrl = `${ip}/api/v1/muscle_related_info`
-
-function setMuscleCategories(data) { return { type: SET_MUSCLE_CATEGORIES, payload: data } }
 
 function removeWorkout(data) { return { type: REMOVE_WORKOUT, payload: data } }
 
@@ -142,17 +139,4 @@ function deleteWorkout(workoutId) {
     }
 }
 
-function fetchMuscleRelatedInfo() {
-    return dispatch => {
-        dispatch(loading())
-        return fetch(muscleRelatedInfoUrl).then(resp => resp.json())
-            .then(data => {
-                dispatch(setMuscleCategories(data))
-                dispatch(loadingComplete())
-                return data
-            })
-            .catch(() => alert("Fetch Error"))
-    }
-}
-
-export { submitWorkoutQuestionnaire, fetchMuscleRelatedInfo, deleteWorkout, swapWorkoutExercise, createNewWorkout, changeWorkoutName, setNextPotentialExercise }
+export { submitWorkoutQuestionnaire, deleteWorkout, swapWorkoutExercise, createNewWorkout, changeWorkoutName, setNextPotentialExercise }

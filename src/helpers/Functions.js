@@ -24,4 +24,10 @@ function loadingComplete() { return { type: LOADING_COMPLETE } }
 
 const fetchHeaders = { "Content-Type": "application/json", "Accept": "application/json" }
 
-export { focusHelper, loading, loadingComplete, fetchHeaders }
+const exerciseFocus = [{id: 1, focus: 'strength'}, {id: 2, focus: 'cardio'}, {id: 3, focus: 'flexibility'}]
+
+const exerciseDifficulty = [{id: 1, name: 'beginner'}, {id: 2, name: 'intermediate'}, {id: 3, name: 'advanced'}, {id: 4, name: 'all'}]
+
+const muscleGroupArray = [{id: 1, name: 'back'}, {id: 2, name: 'shoulders'}, {id: 3, name: 'chest'}, {id: 4, name: 'waist'}, {id: 5, name: 'legs'}, {id: 6, name: 'arms'}, {id: 7, name: "hips"}]
+
+export { focusHelper, loading, loadingComplete, exerciseFocus, exerciseDifficulty, muscleGroupArray, fetchHeaders }
