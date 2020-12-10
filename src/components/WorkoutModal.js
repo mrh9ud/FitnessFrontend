@@ -3,11 +3,11 @@ import { Dialog, List, Portal, Colors, Button, Subheading } from 'react-native-p
 import { sanitizeFocus } from '../helpers/Functions'
 import ExerciseDescription from './ExerciseDescription'
 import { TouchableOpacity, ScrollView } from 'react-native'
-import { clearAllPotentialExercises, removePotentialExercise, setExercise } from '../redux/actions/exercises/actionCreators'
+import { clearAllPotentialExercises, createOwnWorkout, createOwnWorkout, removePotentialExercise, setExercise } from '../redux/actions/exercises/actionCreators'
 import { connect } from 'react-redux'
 import ExerciseModal from './ExerciseModal'
 
-const WorkoutModal = ({ visible, closeModal, setExercise, exercise, removePotentialExercise, clearAllPotentialExercises, potentialExercises }) => {
+const WorkoutModal = ({ visible, closeModal, createOwnWorkout, setExercise, exercise, removePotentialExercise, clearAllPotentialExercises, potentialExercises }) => {
 
   const [exerciseVisible, setExerciseVisible] = useState(false)
   const closeExerciseModal = () => setExerciseVisible(false)
@@ -60,6 +60,11 @@ const WorkoutModal = ({ visible, closeModal, setExercise, exercise, removePotent
           })}
           <Dialog.Actions>
             <Button
+              onPress={() => createOwnWorkout(potentialExercises, currentUser)}
+              mode="contained"
+              >Save
+            </Button>
+            <Button
               mode="contained"
               onPress={() => clearAllPotentialExercises()}
               >Clear All
@@ -81,14 +86,16 @@ const WorkoutModal = ({ visible, closeModal, setExercise, exercise, removePotent
 
 const mapStateToProps = store => ({ 
   potentialExercises: store.potentialExercises,
-  exercise: store.exercise
+  exercise: store.exercise,
+  currentUser: store.currentUser
  })
 
 const mapDispatchToProps = dispatch => { 
   return { 
     clearAllPotentialExercises: () => dispatch(clearAllPotentialExercises()),
     removePotentialExercise: exerciseId => dispatch(removePotentialExercise(exerciseId)),
-    setExercise: exercise => dispatch(setExercise(exercise))
+    setExercise: exercise => dispatch(setExercise(exercise)),
+    createOwnWorkout: (exercises, currentUser) => dispatch(createOwnWorkout(exercises, currentUser))
   } }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutModal)

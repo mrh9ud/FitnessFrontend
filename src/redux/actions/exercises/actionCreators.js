@@ -3,6 +3,7 @@ import { loading, loadingComplete, fetchHeaders } from '../../../helpers/Functio
 import { SET_EXERCISES, CLEAR_EXERCISES, SET_EXERCISE, ADD_POTENTIAL_EXERCISE, REMOVE_POTENTIAL_EXERCISE, CLEAR_ALL_POTENTIAL_EXERCISES } from '../actionType'
 
 const exerciseQueryUrl = `${ip}/api/v1/exercise_query`
+const workoutCreationUrl = `${ip}/api/v1/workouts`
 
 function setExercises(data) { return { type: SET_EXERCISES, payload: data } }
 
@@ -16,7 +17,27 @@ function clearAllPotentialExercises() { return { type: CLEAR_ALL_POTENTIAL_EXERC
 
 function removePotentialExercise(data) { return { type: REMOVE_POTENTIAL_EXERCISE, payload: data} }
 
-clearAllPotentialExercises, removePotentialExercise
+function createOwnWorkout(exercises, currentUser) {
+  return dispatch => {
+    const createWorkoutConfigObj = {
+      method: "POST",
+      headers: fetchHeaders,
+      body: JSON.stringify({ exercises, user: currentUser })
+    }
+    dispatch(loading())
+    fetch(workoutCreationUrl, createWorkoutConfigObj).then(resp => resp.json())
+      .then(data => {
+        if (!data.error) {
+          dispatch(clearAllPotentialExercises)
+          dispatch(loadingComplete())
+        } else {
+          dispatch(loadingComplete())
+          alert(data.message)
+        }
+      })
+      .catch(() => alert("Error Creating Workout"))
+    }
+}
 
 function queryExercises(muscleGroups, focus, searchQuery, difficulty) {
   const exerciseQueryConfigObj = {
@@ -36,4 +57,4 @@ function queryExercises(muscleGroups, focus, searchQuery, difficulty) {
   }
 }
 
-export { queryExercises, removePotentialExercise, clearAllPotentialExercises, setExercise, addPotentialExercise }
+export { queryExercises, removePotentialExercise, createOwnWorkout, clearAllPotentialExercises, setExercise, addPotentialExercise }
