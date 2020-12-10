@@ -12,7 +12,7 @@ function setExercise(data) { return { type: SET_EXERCISE, payload: data } }
 
 function clearExercise() { return { type: CLEAR_EXERCISE } }
 
-function addPotentialExercise(exerciseId) { return { type: ADD_POTENTIAL_EXERCISE, payload: exerciseId } }
+function addPotentialExercise(data) { return { type: ADD_POTENTIAL_EXERCISE, payload: data } }
 
 function queryExercises(muscleGroups, focus, searchQuery, difficulty) {
   const exerciseQueryConfigObj = {

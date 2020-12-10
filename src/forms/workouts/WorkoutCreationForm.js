@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
-import { Subheading, Checkbox, Searchbar, List, Button, Title, RadioButton, Colors, Text } from 'react-native-paper'
+import { Subheading, Checkbox, Searchbar, List, Button, Title, RadioButton, Colors, Text, Divider, FAB } from 'react-native-paper'
 import { View, StyleSheet, SafeAreaView, FlatList, ScrollView, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import { queryExercises, setExercise, clearExercise, addPotentialExercise } from '../../redux/actions/exercises/actionCreators'
+import { queryExercises, setExercise, addPotentialExercise } from '../../redux/actions/exercises/actionCreators'
 import ExerciseDescription from '../../components/ExerciseDescription'
 import ExerciseModal from '../../components/ExerciseModal'
-import { exerciseFocus, exerciseDifficulty, muscleGroupArray } from '../../helpers/Functions'
+import { exerciseFocus, exerciseDifficulty, muscleGroupArray, sanitizeFocus } from '../../helpers/Functions'
+import WorkoutModal from '../../components/WorkoutModal'
 
-const WorkoutCreationForm = ({ exercise, setExercise, clearExercise, queryExercises, loading, exercises }) => {
+const WorkoutCreationForm = ({ exercise, setExercise, addPotentialExercise, potentialExercises, queryExercises, loading, exercises }) => {
   const numColumns = 3
 
   const [searchQuery, setSearchQuery] = useState('')
@@ -15,8 +16,10 @@ const WorkoutCreationForm = ({ exercise, setExercise, clearExercise, queryExerci
   const [focus, setFocus] = useState([])
   const [muscleGroups, setMuscleGroups] = useState([])
   const [difficulty, setDifficulty] = useState('all')
-  const [visible, setVisible] = useState(false)
-  const closeModal = () => setVisible(false)
+  const [exerciseVisible, setExerciseVisible] = useState(false)
+  const closeExerciseModal = () => setExerciseVisible(false)
+  const [potentialWorkoutVisible, setPotentialWorkoutVisible] = useState(false)
+  const closePotentialWorkoutModal = () => setPotentialWorkoutVisible(false)
 
   const onChangeMuscleGroups = (name, id) => {
     if (muscleGroups.length === 0) {
@@ -76,28 +79,49 @@ const WorkoutCreationForm = ({ exercise, setExercise, clearExercise, queryExerci
 
   const renderExercises = () => exercises.map(exercise => {
     return (
+      <>
       <List.Item 
         key={exercise.id} 
         title={exercise.name} 
-        description={<ExerciseDescription focus={exercise.focus} primary={exercise.primary} />}
+        description={<ExerciseDescription focus={sanitizeFocus(exercise.focus)} primary={exercise.primary} />}
         onPress={() => {
           setExercise(exercise)
-          setVisible(true)
+          setExerciseVisible(true)
         }}
-        right={props => <TouchableOpacity onPress={() => addPotentialExercise(exercise)}>
+        right={props => <TouchableOpacity onPress={() => {
+                                                    if (!potentialExercises.some(potentialExercise => potentialExercise.id === exercise.id) && potentialExercises.length <= 12)
+                                                      addPotentialExercise(exercise)
+                                                    else
+                                                      alert("You've already added this exercise!")
+                                                    if (potentialExercises.length > 11)
+                                                      alert("12 Exercises is likely enough for now!")
+                                                  }}>
                           <List.Icon {...props} color={Colors.black500} icon="plus-box"/>
                         </TouchableOpacity>}
       />
+      <Divider />
+      </>
   )})
 
 return (
     <>
-    {visible
+    {potentialWorkoutVisible
+    ?
+    <WorkoutModal 
+      visible={potentialWorkoutVisible}
+      closeModal={closePotentialWorkoutModal}
+      potentialExercises={potentialExercises}
+    />
+    :
+    null
+    }
+    {exerciseVisible
     ?
     <ExerciseModal 
-      visible={visible}
-      closeModal={closeModal}
+      exerciseVisible={exerciseVisible}
+      closeModal={closeExerciseModal}
       exercise={exercise}
+      addPotentialExercise={addPotentialExercise}
     />
     :
     null
@@ -151,6 +175,12 @@ return (
       {renderExercises()}
       </ScrollView>
     </SafeAreaView>
+      <FAB 
+        onPress={() => setPotentialWorkoutVisible(true)}
+        style={styles.FAB}
+        label={`${potentialExercises.length} added`}
+        color={"#000000"}
+      />
     </>
   )
 }
@@ -158,20 +188,26 @@ return (
 const styles = StyleSheet.create({
   container: {
     marginVertical: 5
+  },
+  FAB: {
+      position: 'absolute',
+      bottom: 10,
+      right: 10,
+      margin: 10,
   }
 })
 
 const mapStateToProps = store => ({ 
   exercises: store.exercises, 
   loading: store.loading,
-  exercise: store.exercise
+  exercise: store.exercise,
+  potentialExercises: store.potentialExercises
 })
 const mapDispatchToProps = dispatch => { 
   return { 
     queryExercises: (muscleGroups, focus, searchQuery, difficulty) => dispatch(queryExercises(muscleGroups, focus, searchQuery, difficulty)),
     addPotentialExercise: exercise => dispatch(addPotentialExercise(exercise)),
     setExercise: exercise => dispatch(setExercise(exercise)),
-    clearExercise: () => dispatch(clearExercise())
   } }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutCreationForm)
