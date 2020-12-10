@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Portal, Dialog, Button, Subheading, Text } from 'react-native-paper'
 import { ScrollView } from 'react-native'
-import { sanitizeFocus } from '../helpers/Functions'
+import { sanitizeFocus, includesPotentialExercise } from '../helpers/Functions'
 
 const ExerciseModal = ({ exercise, closeModal, visible, potentialExercises, addPotentialExercise }) => {
 
@@ -27,14 +27,14 @@ const ExerciseModal = ({ exercise, closeModal, visible, potentialExercises, addP
         ?
         <Button
           mode="contained"
-          disabled={potentialExercises.some(potentialExercise => potentialExercise.id === exercise.id)}
+          disabled={includesPotentialExercise(potentialExercises, exercise.id)}
           onPress={() => {
-            if (!potentialExercises.some(potentialExercise => potentialExercise.id === exercise.id) && potentialExercises.length < 12)
+            if (!includesPotentialExercise(potentialExercises, exercise.id) && potentialExercises.length < 12)
               addPotentialExercise(exercise)
             if (potentialExercises.length > 11)
               alert(`${potentialExercises.length} Exercises is likely enough for now!`)
           }}
-          >{potentialExercises.some(potentialExercise => potentialExercise.id === exercise.id) ? "Added" : "Add Exercise"}
+          >{includesPotentialExercise(potentialExercises, exercise.id) ? "Added" : "Add Exercise"}
         </Button>
         :
         null

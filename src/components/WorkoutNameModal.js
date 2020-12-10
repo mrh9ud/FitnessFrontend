@@ -2,9 +2,8 @@ import React from 'react'
 import { Portal, Dialog, TextInput, Text, Button } from 'react-native-paper'
 import { Formik } from 'formik'
 import { WORKOUT_NAME } from '../helpers/FormKeyType'
-import { editNameFormValidations } from '../helpers/Validations'
+import { editNameFormValidations as workoutNameValidations } from '../helpers/Validations'
 import { StyleSheet } from 'react-native'
-import * as yup  from 'yup'
 
 const WorkoutNameModal = ({ visible, closeModal, exercises, user, createOwnWorkout }) => {
   return (
@@ -12,7 +11,7 @@ const WorkoutNameModal = ({ visible, closeModal, exercises, user, createOwnWorko
       <Formik
         initialValues={{ [WORKOUT_NAME]: "" }}
         onSubmit={values => createOwnWorkout(exercises, user, values)}
-        validationSchema={() => editNameFormValidations }
+        validationSchema={() => workoutNameValidations }
       >
         {({handleChange, handleSubmit, errors, isValid, values}) => (
           <Dialog visible={visible} onDismiss={closeModal}>

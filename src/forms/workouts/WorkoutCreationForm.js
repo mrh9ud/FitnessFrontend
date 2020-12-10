@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { Subheading, Checkbox, Searchbar, List, Button, Title, RadioButton, Colors, Text, Divider, FAB } from 'react-native-paper'
 import { View, StyleSheet, SafeAreaView, FlatList, ScrollView, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import { queryExercises, setExercise, addPotentialExercise } from '../../redux/actions/exercises/actionCreators'
+import { queryExercises, setExercise, removePotentialExercise, addPotentialExercise } from '../../redux/actions/exercises/actionCreators'
 import ExerciseDescription from '../../components/ExerciseDescription'
 import ExerciseModal from '../../components/ExerciseModal'
-import { exerciseFocus, exerciseDifficulty, muscleGroupArray, sanitizeFocus } from '../../helpers/Functions'
+import { exerciseFocus, exerciseDifficulty, muscleGroupArray, includesPotentialExercise, sanitizeFocus } from '../../helpers/Functions'
 import WorkoutModal from '../../components/WorkoutModal'
 
-const WorkoutCreationForm = ({ exercise, setExercise, addPotentialExercise, potentialExercises, queryExercises, loading, exercises }) => {
+const WorkoutCreationForm = ({ exercise, setExercise, removePotentialExercise, addPotentialExercise, potentialExercises, queryExercises, loading, exercises }) => {
   const numColumns = 3
 
   const [searchQuery, setSearchQuery] = useState('')
@@ -90,15 +90,18 @@ const WorkoutCreationForm = ({ exercise, setExercise, addPotentialExercise, pote
           setExercise(exercise)
           setExerciseVisible(true)
         }}
-        right={props => <TouchableOpacity onPress={() => {
-                                                    if (!potentialExercises.some(potentialExercise => potentialExercise.id === exercise.id) && potentialExercises.length <= 12)
+        right={props => <TouchableOpacity onPress={includesPotentialExercise(potentialExercises, exercise.id) 
+                                                  ? 
+                                                  () => removePotentialExercise(exercise.id)
+                                                  :
+                                                  () => {
+                                                    if (potentialExercises.length <= 12)
                                                       addPotentialExercise(exercise)
                                                     else
-                                                      alert("You've already added this exercise!")
-                                                    if (potentialExercises.length > 11)
-                                                      alert("12 Exercises is likely enough for now!")
-                                                  }}>
-                          <List.Icon {...props} color={'#3cb371'} icon="plus-box"/>
+                                                      alert(`${potentialExercises.length} Exercises is likely enough for now!`)
+                                                  }}
+                        >
+                          <List.Icon {...props} color={includesPotentialExercise(potentialExercises, exercise.id) ? Colors.red500 : Colors.green500} icon={includesPotentialExercise(potentialExercises, exercise.id) ? 'minus-box' : "plus-box"} />
                         </TouchableOpacity>}
       />
       <Divider />
@@ -167,7 +170,7 @@ const WorkoutCreationForm = ({ exercise, setExercise, addPotentialExercise, pote
           onPress={() => queryExercises(muscleGroups, focus, searchQuery, difficulty)}
           >Search Exercises
         </Button>
-      <Title>Exercise Search Results</Title>
+      <Title style={styles.subheading} >Exercise Search Results</Title>
       {exercises.length === 0
       ?
       <Text>No Results</Text>
@@ -212,7 +215,8 @@ const mapDispatchToProps = dispatch => {
   return { 
     queryExercises: (muscleGroups, focus, searchQuery, difficulty) => dispatch(queryExercises(muscleGroups, focus, searchQuery, difficulty)),
     addPotentialExercise: exercise => dispatch(addPotentialExercise(exercise)),
-    setExercise: exercise => dispatch(setExercise(exercise))  
+    setExercise: exercise => dispatch(setExercise(exercise)),
+    removePotentialExercise: exerciseId => dispatch(removePotentialExercise(exerciseId))
   } }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutCreationForm)

@@ -42,6 +42,8 @@ const WorkoutModal = ({ visible, closeModal, currentUser, createOwnWorkout, setE
     <ScrollView>
       <Portal>
         <Dialog visible={visible} onDismiss={closeModal}>
+          <Dialog.ScrollArea style={{paddingHorizontal: 7}}>
+            <ScrollView>
           <Dialog.Title>Currently Selected Exercises</Dialog.Title>
           {potentialExercises.length === 0
           ?
@@ -94,6 +96,8 @@ const WorkoutModal = ({ visible, closeModal, currentUser, createOwnWorkout, setE
           </Dialog.Actions>
           </>
           }
+          </ScrollView>
+          </Dialog.ScrollArea>
         </Dialog>
       </Portal>
     </ScrollView>
