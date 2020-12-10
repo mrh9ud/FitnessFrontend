@@ -68,7 +68,7 @@ const WorkoutModal = ({ visible, closeModal, currentUser, createOwnWorkout, setE
                 }}
                 key={exercise.id}
                 title={exercise.name}
-                description={<ExerciseDescription focus={sanitizeFocus(exercise.focus)} primary={exercise.primary} secondary={exercise.secondary} />}
+                description={<ExerciseDescription focus={sanitizeFocus(exercise.focus)} primary={exercise.primary_muscle_groups} secondary={exercise.secondary_muscle_groups} />}
                 descriptionNumberOfLines={10}
                 titleStyle={{color: "#0000cd"}}
                 right={props => <TouchableOpacity onPress={() => removePotentialExercise(exercise.id)}>

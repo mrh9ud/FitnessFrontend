@@ -7,9 +7,7 @@ const HomeScreen = ({ navigation }) => {
     <View>
       <View style={styleSheet.cards}>
         <Card elevation={2}>
-          <Card.Title title="Today's Workout" subtitle="Arms, Lower Back"/>
           <Card.Content>
-
             <Title>Generate a Workout</Title>
             <Card.Actions>
               <Button mode="outlined" onPress={() => navigation.navigate("Workout Questionnaire")}>Start Now</Button>
@@ -19,11 +17,7 @@ const HomeScreen = ({ navigation }) => {
             <Card.Actions>
               <Button mode="outlined" onPress={() => navigation.navigate("Create a Workout")}>Start Now</Button>
             </Card.Actions>
-
           </Card.Content>
-          <Card.Actions>
-            <Button>View</Button>
-          </Card.Actions>
         </Card>
       </View>
     </View>

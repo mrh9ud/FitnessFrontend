@@ -83,7 +83,7 @@ const WorkoutCreationForm = ({ exercise, setExercise, removePotentialExercise, a
       <List.Item 
         key={exercise.id} 
         title={exercise.name} 
-        description={<ExerciseDescription focus={sanitizeFocus(exercise.focus)} primary={exercise.primary} secondary={exercise.secondary} />}
+        description={<ExerciseDescription focus={sanitizeFocus(exercise.focus)} primary={exercise.primary_muscle_groups} secondary={exercise.secondary_muscle_groups} />}
         descriptionNumberOfLines={10}
         titleStyle={{color: "#0000cd"}}
         onPress={() => {
