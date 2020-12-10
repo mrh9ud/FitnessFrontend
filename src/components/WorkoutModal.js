@@ -3,17 +3,32 @@ import { Dialog, List, Portal, Colors, Button, Subheading } from 'react-native-p
 import { sanitizeFocus } from '../helpers/Functions'
 import ExerciseDescription from './ExerciseDescription'
 import { TouchableOpacity, ScrollView } from 'react-native'
-import { clearAllPotentialExercises, createOwnWorkout, createOwnWorkout, removePotentialExercise, setExercise } from '../redux/actions/exercises/actionCreators'
+import { clearAllPotentialExercises, createOwnWorkout, removePotentialExercise, setExercise } from '../redux/actions/exercises/actionCreators'
 import { connect } from 'react-redux'
 import ExerciseModal from './ExerciseModal'
+import WorkoutNameModal from './WorkoutNameModal'
 
-const WorkoutModal = ({ visible, closeModal, createOwnWorkout, setExercise, exercise, removePotentialExercise, clearAllPotentialExercises, potentialExercises }) => {
+const WorkoutModal = ({ visible, closeModal, currentUser, createOwnWorkout, setExercise, exercise, removePotentialExercise, clearAllPotentialExercises, potentialExercises }) => {
 
   const [exerciseVisible, setExerciseVisible] = useState(false)
   const closeExerciseModal = () => setExerciseVisible(false)
+  const [workoutNameVisible, setWorkoutNameVisible] = useState(false)
+  const closeWorkoutNameModal = () => setWorkoutNameVisible(false)
 
   return (
     <>
+    {workoutNameVisible
+    ?
+    <WorkoutNameModal 
+      visible={workoutNameVisible}
+      closeModal={closeWorkoutNameModal}
+      exercises={potentialExercises}
+      user={currentUser}
+      createOwnWorkout={createOwnWorkout}
+    />
+    :
+    null
+    }
     {exerciseVisible
     ?
     <ExerciseModal 
@@ -51,7 +66,9 @@ const WorkoutModal = ({ visible, closeModal, createOwnWorkout, setExercise, exer
                 }}
                 key={exercise.id}
                 title={exercise.name}
-                description={<ExerciseDescription focus={sanitizeFocus(exercise.focus)} primary={exercise.primary} />}
+                description={<ExerciseDescription focus={sanitizeFocus(exercise.focus)} primary={exercise.primary} secondary={exercise.secondary} />}
+                descriptionNumberOfLines={10}
+                titleStyle={{color: "#0000cd"}}
                 right={props => <TouchableOpacity onPress={() => removePotentialExercise(exercise.id)}>
                                   <List.Icon {...props} color={Colors.red500} icon="minus-box" />
                                 </TouchableOpacity>}
@@ -60,7 +77,7 @@ const WorkoutModal = ({ visible, closeModal, createOwnWorkout, setExercise, exer
           })}
           <Dialog.Actions>
             <Button
-              onPress={() => createOwnWorkout(potentialExercises, currentUser)}
+              onPress={() => setWorkoutNameVisible(true)}
               mode="contained"
               >Save
             </Button>

@@ -83,7 +83,9 @@ const WorkoutCreationForm = ({ exercise, setExercise, addPotentialExercise, pote
       <List.Item 
         key={exercise.id} 
         title={exercise.name} 
-        description={<ExerciseDescription focus={sanitizeFocus(exercise.focus)} primary={exercise.primary} />}
+        description={<ExerciseDescription focus={sanitizeFocus(exercise.focus)} primary={exercise.primary} secondary={exercise.secondary} />}
+        descriptionNumberOfLines={10}
+        titleStyle={{color: "#0000cd"}}
         onPress={() => {
           setExercise(exercise)
           setExerciseVisible(true)
@@ -96,7 +98,7 @@ const WorkoutCreationForm = ({ exercise, setExercise, addPotentialExercise, pote
                                                     if (potentialExercises.length > 11)
                                                       alert("12 Exercises is likely enough for now!")
                                                   }}>
-                          <List.Icon {...props} color={Colors.black500} icon="plus-box"/>
+                          <List.Icon {...props} color={'#3cb371'} icon="plus-box"/>
                         </TouchableOpacity>}
       />
       <Divider />
@@ -121,27 +123,28 @@ const WorkoutCreationForm = ({ exercise, setExercise, addPotentialExercise, pote
       closeModal={closeExerciseModal}
       exercise={exercise}
       addPotentialExercise={addPotentialExercise}
+      potentialExercises={potentialExercises}
     />
     :
     null
     }
     <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <Subheading>Search Exercises by Name</Subheading>
+        <Subheading style={styles.subheading} >Search Exercises by Name</Subheading>
         <Searchbar 
           placeholder="Barbell Bench Press"
           value={searchQuery}
           onChangeText={onChangeSearch}
           onSubmitEditing={() => queryExercises(muscleGroups, focus, searchQuery, difficulty)}
         />
-        <Subheading>Filter by Focus</Subheading>
+        <Subheading style={styles.subheading} >Filter by Focus</Subheading>
         <FlatList
           style={styles.container}
           renderItem={renderExerciseFocus}
           data={exerciseFocus}
           numColumns={numColumns}
         />
-        <Subheading>Filter by Difficulty Level</Subheading>
+        <Subheading style={styles.subheading} >Filter by Difficulty Level</Subheading>
         <RadioButton.Group onValueChange={value => setDifficulty(value)} value={difficulty}>
           <FlatList
             style={styles.container}
@@ -150,7 +153,7 @@ const WorkoutCreationForm = ({ exercise, setExercise, addPotentialExercise, pote
             numColumns={numColumns}
           />
         </RadioButton.Group>
-        <Subheading>Filter by Muscle Groups</Subheading>
+        <Subheading style={styles.subheading} >Filter by Muscle Groups</Subheading>
         <FlatList
           style={styles.container}
           renderItem={renderMuscleGroups}
@@ -193,6 +196,9 @@ const styles = StyleSheet.create({
       bottom: 10,
       right: 10,
       margin: 10,
+  },
+  subheading: {
+    marginHorizontal: 5
   }
 })
 
