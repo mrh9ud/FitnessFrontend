@@ -6,7 +6,7 @@ const ExerciseDescription = ({ focus, primary }) => {
         <>
         <Text>Focus: {focus}</Text>
         {'\n'}
-        <Text>Muscle Groups: {primary.join(", ")}</Text>
+        <Text>Muscle Groups: {primary.join(" ")}</Text>
         </>
     )
 }

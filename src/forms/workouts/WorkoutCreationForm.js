@@ -103,14 +103,13 @@ const WorkoutCreationForm = ({ exercise, setExercise, addPotentialExercise, pote
       </>
   )})
 
-return (
+  return (
     <>
     {potentialWorkoutVisible
     ?
     <WorkoutModal 
       visible={potentialWorkoutVisible}
       closeModal={closePotentialWorkoutModal}
-      potentialExercises={potentialExercises}
     />
     :
     null
@@ -118,7 +117,7 @@ return (
     {exerciseVisible
     ?
     <ExerciseModal 
-      exerciseVisible={exerciseVisible}
+      visible={exerciseVisible}
       closeModal={closeExerciseModal}
       exercise={exercise}
       addPotentialExercise={addPotentialExercise}
@@ -207,7 +206,7 @@ const mapDispatchToProps = dispatch => {
   return { 
     queryExercises: (muscleGroups, focus, searchQuery, difficulty) => dispatch(queryExercises(muscleGroups, focus, searchQuery, difficulty)),
     addPotentialExercise: exercise => dispatch(addPotentialExercise(exercise)),
-    setExercise: exercise => dispatch(setExercise(exercise)),
+    setExercise: exercise => dispatch(setExercise(exercise))  
   } }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutCreationForm)
