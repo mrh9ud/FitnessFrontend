@@ -9,7 +9,7 @@ import { exerciseFocus, exerciseDifficulty, muscleGroupArray, includesPotentialE
 import WorkoutModal from '../../components/WorkoutModal'
 import LoadingIndicator from '../../components/LoadingIndicator'
 
-const WorkoutCreationForm = ({ exercise, setExercise, pageNum, loadingExtraData, removePotentialExercise, addPotentialExercise, potentialExercises, queryExercises, loading, exercises }) => {
+const WorkoutCreationForm = ({ exercise, setExercise, pageNum, loadingExtraData, removePotentialExercise, addPotentialExercise, potentialExercises, queryExercises, loading, exercises, moreExercises }) => {
   const numColumns = 3
   const LIST_ITEM_HEIGHT = 120
 
@@ -56,7 +56,7 @@ const WorkoutCreationForm = ({ exercise, setExercise, pageNum, loadingExtraData,
     }
   }
 
-  const renderMuscleGroups = ({ item }) => {
+  function renderMuscleGroups({ item }) {
     return (
       <View>
         <Checkbox.Item 
@@ -70,7 +70,7 @@ const WorkoutCreationForm = ({ exercise, setExercise, pageNum, loadingExtraData,
     )
   }
 
-  const renderExerciseFocus = ({ item }) => {
+  function renderExerciseFocus({ item }) {
     return (
       <View>
         <Checkbox.Item
@@ -84,7 +84,7 @@ const WorkoutCreationForm = ({ exercise, setExercise, pageNum, loadingExtraData,
     )
   }
 
-  const renderDifficulty = ({ item }) => <RadioButton.Item label={item.name} value={item.name} />
+  function renderDifficulty({ item }){return (<RadioButton.Item label={item.name} value={item.name} />)}
 
   function renderExercises({ item }) {
     return (
@@ -127,12 +127,12 @@ const WorkoutCreationForm = ({ exercise, setExercise, pageNum, loadingExtraData,
         onChangeText={onChangeSearch}
         onSubmitEditing={() => queryExercises(muscleGroups, focus, searchQuery, difficulty, 0, true)}
       />
-      <Subheading style={styles.subheading} >Filter by Focus</Subheading>
+      <Subheading style={styles.subheading}>Filter by Focus</Subheading>
       <FlatList
         listKey={'focus'}
         style={styles.container}
         keyExtractor={keyExtractor}
-        renderItem={renderExerciseFocus}
+        renderItem={item => renderExerciseFocus(item)}
         data={exerciseFocus}
         numColumns={numColumns}
       />
@@ -141,7 +141,7 @@ const WorkoutCreationForm = ({ exercise, setExercise, pageNum, loadingExtraData,
         <FlatList
           listKey={'difficulty'}
           style={styles.container}
-          renderItem={renderDifficulty}
+          renderItem={item => renderDifficulty(item)}
           data={exerciseDifficulty}
           numColumns={numColumns}
           keyExtractor={keyExtractor}
@@ -151,7 +151,7 @@ const WorkoutCreationForm = ({ exercise, setExercise, pageNum, loadingExtraData,
       <FlatList
         listKey={'muscleGroups'}
         style={styles.container}
-        renderItem={renderMuscleGroups}
+        renderItem={item => renderMuscleGroups(item)}
         data={muscleGroupArray}
         numColumns={numColumns}
         keyExtractor={keyExtractor}
@@ -161,7 +161,6 @@ const WorkoutCreationForm = ({ exercise, setExercise, pageNum, loadingExtraData,
         loading={loading}
         disabled={loading}
         onPress={() => {
-
           queryExercises(muscleGroups, focus, searchQuery, difficulty, 0, true)
         }}
         >Search Exercises
@@ -213,7 +212,10 @@ const WorkoutCreationForm = ({ exercise, setExercise, pageNum, loadingExtraData,
         renderItem={item => renderExercises(item)}
         keyExtractor={keyExtractor}
         onEndReachedThreshold={0.5}
-        onEndReached={() => queryExercises(muscleGroups, focus, searchQuery, difficulty, pageNum += 1, false)}
+        onEndReached={() => {
+          if (moreExercises)
+            queryExercises(muscleGroups, focus, searchQuery, difficulty, pageNum += 1, false)}
+        }
         ListFooterComponent={renderFooter}
       />
     </SafeAreaView>
@@ -248,7 +250,8 @@ const mapStateToProps = store => ({
   loading: store.loading.loading,
   loadingExtraData: store.loading.loadingExtraData,
   exercise: store.exercise,
-  potentialExercises: store.potentialExercises.exercises
+  potentialExercises: store.potentialExercises.exercises,
+  moreExercises: store.moreExercises
 })
 const mapDispatchToProps = dispatch => { 
   return { 
