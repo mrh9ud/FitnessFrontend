@@ -38,6 +38,8 @@ const workoutFocus = workout => {
   return "Cardio"
 }
 
+const keyExtractor = (item, index) => item.id.toString()
+
 const includesPotentialExercise = (potentialExercises, exerciseId) => potentialExercises.some(potentialExercise => potentialExercise.id === exerciseId ? true : false)
 
 function loading() { return { type: LOADING } }
@@ -52,4 +54,4 @@ const exerciseDifficulty = [{id: 1, name: 'beginner'}, {id: 2, name: 'intermedia
 
 const muscleGroupArray = [{id: 1, name: 'back'}, {id: 2, name: 'shoulders'}, {id: 3, name: 'chest'}, {id: 4, name: 'waist'}, {id: 5, name: 'legs'}, {id: 6, name: 'arms'}, {id: 7, name: "hips"}]
 
-export { focusHelper, workoutFocus, includesPotentialExercise, sanitizeFocus, loading, loadingComplete, exerciseFocus, exerciseDifficulty, muscleGroupArray, fetchHeaders }
+export { focusHelper, workoutFocus, keyExtractor, includesPotentialExercise, sanitizeFocus, loading, loadingComplete, exerciseFocus, exerciseDifficulty, muscleGroupArray, fetchHeaders }

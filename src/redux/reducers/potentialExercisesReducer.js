@@ -1,14 +1,22 @@
-import { ADD_POTENTIAL_EXERCISE, REMOVE_POTENTIAL_EXERCISE, CLEAR_ALL_POTENTIAL_EXERCISES } from "../actions/actionType";
+import { ADD_POTENTIAL_EXERCISE, INCREASE_PAGE_NUM, RESET_PAGE_NUM, REMOVE_POTENTIAL_EXERCISE, CLEAR_ALL_POTENTIAL_EXERCISES } from "../actions/actionType";
 
-const potentialExercisesReducer = (state=[], action) => {
+const initialState = {
+  exercises: [],
+  pageNum: 0
+}
+
+const potentialExercisesReducer = (state=initialState, action) => {
   switch(action.type) {
     case ADD_POTENTIAL_EXERCISE:
-      return [ ...state, action.payload ]
+      return { ...state, exercises: [ ...state.exercises, action.payload ] }
     case REMOVE_POTENTIAL_EXERCISE:
-      const filtered_exercises = state.filter(exercise => exercise.id !== action.payload)
-    return filtered_exercises
+      return { ...state, exercises: [ ...state.exercises.filter(exercise => exercise.id !== action.payload) ] }
     case CLEAR_ALL_POTENTIAL_EXERCISES:
-      return []
+      return initialState
+    case INCREASE_PAGE_NUM:
+      return { ...state, pageNum: state.pageNum += 1 }
+    case RESET_PAGE_NUM:
+      return { ...state, pageNum: 0}
     default:
       return state
   }

@@ -74,6 +74,6 @@ const ProfileSettingsScreen = ({ currentUser, loading }) => {
   )
 }
 
-const mapStateToProps = store => ({ currentUser: store.currentUser, loading: store.loading })
+const mapStateToProps = store => ({ currentUser: store.currentUser, loading: store.loading.loading })
 
 export default connect(mapStateToProps)(ProfileSettingsScreen)

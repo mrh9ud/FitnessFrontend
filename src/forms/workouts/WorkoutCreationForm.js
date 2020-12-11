@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import { Subheading, Checkbox, Searchbar, List, Button, Title, RadioButton, Colors, Text, Divider, FAB } from 'react-native-paper'
-import { View, StyleSheet, SafeAreaView, FlatList, ScrollView, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, SafeAreaView, FlatList, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import { queryExercises, setExercise, removePotentialExercise, addPotentialExercise } from '../../redux/actions/exercises/actionCreators'
+import { queryExercises, setExercise, removePotentialExercise, addPotentialExercise, loadingExtraData } from '../../redux/actions/exercises/actionCreators'
 import ExerciseDescription from '../../components/ExerciseDescription'
 import ExerciseModal from '../../components/ExerciseModal'
-import { exerciseFocus, exerciseDifficulty, muscleGroupArray, includesPotentialExercise, sanitizeFocus } from '../../helpers/Functions'
+import { exerciseFocus, exerciseDifficulty, muscleGroupArray, includesPotentialExercise, sanitizeFocus, keyExtractor } from '../../helpers/Functions'
 import WorkoutModal from '../../components/WorkoutModal'
+import LoadingIndicator from '../../components/LoadingIndicator'
 
-const WorkoutCreationForm = ({ exercise, setExercise, removePotentialExercise, addPotentialExercise, potentialExercises, queryExercises, loading, exercises }) => {
+const WorkoutCreationForm = ({ exercise, setExercise, pageNum, loadingExtraData, removePotentialExercise, addPotentialExercise, potentialExercises, queryExercises, loading, exercises }) => {
   const numColumns = 3
 
   const [searchQuery, setSearchQuery] = useState('')
@@ -20,6 +21,13 @@ const WorkoutCreationForm = ({ exercise, setExercise, removePotentialExercise, a
   const closeExerciseModal = () => setExerciseVisible(false)
   const [potentialWorkoutVisible, setPotentialWorkoutVisible] = useState(false)
   const closePotentialWorkoutModal = () => setPotentialWorkoutVisible(false)
+
+  const renderFooter = () => {
+    if (!loadingExtraData)
+      return null
+    else
+      return <LoadingIndicator />
+  }
 
   const onChangeMuscleGroups = (name, id) => {
     if (muscleGroups.length === 0) {
@@ -77,36 +85,95 @@ const WorkoutCreationForm = ({ exercise, setExercise, removePotentialExercise, a
 
   const renderDifficulty = ({ item }) => <RadioButton.Item label={item.name} value={item.name} />
 
-  const renderExercises = () => exercises.map(exercise => {
+  const renderExercises = ({ item }) => {
     return (
       <>
       <List.Item 
-        key={exercise.id} 
-        title={exercise.name} 
-        description={<ExerciseDescription focus={sanitizeFocus(exercise.focus)} primary={exercise.primary_muscle_groups} secondary={exercise.secondary_muscle_groups} />}
+        title={item.name} 
+        description={<ExerciseDescription focus={sanitizeFocus(item.focus)} primary={item.primary_muscle_groups} secondary={item.secondary_muscle_groups} difficulty={item.difficulty} />}
         descriptionNumberOfLines={10}
         titleStyle={{color: "#0000cd"}}
         onPress={() => {
-          setExercise(exercise)
+          setExercise(item)
           setExerciseVisible(true)
         }}
-        right={props => <TouchableOpacity onPress={includesPotentialExercise(potentialExercises, exercise.id) 
+        right={props => <TouchableOpacity onPress={includesPotentialExercise(potentialExercises, item.id) 
                                                   ? 
-                                                  () => removePotentialExercise(exercise.id)
+                                                  () => removePotentialExercise(item.id)
                                                   :
                                                   () => {
                                                     if (potentialExercises.length <= 12)
-                                                      addPotentialExercise(exercise)
+                                                      addPotentialExercise(item)
                                                     else
                                                       alert(`${potentialExercises.length} Exercises is likely enough for now!`)
                                                   }}
                         >
-                          <List.Icon {...props} color={includesPotentialExercise(potentialExercises, exercise.id) ? Colors.red500 : Colors.green500} icon={includesPotentialExercise(potentialExercises, exercise.id) ? 'minus-box' : "plus-box"} />
+                          <List.Icon {...props} color={includesPotentialExercise(potentialExercises, item.id) ? Colors.red500 : Colors.green500} icon={includesPotentialExercise(potentialExercises, item.id) ? 'minus-box' : "plus-box"} />
                         </TouchableOpacity>}
       />
       <Divider />
       </>
-  )})
+  )}
+
+  const headerForm = () => {
+    return (
+      <>
+      <Subheading style={styles.subheading} >Search Exercises by Name</Subheading>
+      <Searchbar 
+        placeholder="Barbell Bench Press"
+        value={searchQuery}
+        onChangeText={onChangeSearch}
+        onSubmitEditing={() => queryExercises(muscleGroups, focus, searchQuery, difficulty, 0, true)}
+      />
+      <Subheading style={styles.subheading} >Filter by Focus</Subheading>
+      <FlatList
+        listKey={'focus'}
+        style={styles.container}
+        keyExtractor={keyExtractor}
+        renderItem={renderExerciseFocus}
+        data={exerciseFocus}
+        numColumns={numColumns}
+      />
+      <Subheading style={styles.subheading} >Filter by Difficulty Level</Subheading>
+      <RadioButton.Group onValueChange={value => setDifficulty(value)} value={difficulty}>
+        <FlatList
+          listKey={'difficulty'}
+          style={styles.container}
+          renderItem={renderDifficulty}
+          data={exerciseDifficulty}
+          numColumns={numColumns}
+          keyExtractor={keyExtractor}
+        />
+      </RadioButton.Group>
+      <Subheading style={styles.subheading} >Filter by Muscle Groups</Subheading>
+      <FlatList
+        listKey={'muscleGroups'}
+        style={styles.container}
+        renderItem={renderMuscleGroups}
+        data={muscleGroupArray}
+        numColumns={numColumns}
+        keyExtractor={keyExtractor}
+      />
+      <Button
+        mode="contained"
+        loading={loading}
+        disabled={loading}
+        onPress={() => {
+
+          queryExercises(muscleGroups, focus, searchQuery, difficulty, 0, true)
+        }}
+        >Search Exercises
+      </Button>
+      <Title style={styles.subheading} >Exercise Search Results</Title>
+      {exercises.length === 0
+      ?
+      <Text>No Results</Text>
+      :
+      null
+      }
+      </>
+    )
+  }
 
   return (
     <>
@@ -132,60 +199,24 @@ const WorkoutCreationForm = ({ exercise, setExercise, removePotentialExercise, a
     null
     }
     <SafeAreaView>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <Subheading style={styles.subheading} >Search Exercises by Name</Subheading>
-        <Searchbar 
-          placeholder="Barbell Bench Press"
-          value={searchQuery}
-          onChangeText={onChangeSearch}
-          onSubmitEditing={() => queryExercises(muscleGroups, focus, searchQuery, difficulty)}
-        />
-        <Subheading style={styles.subheading} >Filter by Focus</Subheading>
-        <FlatList
-          style={styles.container}
-          renderItem={renderExerciseFocus}
-          data={exerciseFocus}
-          numColumns={numColumns}
-        />
-        <Subheading style={styles.subheading} >Filter by Difficulty Level</Subheading>
-        <RadioButton.Group onValueChange={value => setDifficulty(value)} value={difficulty}>
-          <FlatList
-            style={styles.container}
-            renderItem={renderDifficulty}
-            data={exerciseDifficulty}
-            numColumns={numColumns}
-          />
-        </RadioButton.Group>
-        <Subheading style={styles.subheading} >Filter by Muscle Groups</Subheading>
-        <FlatList
-          style={styles.container}
-          renderItem={renderMuscleGroups}
-          data={muscleGroupArray}
-          numColumns={numColumns}
-        />
-        <Button
-          mode="contained"
-          loading={loading}
-          disabled={loading}
-          onPress={() => queryExercises(muscleGroups, focus, searchQuery, difficulty)}
-          >Search Exercises
-        </Button>
-      <Title style={styles.subheading} >Exercise Search Results</Title>
-      {exercises.length === 0
-      ?
-      <Text>No Results</Text>
-      :
-      null
-      }
-      {renderExercises()}
-      </ScrollView>
-    </SafeAreaView>
-      <FAB 
-        onPress={() => setPotentialWorkoutVisible(true)}
-        style={styles.FAB}
-        label={`${potentialExercises.length} added`}
-        color={"#000000"}
+      <FlatList
+        listKey={'exercises'}
+        ListHeaderComponent={headerForm}
+        data={exercises}
+        renderItem={renderExercises}
+        keyExtractor={keyExtractor}
+        onEndReachedThreshold={0.5}
+        onEndReached={() => queryExercises(muscleGroups, focus, searchQuery, difficulty, pageNum += 1, false)}
+        ListFooterComponent={renderFooter}
+        refreshing={loadingExtraData}
       />
+    </SafeAreaView>
+    <FAB 
+      onPress={() => setPotentialWorkoutVisible(true)}
+      style={styles.FAB}
+      label={`${potentialExercises.length} added`}
+      color={"#000000"}
+    />
     </>
   )
 }
@@ -206,17 +237,20 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = store => ({ 
+  pageNum: store.potentialExercises.pageNum,
   exercises: store.exercises, 
-  loading: store.loading,
+  loading: store.loading.loading,
+  loadingExtraData: store.loading.loadingExtraData,
   exercise: store.exercise,
-  potentialExercises: store.potentialExercises
+  potentialExercises: store.potentialExercises.exercises
 })
 const mapDispatchToProps = dispatch => { 
   return { 
-    queryExercises: (muscleGroups, focus, searchQuery, difficulty) => dispatch(queryExercises(muscleGroups, focus, searchQuery, difficulty)),
+    queryExercises: (muscleGroups, focus, searchQuery, difficulty, pageNum, newQuery) => dispatch(queryExercises(muscleGroups, focus, searchQuery, difficulty, pageNum, newQuery)),
     addPotentialExercise: exercise => dispatch(addPotentialExercise(exercise)),
     setExercise: exercise => dispatch(setExercise(exercise)),
-    removePotentialExercise: exerciseId => dispatch(removePotentialExercise(exerciseId))
+    removePotentialExercise: exerciseId => dispatch(removePotentialExercise(exerciseId)),
+    loadingExtraData: () => dispatch(loadingExtraData())
   } }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutCreationForm)

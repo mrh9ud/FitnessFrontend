@@ -15,6 +15,6 @@ const WorkoutPageLoading = ({ workouts, loading, navigation }) => {
   return <LoadingIndicator />
 }
 
-const mapStateToProps = store => ({ loading: store.loading, workouts: store.workouts })
+const mapStateToProps = store => ({ loading: store.loading.loading, workouts: store.workouts })
 
 export default connect(mapStateToProps)(WorkoutPageLoading)

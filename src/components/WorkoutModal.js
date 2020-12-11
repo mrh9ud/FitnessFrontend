@@ -106,7 +106,7 @@ const WorkoutModal = ({ visible, closeModal, currentUser, createOwnWorkout, setE
 }
 
 const mapStateToProps = store => ({ 
-  potentialExercises: store.potentialExercises,
+  potentialExercises: store.potentialExercises.exercises,
   exercise: store.exercise,
   currentUser: store.currentUser
  })
