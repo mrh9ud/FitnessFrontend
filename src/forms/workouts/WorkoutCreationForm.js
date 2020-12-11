@@ -210,13 +210,11 @@ const WorkoutCreationForm = ({ exercise, setExercise, pageNum, loadingExtraData,
         )}
         ListHeaderComponent={headerForm()}
         data={exercises}
-        extraData={exercises}
         renderItem={item => renderExercises(item)}
         keyExtractor={keyExtractor}
         onEndReachedThreshold={0.5}
         onEndReached={() => queryExercises(muscleGroups, focus, searchQuery, difficulty, pageNum += 1, false)}
         ListFooterComponent={renderFooter}
-        refreshing={loadingExtraData}
       />
     </SafeAreaView>
     <FAB 

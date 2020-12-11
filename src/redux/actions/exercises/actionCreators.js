@@ -1,6 +1,6 @@
 import { ip } from '../../../helpers/ipPort'
 import { loading, loadingComplete, fetchHeaders } from '../../../helpers/Functions'
-import { SET_EXERCISES, CLEAR_EXERCISES, SET_EXERCISE, RESET_PAGE_NUM, LOADING_EXTRA_DATA, LOADING_EXTRA_DATA_COMPLETE, INCREASE_PAGE_NUM, ADD_POTENTIAL_EXERCISE, REMOVE_POTENTIAL_EXERCISE, CLEAR_ALL_POTENTIAL_EXERCISES } from '../actionType'
+import { SET_EXERCISES, CLEAR_EXERCISES, ADD_WORKOUT, SET_EXERCISE, RESET_PAGE_NUM, LOADING_EXTRA_DATA, LOADING_EXTRA_DATA_COMPLETE, INCREASE_PAGE_NUM, ADD_POTENTIAL_EXERCISE, REMOVE_POTENTIAL_EXERCISE, CLEAR_ALL_POTENTIAL_EXERCISES } from '../actionType'
 
 const exerciseQueryUrl = `${ip}/api/v1/exercise_query`
 const workoutCreationUrl = `${ip}/api/v1/create_own_workout`
@@ -25,17 +25,20 @@ function loadingExtraData() { return { type: LOADING_EXTRA_DATA } }
 
 function loadingExtraDataComplete() { return { type: LOADING_EXTRA_DATA_COMPLETE } }
 
-function createOwnWorkout(exercises, currentUser) {
+function addWorkoutToUser(data) { return { type: ADD_WORKOUT, payload: data } }
+
+function createOwnWorkout(exercises, currentUser, workoutName) {
   return dispatch => {
     const createWorkoutConfigObj = {
       method: "POST",
       headers: fetchHeaders,
-      body: JSON.stringify({ exercises, user: currentUser })
+      body: JSON.stringify({workout: { exercises, user: currentUser, name: workoutName } })
     }
     dispatch(loading())
     fetch(workoutCreationUrl, createWorkoutConfigObj).then(resp => resp.json())
       .then(data => {
         if (!data.error) {
+          dispatch(addWorkoutToUser(data))
           dispatch(clearAllPotentialExercises)
           dispatch(loadingComplete())
         } else {
