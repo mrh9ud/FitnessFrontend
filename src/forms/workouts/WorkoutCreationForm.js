@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Subheading, Checkbox, Searchbar, List, Button, Title, RadioButton, Colors, Text, Divider, FAB } from 'react-native-paper'
 import { View, StyleSheet, SafeAreaView, FlatList, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import { queryExercises, setExercise, removePotentialExercise, addPotentialExercise, loadingExtraData } from '../../redux/actions/exercises/actionCreators'
+import { queryExercises, setExercise, removePotentialExercise, addPotentialExercise } from '../../redux/actions/exercises/actionCreators'
 import ExerciseDescription from '../../components/ExerciseDescription'
 import ExerciseModal from '../../components/ExerciseModal'
 import { exerciseFocus, exerciseDifficulty, muscleGroupArray, includesPotentialExercise, sanitizeFocus, keyExtractor } from '../../helpers/Functions'
@@ -85,7 +85,7 @@ const WorkoutCreationForm = ({ exercise, setExercise, pageNum, loadingExtraData,
 
   const renderDifficulty = ({ item }) => <RadioButton.Item label={item.name} value={item.name} />
 
-  const renderExercises = ({ item }) => {
+  function renderExercises({ item }) {
     return (
       <>
       <List.Item 
@@ -115,7 +115,7 @@ const WorkoutCreationForm = ({ exercise, setExercise, pageNum, loadingExtraData,
       </>
   )}
 
-  const headerForm = () => {
+  function headerForm() {
     return (
       <>
       <Subheading style={styles.subheading} >Search Exercises by Name</Subheading>
@@ -201,14 +201,13 @@ const WorkoutCreationForm = ({ exercise, setExercise, pageNum, loadingExtraData,
     <SafeAreaView>
       <FlatList
         listKey={'exercises'}
-        ListHeaderComponent={headerForm}
+        ListHeaderComponent={headerForm()}
         data={exercises}
-        renderItem={renderExercises}
+        renderItem={item => renderExercises(item)}
         keyExtractor={keyExtractor}
         onEndReachedThreshold={0.5}
         onEndReached={() => queryExercises(muscleGroups, focus, searchQuery, difficulty, pageNum += 1, false)}
         ListFooterComponent={renderFooter}
-        refreshing={loadingExtraData}
       />
     </SafeAreaView>
     <FAB 
@@ -250,7 +249,6 @@ const mapDispatchToProps = dispatch => {
     addPotentialExercise: exercise => dispatch(addPotentialExercise(exercise)),
     setExercise: exercise => dispatch(setExercise(exercise)),
     removePotentialExercise: exerciseId => dispatch(removePotentialExercise(exerciseId)),
-    loadingExtraData: () => dispatch(loadingExtraData())
   } }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutCreationForm)
