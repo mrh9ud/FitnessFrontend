@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Title, Card, List, Divider, Button, Paragraph} from 'react-native-paper'
+import { Card, List, Divider, Button } from 'react-native-paper'
 import { focusHelper } from "../helpers/Functions";
 import { StyleSheet, View, Alert } from "react-native";
 import { connect } from 'react-redux'
@@ -41,23 +41,26 @@ const WorkoutCard = ({ workout, navigation, deleteWorkout }) => {
         />
         <Card.Actions>
           {loading
-            ?
-            <LoadingIndicator />
-            :
-            <>
-              <Button
-                icon="square-edit-outline"
-                onPress={() => navigation.navigate("Edit Workout", { workoutId: workout.id })}
-              >
-                Edit
-              </Button>
-              <Button
-                icon="trash-can"
-                onPress={confirmWorkoutDeletion}
-              >
-                Delete
-              </Button>
-            </>
+          ?
+          <LoadingIndicator />
+          :
+          <>
+          <Button
+            icon="play-circle-outline"
+            onPress={() => navigation.navigate("Workout In Progress", { workoutId: workout.id })}
+          >Start
+          </Button>
+          <Button
+            icon="square-edit-outline"
+            onPress={() => navigation.navigate("Edit Workout", { workoutId: workout.id })}
+          >Edit
+          </Button>
+          <Button
+            icon="trash-can"
+            onPress={confirmWorkoutDeletion}
+          >Delete
+          </Button>
+          </>
           }
           <Divider />
         </Card.Actions>

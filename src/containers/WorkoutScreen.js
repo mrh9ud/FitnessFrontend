@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { workoutFocus } from "../helpers/Functions"
 import Exercise from '../components/Exercise'
-import { Title, Text } from 'react-native-paper'
+import { Title, Text, Button } from 'react-native-paper'
 import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 
-const WorkoutScreen = ({ route, workouts }) => {
+const WorkoutScreen = ({ route, workouts, navigation }) => {
 
   const { workoutId } = route.params
   const workout = workouts.find(workout => workout.id === workoutId)
@@ -19,6 +19,11 @@ const WorkoutScreen = ({ route, workouts }) => {
       <Text>Completed: {workout.completed ? "Yes" : "No"}</Text>
       <Title>Exercises:</Title>
       {workout.exercises.map(exercise => <Exercise exercise={exercise} divide={true} key={exercise.id} />)}
+      <Button
+        icon="play-circle-outline"
+        onPress={() => navigation.navigate("Workout In Progress", { workoutId: workout.id })}
+        >Start
+      </Button>
     </ScrollView>
   )
 }

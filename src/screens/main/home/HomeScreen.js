@@ -17,6 +17,16 @@ const HomeScreen = ({ navigation }) => {
             <Card.Actions>
               <Button mode="outlined" onPress={() => navigation.navigate("Create a Workout")}>Start Now</Button>
             </Card.Actions>
+            
+            <Title>Your Workouts</Title>
+            <Card.Actions>
+              <Button mode="outlined" onPress={() => navigation.navigate("My Workouts", { screen: "My Workout"})} >View Now</Button>
+            </Card.Actions>
+
+            <Title>Workout Statistics</Title>
+            <Card.Actions>
+              <Button mode="outlined" onPress={() => navigation.navigate("Stats", { screen: "Statistics" })}>View Now</Button>
+            </Card.Actions>
           </Card.Content>
         </Card>
       </View>

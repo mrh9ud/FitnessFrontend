@@ -7,10 +7,11 @@ import WorkoutCard from "../../components/WorkoutCard";
 const MyWorkoutScreen = ({ workouts, navigation }) => {
   return (
     <ScrollView bounces={true}>
-      {workouts.length !== 0 ?
-        workouts.map(workout => <WorkoutCard workout={workout} key={Math.random()} navigation={navigation} />)
+      {workouts.length !== 0 
+      ?
+      workouts.map(workout => <WorkoutCard workout={workout} key={Math.random()} navigation={navigation} />)
       :
-        <Text>You currently don't have any workouts. Click the button below to generate a new workout.</Text>
+      <Text>You currently don't have any workouts. Click the button below to generate a new workout.</Text>
       }
       <Button onPress={() => navigation.navigate("Home", { screen: "Workout Questionnaire"})}>
         Generate New Workout

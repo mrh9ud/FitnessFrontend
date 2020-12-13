@@ -5,7 +5,7 @@ const focusHelper = (workout) => {
   let focusIcons = []
   if (workout.strength) {
     focus.push("Strength")
-    focusIcons.push("weight")
+    focusIcons.push("dumbbell")
   }
   if (workout.cardio) {
     focus.push("Cardio")

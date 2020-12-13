@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { workoutFocus } from "../../helpers/Functions"
-import Exercise from '../../components/Exercise'
 import { Title, Text, Button } from 'react-native-paper'
 import { ScrollView } from 'react-native'
 import EditNameForm from '../workouts/EditNameForm'
