@@ -12,6 +12,7 @@ import navBarReducer from "./navBarReducer";
 import exercisesReducer from "./exercisesReducer";
 import exerciseReducer from "./exerciseReducer"
 import potentialExercisesReducer from "./potentialExercisesReducer";
+import moreExercisesReducer from "./moreExercisesReducer";
 
 const rootReducer = combineReducers({
   currentUser: userReducer,
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
   navBarMenuOptions: navBarReducer,
   exercises: exercisesReducer,
   exercise: exerciseReducer,
-  potentialExercises: potentialExercisesReducer
+  potentialExercises: potentialExercisesReducer,
+  moreExercises: moreExercisesReducer
 })
 
 export default rootReducer
