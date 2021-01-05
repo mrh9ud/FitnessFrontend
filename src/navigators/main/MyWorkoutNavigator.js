@@ -23,7 +23,7 @@ const MyWorkoutNavigator = ({ route, navigation }) => {
       <Stack.Screen name='Edit Workout' component={EditWorkoutForm} />
       <Stack.Screen 
         name="Workout In Progress" 
-        component={WorkoutInProgress} 
+        component={WorkoutInProgress}
       />
       <Stack.Screen 
         name="Workout Loading" 

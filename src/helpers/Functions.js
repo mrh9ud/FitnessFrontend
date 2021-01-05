@@ -38,7 +38,7 @@ const workoutFocus = workout => {
   return "Cardio"
 }
 
-const keyExtractor = (item, index) => item.id.toString()
+const keyExtractor = item => item.id.toString()
 
 const includesPotentialExercise = (potentialExercises, exerciseId) => potentialExercises.some(potentialExercise => potentialExercise.id === exerciseId ? true : false)
 

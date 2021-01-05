@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, USERNAME, DURATION, WORKOUT_NAME, CONFIRM_PASSWORD } from "./FormKeyType";
+import { EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, USERNAME, WORKOUT_NAME, CONFIRM_PASSWORD } from "./FormKeyType";
 
 const usernameRegisterValidation = {
   [USERNAME]: yup
@@ -59,13 +59,6 @@ const firstNameValidation = {
     [EMAIL]: yup
     .string().required("email required").email("Not a valid email")
   }
-  
-  const workoutDurationValidation = {
-    [DURATION]: yup
-      .string().required("Must include a workout duration")
-      .max(3, "Healthy exercise should be constrained to less than 1000 minutes a day")
-      .matches(/^\d+$/g, { message: "Numbers only!", excludeEmptyString: true })
-  }
 
   const workoutNameValidation = {
     [WORKOUT_NAME]: yup
@@ -104,7 +97,6 @@ const registrationFormValidations = yup.object().shape({
 })
 
 const workoutQuestionsValidations = yup.object().shape({
-  ...workoutDurationValidation,
   ...workoutNameValidation,
   ...workoutTargetAreaValidation
 })

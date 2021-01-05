@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import {View, StyleSheet, ScrollView, Picker} from 'react-native'
-import {Text, TextInput, Button, Switch, Title, Checkbox, Headline} from "react-native-paper";
+import { View, StyleSheet, ScrollView, Picker } from 'react-native'
+import { Text, TextInput, Button, Switch, Title, Checkbox, Subheading } from "react-native-paper";
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
-import { DURATION, WORKOUT_NAME } from '../../helpers/FormKeyType'
+import { WORKOUT_NAME } from '../../helpers/FormKeyType'
 import { submitWorkoutQuestionnaire } from '../../redux/actions/workouts/actionCreators'
 import { workoutQuestionsValidations } from '../../helpers/Validations'
 
@@ -19,7 +19,7 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
   const [firstTargetArea, setFirstTargetArea] = useState('')
   const [secondTargetArea, setSecondTargetArea] = useState('')
 
-  const handleSubmit = ({ duration, name }) => {
+  const handleSubmit = ({ name }) => {
     const muscleGroups = [firstTargetArea, secondTargetArea]
     const difficulty = {}
     if (workoutBeginner) {
@@ -30,12 +30,9 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
       difficulty['difficulty'] = 'advanced'
     }
 
-    const durationInt = parseInt(duration, 10)
-
     const workoutObj = {
       strength: workoutStrFocus,
       cardio: workoutCardioFocus,
-      duration: durationInt,
       ...difficulty,
       name,
       muscle_groups: muscleGroups
@@ -48,7 +45,6 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
     <ScrollView>
       <Formik
         initialValues={{
-          [DURATION]: '',
           [WORKOUT_NAME]: '',
           firstTargetArea: 'Select a Value...',
           secondTargetArea: 'Select a Value...'
@@ -56,7 +52,7 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
         validationSchema={workoutQuestionsValidations}
       >
       {({isValid, errors, handleChange, values, setFieldValue}) => (
-        <View>
+        <View style={styles.form}>
           <Title>Name:</Title>
         <TextInput
           mode="outlined"
@@ -85,17 +81,6 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
             value={workoutFlexibilityFocus}
             onValueChange={() => setWorkoutFlexibilityFocus(!workoutFlexibilityFocus)}
           />
-
-          <Title>Duration</Title>
-          <TextInput
-            mode="outlined"
-            placeholder="Enter duration in minutes"
-            keyboardType={'numeric'}
-            value={values.duration}
-            onChangeText={handleChange('duration')}
-          />
-          {errors.duration &&
-            <Text style={styles.error}>{errors.duration}</Text>}
 
           <Title>Workout Complexity Level</Title>
           <Checkbox.Item
@@ -127,7 +112,7 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
           />
 
           <Title>Workout Target Areas</Title>
-          <Headline>First Target Area: </Headline>
+          <Subheading>First Target Area: </Subheading>
           <Picker
             selectedValue={firstTargetArea}
             style={{ width: 200 }}
@@ -146,7 +131,7 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
             <Picker.Item label="Legs" value="legs" />
           </Picker>
 
-          <Headline>Second Target Area: </Headline>
+          <Subheading>Second Target Area: </Subheading>
           <Picker
             selectedValue={secondTargetArea}
             style={{ width: 200 }}
@@ -170,7 +155,7 @@ const WorkoutQuestionForm = ({ submitWorkoutQuestionnaire, currentUser, navigati
               mode="contained"
               onPress={() => handleSubmit(values)}
               disabled={!isValid || (!workoutBeginner && !workoutIntermediate && !workoutAdvanced) ||
-                (!workoutStrFocus && !workoutCardioFocus && !workoutFlexibilityFocus) || values.duration.length < 2}
+                (!workoutStrFocus && !workoutCardioFocus && !workoutFlexibilityFocus) }
               >Generate New Workout
             </Button>
           </View>
@@ -192,6 +177,9 @@ const styles = StyleSheet.create({
     error: { 
       fontSize: 10, 
       color: 'red'  
+    },
+    form: {
+      paddingLeft: "2%"
     }
   })
 

@@ -6,23 +6,30 @@ import { connect } from 'react-redux'
 
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical'
 
-
 const NavBar = ({ props, drawerNavigation, rootNavigation, logOutUser, menuOptions }) => {
   const [menuVisible, setMenuVisible] = React.useState(false)
   const openMenu = () => setMenuVisible(true)
   const closeMenu = () => setMenuVisible(false)
 
+  const { options } = props.scene.descriptor
+
   return (
     <View>
       <Appbar.Header>
-        {/*Change top left button based on which navigator it is in*/}
         {props.previous
-          ?
-          <Appbar.BackAction onPress={() => props.navigation.goBack()} />
-          :
-          <Appbar.Action icon='menu' onPress={() => drawerNavigation.openDrawer()} />
+        ?
+        <Appbar.BackAction onPress={() => props.navigation.goBack()} />
+        :
+        <Appbar.Action icon='menu' onPress={() => drawerNavigation.openDrawer()} />
         }
-        <Appbar.Content title={props.scene.route.name} />
+
+        <Appbar.Content title={
+                          options.headerTitle !== undefined
+                          ? options.headerTitle
+                          : props.scene.route.name
+                        } 
+        />
+        
         <Menu
           visible={menuVisible}
           onDismiss={closeMenu}

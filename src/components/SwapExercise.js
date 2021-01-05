@@ -3,7 +3,6 @@ import { Divider, Button } from 'react-native-paper'
 import { StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 import { swapWorkoutExercise } from '../redux/actions/workouts/actionCreators'
-import LoadingIndicator from './LoadingIndicator'
 import Exercise from "./Exercise";
 
 const SwapExercise = ({ workoutId, exercise, swapWorkoutExercise }) => {

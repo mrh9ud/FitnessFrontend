@@ -1,22 +1,74 @@
 import React, { useEffect } from 'react'
-import { Text } from 'react-native-paper'
+import { List, Button, Divider } from 'react-native-paper'
 import { connect } from 'react-redux'
+import { FlatList, View, StyleSheet } from 'react-native'
+import { keyExtractor } from '../helpers/Functions'
+import ExerciseForm from '../forms/exercises/ExerciseForm'
+import { swapWorkoutExercise } from '../redux/actions/workouts/actionCreators'
 
-const WorkoutInProgress = ({ navigation, workouts, route }) => {
+const WorkoutInProgress = ({ navigation, workouts, route, swapWorkoutExercise }) => {
 
   useEffect(() => {
-    navigation.setOptions({ title: workout.name })
-  }, [workouts])
+    navigation.setOptions({ headerTitle: workout.name })
+  }, [])
 
   const { workoutId } = route.params
   const workout = workouts.find(workout => workout.id === workoutId)
 
-  console.log("route: ", route, "route.params: ", route.params, "navigation: ", navigation)
+  const renderExercises = ({ item }) => {
+    return (
+      <>
+      <List.Item
+        title={item.name}
+      />
+      <ExerciseForm exercise={item} />
+      <View style={styles.inline}>
+        <Button
+          mode="inline"
+          onPress={() => swapWorkoutExercise(workout.id, item.id)}
+          >Swap
+        </Button>
+      </View>
+      <Divider />
+      </>
+    )
+  }
+
   return (
-    <Text>Testing Workout in progress component</Text>
+    <>
+    {
+    workout
+    ?
+    <>
+    <FlatList 
+      data={workout.exercises}
+      keyExtractor={keyExtractor}
+      renderItem={item => renderExercises(item)}
+    />
+    <Button
+      mode="outlined"
+      onPress={() => console.log("workout completed")}
+      >Workout Completed
+    </Button>
+    </>
+    :
+    null
+    }
+    </>
   )
 }
 
-const mapStateToProps = store => ({ workouts: store.workouts })
+const styles = StyleSheet.create({
+  inline: {
+    flexDirection: 'row',
+  }
+})
 
-export default connect(mapStateToProps)(WorkoutInProgress)
+const mapStateToProps = store => ({ workouts: store.workouts })
+const mapDispatchToProps = dispatch => { 
+  return { 
+    swapWorkoutExercise: (workoutId, exerciseId) => dispatch(swapWorkoutExercise(workoutId, exerciseId)) 
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WorkoutInProgress)

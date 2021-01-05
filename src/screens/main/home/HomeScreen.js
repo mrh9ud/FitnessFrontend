@@ -1,11 +1,13 @@
 import React from 'react'
 import { Card, Title, Button } from "react-native-paper";
 import { View, StyleSheet } from 'react-native'
+import { connect } from 'react-redux'
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, currentUser }) => {
   return (
     <View>
       <View style={styleSheet.cards}>
+        <Title>Welcome {currentUser.first_name}!</Title>
         <Card elevation={2}>
           <Card.Content>
             <Title>Generate a Workout</Title>
@@ -41,4 +43,6 @@ const styleSheet = StyleSheet.create({
   }
 })
 
-export default HomeScreen
+const mapStateToProps = store => ({ currentUser: store.currentUser })
+
+export default connect(mapStateToProps)(HomeScreen)

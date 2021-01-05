@@ -35,7 +35,7 @@ const WorkoutCard = ({ workout, navigation, deleteWorkout }) => {
         onPress={() => navigation.navigate("Workout", { workoutId: workout.id })}
       >
         <Card.Title
-          title={workout.name ? workout.name : "Created before name was required"}
+          title={workout.name}
           subtitle={focusObj.focus}
           right={props => focusObj.icons.map(icon => <List.Icon {...props} key={Math.random()} icon={icon} />)}
         />
