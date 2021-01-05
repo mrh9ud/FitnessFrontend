@@ -10,7 +10,7 @@ const WorkoutNameModal = ({ visible, closeModal, exercises, user, createOwnWorko
     <Portal>
       <Formik
         initialValues={{ [WORKOUT_NAME]: "" }}
-        onSubmit={values => createOwnWorkout(exercises, user, values)}
+        onSubmit={values => createOwnWorkout(exercises, user, values.name)}
         validationSchema={() => workoutNameValidations }
       >
         {({handleChange, handleSubmit, errors, isValid, values}) => (
@@ -31,7 +31,7 @@ const WorkoutNameModal = ({ visible, closeModal, exercises, user, createOwnWorko
                 disabled={!isValid}
                 mode="contained"
                 onPress={() => {
-                  handleSubmit()
+                  handleSubmit(values)
                   closeModal()
                 }}
                 >Submit

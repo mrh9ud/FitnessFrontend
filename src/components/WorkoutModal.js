@@ -116,7 +116,7 @@ const mapDispatchToProps = dispatch => {
     clearAllPotentialExercises: () => dispatch(clearAllPotentialExercises()),
     removePotentialExercise: exerciseId => dispatch(removePotentialExercise(exerciseId)),
     setExercise: exercise => dispatch(setExercise(exercise)),
-    createOwnWorkout: (exercises, currentUser) => dispatch(createOwnWorkout(exercises, currentUser))
+    createOwnWorkout: (exercises, currentUser, workoutName) => dispatch(createOwnWorkout(exercises, currentUser, workoutName))
   } }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutModal)

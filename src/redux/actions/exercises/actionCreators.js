@@ -30,6 +30,7 @@ function loadingExtraDataComplete() { return { type: LOADING_EXTRA_DATA_COMPLETE
 function addWorkoutToUser(data) { return { type: ADD_WORKOUT, payload: data } }
 
 function createOwnWorkout(exercises, currentUser, workoutName) {
+  debugger
   return dispatch => {
     const createWorkoutConfigObj = {
       method: "POST",
