@@ -34,7 +34,7 @@ function createOwnWorkout(exercises, currentUser, workoutName) {
     const createWorkoutConfigObj = {
       method: "POST",
       headers: fetchHeaders,
-      body: JSON.stringify({workout: { exercises, user: currentUser, name: workoutName } })
+      body: JSON.stringify({exercises, user: currentUser, workout: { name: workoutName } })
     }
     dispatch(loading())
     fetch(workoutCreationUrl, createWorkoutConfigObj).then(resp => resp.json())
