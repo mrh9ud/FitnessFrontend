@@ -7,13 +7,15 @@ import { StyleSheet, View } from 'react-native'
 const ExerciseForm = ({ exercise }) => {
   const { timed, setted, weighted } = exercise
   const [numOfSets, setNumOfSets] = useState([1, 2, 3])
+
   const decrementSets = () => {
     if (numOfSets.length > 0)
-      setNumOfSets(numOfSets.pop())
+      setNumOfSets(numOfSets.slice(0, numOfSets.length - 1))
   }
   const incrementSets = () => {
-    if (numOfSets.length < 30)
-      setNumOfSets(numOfSets.push(numOfSets.length + 1))
+    if (numOfSets.length < 30) {
+      setNumOfSets([ ...numOfSets, numOfSets.length + 1 ])
+    }
   }
 
   if (timed && weighted && setted) {
@@ -70,6 +72,7 @@ const ExerciseForm = ({ exercise }) => {
           icon="plus" 
           onPress={incrementSets}>
         </Button>   
+
         {numOfSets.map(setNum => <Weight key={setNum} setNum={setNum} />)}
       </View>
     )
