@@ -30,12 +30,11 @@ function loadingExtraDataComplete() { return { type: LOADING_EXTRA_DATA_COMPLETE
 function addWorkoutToUser(data) { return { type: ADD_WORKOUT, payload: data } }
 
 function createOwnWorkout(exercises, currentUser, workoutName) {
-  debugger
   return dispatch => {
     const createWorkoutConfigObj = {
       method: "POST",
       headers: fetchHeaders,
-      body: JSON.stringify({workout: { exercises, user: currentUser, name: workoutName } })
+      body: JSON.stringify({exercises, user: currentUser, workout: { name: workoutName } })
     }
     dispatch(loading())
     fetch(workoutCreationUrl, createWorkoutConfigObj).then(resp => resp.json())
