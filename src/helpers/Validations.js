@@ -116,10 +116,6 @@ const editNameFormValidations = yup.object().shape({
   ...workoutNameValidation
 })
 
-const weightFormValidations = yup.object().shape({
-
-})
-
 const editFormValidations = (key) => {
   switch (key) {
     case USERNAME:
@@ -146,4 +142,4 @@ const editFormValidations = (key) => {
   }
 }
 
-export { registrationFormValidations, weightFormValidations, editFormValidations, editNameFormValidations, loginFormValidations, workoutQuestionsValidations, forgotPasswordFormValidations, resetPasswordFormValidations }
+export { registrationFormValidations, editFormValidations, editNameFormValidations, loginFormValidations, workoutQuestionsValidations, forgotPasswordFormValidations, resetPasswordFormValidations }
