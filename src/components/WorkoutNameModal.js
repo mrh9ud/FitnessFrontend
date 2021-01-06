@@ -4,13 +4,19 @@ import { Formik } from 'formik'
 import { WORKOUT_NAME } from '../helpers/FormKeyType'
 import { editNameFormValidations as workoutNameValidations } from '../helpers/Validations'
 import { StyleSheet } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
-const WorkoutNameModal = ({ visible, closeModal, exercises, user, createOwnWorkout }) => {
+const WorkoutNameModal = ({ visible, closeWorkoutModal, closeModal, exercises, user, createOwnWorkout }) => {
+  const navigation = useNavigation()
   return (
     <Portal>
       <Formik
         initialValues={{ [WORKOUT_NAME]: "" }}
-        onSubmit={values => createOwnWorkout(exercises, user, values.name)}
+        onSubmit={values => {
+          createOwnWorkout(exercises, user, values.name)
+          closeWorkoutModal()
+          navigation.navigate('My Workouts')
+        }}
         validationSchema={() => workoutNameValidations }
       >
         {({handleChange, handleSubmit, errors, isValid, values}) => (

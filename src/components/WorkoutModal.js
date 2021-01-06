@@ -19,7 +19,8 @@ const WorkoutModal = ({ visible, closeModal, currentUser, createOwnWorkout, setE
     <>
     {workoutNameVisible
     ?
-    <WorkoutNameModal 
+    <WorkoutNameModal
+      closeWorkoutModal={closeModal}
       visible={workoutNameVisible}
       closeModal={closeWorkoutNameModal}
       exercises={potentialExercises}
