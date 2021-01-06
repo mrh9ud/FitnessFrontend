@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { List, Button, Divider } from 'react-native-paper'
 import { connect } from 'react-redux'
-import { FlatList, View, StyleSheet } from 'react-native'
+import { FlatList, View, StyleSheet, ScrollView } from 'react-native'
 import { keyExtractor } from '../helpers/Functions'
 import ExerciseForm from '../forms/exercises/ExerciseForm'
 import { swapWorkoutExercise } from '../redux/actions/workouts/actionCreators'
@@ -21,7 +21,12 @@ const WorkoutInProgress = ({ navigation, workouts, route, swapWorkoutExercise })
       <List.Item
         title={item.name}
       />
-      <ExerciseForm exercise={item} />
+      <ScrollView 
+        horizontal
+        showsHorizontalScrollIndicator={false}
+      >
+        <ExerciseForm exercise={item}/>
+      </ScrollView>
       <View style={styles.inline}>
         <Button
           mode="inline"

@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import { Provider as PaperProvider } from 'react-native-paper'
-import * as React from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import store from './redux/store'
 import { NavigationContainer } from "@react-navigation/native";
@@ -11,6 +11,7 @@ LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
   'VirtualizedLists should never be nested'
 ]);
+
 
 const App = () => {
   return (

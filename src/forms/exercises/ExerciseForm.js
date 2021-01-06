@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Time from '../../components/Time'
-import Weight from '../../components/Weight'
+import WeightForm from '../exercises/WeightForm'
 import { Button, Text } from 'react-native-paper'
 import { StyleSheet, View } from 'react-native'
 
@@ -9,11 +9,11 @@ const ExerciseForm = ({ exercise }) => {
   const [numOfSets, setNumOfSets] = useState([1, 2, 3])
 
   const decrementSets = () => {
-    if (numOfSets.length > 0)
+    if (numOfSets.length > 1)
       setNumOfSets(numOfSets.slice(0, numOfSets.length - 1))
   }
   const incrementSets = () => {
-    if (numOfSets.length < 30) {
+    if (numOfSets.length < 10) {
       setNumOfSets([ ...numOfSets, numOfSets.length + 1 ])
     }
   }
@@ -35,7 +35,7 @@ const ExerciseForm = ({ exercise }) => {
         {numOfSets.map(setNum => {
           return (
             <>
-            <Weight key={setNum} setNum={setNum}/>
+            <WeightForm key={setNum} setNum={setNum}/>
             <Time key={setNum} setNum={setNum} />
             </>
           )
@@ -73,20 +73,20 @@ const ExerciseForm = ({ exercise }) => {
           onPress={incrementSets}>
         </Button>   
 
-        {numOfSets.map(setNum => <Weight key={setNum} setNum={setNum} />)}
+        {numOfSets.map(setNum => <WeightForm key={setNum} setNum={setNum} />)}
       </View>
     )
   } else if (timed && weighted) {
     return (
       <>
       <Time />
-      <Weight />
+      <WeightForm />
       </>
     )
   } else if (timed) {
     // return <Time />
   } else if (weighted) {
-    // return <Weight />
+    // return <WeightForm />
   } else {
     return null
   }
@@ -95,7 +95,6 @@ const ExerciseForm = ({ exercise }) => {
 const style = StyleSheet.create({
   inline: {
     flexDirection: 'row',
-    // justifyContent: 'space-between'
   }
 })
 

@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, USERNAME, WORKOUT_NAME, CONFIRM_PASSWORD } from "./FormKeyType";
+import { EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, WEIGHT, REPS, USERNAME, WORKOUT_NAME, CONFIRM_PASSWORD } from "./FormKeyType";
 
 const usernameRegisterValidation = {
   [USERNAME]: yup
@@ -116,6 +116,10 @@ const editNameFormValidations = yup.object().shape({
   ...workoutNameValidation
 })
 
+const weightFormValidations = yup.object().shape({
+
+})
+
 const editFormValidations = (key) => {
   switch (key) {
     case USERNAME:
@@ -142,4 +146,4 @@ const editFormValidations = (key) => {
   }
 }
 
-export { registrationFormValidations, editFormValidations, editNameFormValidations, loginFormValidations, workoutQuestionsValidations, forgotPasswordFormValidations, resetPasswordFormValidations }
+export { registrationFormValidations, weightFormValidations, editFormValidations, editNameFormValidations, loginFormValidations, workoutQuestionsValidations, forgotPasswordFormValidations, resetPasswordFormValidations }

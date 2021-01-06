@@ -15,7 +15,7 @@ const NavBar = ({ props, drawerNavigation, rootNavigation, logOutUser, menuOptio
 
   return (
     <View>
-      <Appbar.Header>
+      <Appbar.Header statusBarHeight={12}>
         {props.previous
         ?
         <Appbar.BackAction onPress={() => props.navigation.goBack()} />
@@ -42,7 +42,6 @@ const NavBar = ({ props, drawerNavigation, rootNavigation, logOutUser, menuOptio
 
           {menuOptions.map(option => <Menu.Item onPress={() => option.execFunc()} title={option.title} />)}
 
-          {/*Always have the logout button in the navbar menu*/}
           <Menu.Item onPress={() => {
             logOutUser()
             rootNavigation.navigate('Auth')
