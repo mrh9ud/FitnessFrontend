@@ -1,4 +1,4 @@
-import { ADD_WORKOUT, SET_NEXT_POTENTIAL_EXERCISE, REMOVE_WORKOUT, SWAP_EXERCISE, UPDATE_WORKOUT_NAME, LOADING_COMPLETE, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, SET_WORKOUT_QUESTION_RESPONSES } from '../actionType'
+import { ADD_WORKOUT, SET_NEXT_POTENTIAL_EXERCISE, SET_EXERCISE_STAT, REMOVE_WORKOUT, SWAP_EXERCISE, UPDATE_WORKOUT_NAME, LOADING_COMPLETE, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, SET_WORKOUT_QUESTION_RESPONSES } from '../actionType'
 import { ip } from '../../../helpers/ipPort'
 import { loading, loadingComplete, fetchHeaders } from '../../../helpers/Functions'
 
@@ -25,6 +25,8 @@ function setWorkoutQuestionResponses(data) { return { type: SET_WORKOUT_QUESTION
 function addWorkoutToUser(data) { return { type: ADD_WORKOUT, payload: data } }
 
 function clearWorkoutQuestionResponses() { return { type: CLEAR_WORKOUT_QUESTION_RESPONSES } }
+
+function setExerciseStat(data) { return { type: SET_EXERCISE_STAT, payload: data } }
 
 function submitWorkoutQuestionnaire(answersObj, userObj) {
     return dispatch => {
@@ -139,4 +141,4 @@ function deleteWorkout(workoutId) {
     }
 }
 
-export { submitWorkoutQuestionnaire, deleteWorkout, swapWorkoutExercise, createNewWorkout, changeWorkoutName, setNextPotentialExercise }
+export { submitWorkoutQuestionnaire, setExerciseStat, deleteWorkout, swapWorkoutExercise, createNewWorkout, changeWorkoutName, setNextPotentialExercise }

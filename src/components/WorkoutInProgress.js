@@ -25,7 +25,7 @@ const WorkoutInProgress = ({ navigation, workouts, route, swapWorkoutExercise })
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        <ExerciseForm exercise={item}/>
+        <ExerciseForm exercise={item} workoutId={workout.id}/>
       </ScrollView>
       <View style={styles.inline}>
         <Button

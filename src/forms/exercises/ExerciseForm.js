@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import Time from '../../components/Time'
+import TimeForm from './TimeForm'
 import WeightForm from '../exercises/WeightForm'
 import { Button, Text } from 'react-native-paper'
 import { StyleSheet, View } from 'react-native'
 
-const ExerciseForm = ({ exercise }) => {
+const ExerciseForm = ({ exercise, workoutId }) => {
   const { timed, setted, weighted } = exercise
   const [numOfSets, setNumOfSets] = useState([1, 2, 3])
 
@@ -35,8 +35,8 @@ const ExerciseForm = ({ exercise }) => {
         {numOfSets.map(setNum => {
           return (
             <>
-            <WeightForm key={setNum} setNum={setNum}/>
-            <Time key={setNum} setNum={setNum} />
+            <WeightForm key={setNum} setNum={setNum} workoutId={workoutId} exerciseId={exercise.id} />
+            <TimeForm key={setNum} setNum={setNum} workoutId={workoutId} exerciseId={exercise.id} />
             </>
           )
         })}
@@ -56,7 +56,7 @@ const ExerciseForm = ({ exercise }) => {
           onPress={incrementSets}>
         </Button>     
 
-        {numOfSets.map(setNum => <Time key={setNum} setNum={setNum} />)}
+        {numOfSets.map(setNum => <TimeForm key={setNum} setNum={setNum} workoutId={workoutId} exerciseId={exercise.id} />)}
       </View>
     )
   } else if (weighted && setted) {
@@ -73,20 +73,20 @@ const ExerciseForm = ({ exercise }) => {
           onPress={incrementSets}>
         </Button>   
 
-        {numOfSets.map(setNum => <WeightForm key={setNum} setNum={setNum} />)}
+        {numOfSets.map(setNum => <WeightForm key={setNum} setNum={setNum} workoutId={workoutId} exerciseId={exercise.id} />)}
       </View>
     )
   } else if (timed && weighted) {
     return (
       <>
-      <Time />
-      <WeightForm />
+      <TimeForm workoutId={workoutId} exerciseId={exercise.id} />
+      <WeightForm workoutId={workoutId} exerciseId={exercise.id} />
       </>
     )
   } else if (timed) {
-    // return <Time />
+    return <TimeForm workoutId={workoutId} exerciseId={exercise.id} />
   } else if (weighted) {
-    // return <WeightForm />
+    return <WeightForm workoutId={workoutId} exerciseId={exercise.id} />
   } else {
     return null
   }
