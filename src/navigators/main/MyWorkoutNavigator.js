@@ -1,12 +1,12 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import NavBar from "../NavBar";
-import MyWorkoutScreen from "../../screens/main/MyWorkoutScreen";
+import MyWorkoutScreen from "../../screens/main/UncompletedWorkoutScreen";
 import WorkoutScreen from "../../containers/WorkoutScreen";
 import WorkoutPageLoading from '../../components/WorkoutPageLoading';
 import EditWorkoutForm from "../../forms/workouts/EditWorkoutForm";
 import WorkoutInProgress from "../../components/WorkoutInProgress"
-
+import TabNavigator from "./TabNavigator";
 const Stack = createStackNavigator()
 
 const MyWorkoutNavigator = ({ route, navigation }) => {
@@ -18,7 +18,7 @@ const MyWorkoutNavigator = ({ route, navigation }) => {
           drawerNavigation={navigation}
           rootNavigation={rootNavigation} />}}
     >
-      <Stack.Screen name='My Workout' component={MyWorkoutScreen} />
+      <Stack.Screen name='My Workout' component={TabNavigator} />
       <Stack.Screen name='Workout' component={WorkoutScreen} />
       <Stack.Screen name='Edit Workout' component={EditWorkoutForm} />
       <Stack.Screen 

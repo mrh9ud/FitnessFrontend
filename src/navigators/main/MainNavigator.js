@@ -28,9 +28,6 @@ const MainNavigator = ({ navigation }) => {
                      component={SettingsNavigator}
                      initialParams={{rootNavigation: navigation}}
       />
-      <Drawer.Screen name="Tab Test"
-                     component={TabNavigator}
-      />
     </Drawer.Navigator>
   )
 }

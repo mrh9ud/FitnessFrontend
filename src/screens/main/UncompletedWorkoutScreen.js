@@ -1,10 +1,10 @@
 import React from 'react'
-import {Button, Text} from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import WorkoutCard from "../../components/WorkoutCard";
 
-const MyWorkoutScreen = ({ workouts, navigation }) => {
+const UncompletedWorkoutScreen = ({ workouts, navigation }) => {
   return (
     <ScrollView bounces={true}>
       {workouts.length !== 0 
@@ -22,4 +22,4 @@ const MyWorkoutScreen = ({ workouts, navigation }) => {
 
 const mapStateToProps = store => ({ workouts: store.workouts })
 
-export default connect(mapStateToProps)(MyWorkoutScreen)
+export default connect(mapStateToProps)(UncompletedWorkoutScreen)
