@@ -51,8 +51,8 @@ function workoutReducer(state = [], action) {
           })
           let updatedWorkout = { ...workout, exercises: exercisesUpdated }
           weightStatUpdated.push(updatedWorkout)
-        }
-        return workout
+        } else
+          weightStatUpdated.push(workout)
       })
       return weightStatUpdated
     case CLEAR_USER_WORKOUTS:

@@ -76,10 +76,12 @@ function verifyUserData(userObj) {
                     }
                 } else {
                     alert("Cannot store credentials on your device. Update your device to continue.")
+                    dispatch(loadingComplete())
                 }
             } else {
                 dispatch(loginError())
                 alert(data.message)
+                dispatch(loadingComplete())
         }})
         .catch(error => alert(error))
     }
@@ -117,6 +119,7 @@ function createNewUser(userData) {
                 if (!data.error) {
                     dispatch(emailPending())
                     alert(data.message)
+                    dispatch(loadingComplete())
                 } else {
                     dispatch(loadingComplete())
                     alert(data.message.message)
@@ -143,6 +146,7 @@ function updateUser(userData, userId) {
                   alert("Information Updated Successfully")
                 } else {
                   alert(data.message.message) 
+                  dispatch(loadingComplete())
               }
           })
           .catch(error => alert(error))
@@ -164,12 +168,15 @@ function verifyEmailUsername(userData) {
                         dispatch(emailPending())
                         dispatch(passwordResetEmailResent())
                         alert(data.message)
+                        dispatch(loadingComplete())
                     } else {
                         alert("Cannot store credentials on your device. Update your device to continue.")
+                        dispatch(loadingComplete())
                     }
                 } else {
                     dispatch(loginError())
                     alert(data.message)
+                    dispatch(loadingComplete())
                 }
             })
             .catch(error => alert(error))
@@ -188,18 +195,22 @@ function createNewPassword(userData) {
             .then( data => {
                 if (data.expired) {
                     dispatch(resetPasswordPeriodExpired(data))
+                    dispatch(loadingComplete())
                 } else if (!data.error) {
                     if (encryptor.isSecureStorageAvailable()) {
                         encryptor.setCredentials(data.jwt)
                         dispatch(resetPasswordCompleted())
                         dispatch(loginUser(data.user))
                         dispatch(setUserWorkouts(data.workouts))
+                        dispatch(loadingComplete())
                     } else {
                         alert("Cannot store credentials on your device. Update your device to continue.")
+                        dispatch(loadingComplete())
                     }
                 } else {
                     dispatch(resetPasswordFormError())
                     alert(data.message)
+                    dispatch(loadingComplete())
                 }
             })
             .catch(error => alert(error))
@@ -221,6 +232,7 @@ function changePassword(userData, userId) {
                     alert(data.message)
                 } else {
                     alert(data.message)
+                    dispatch(loadingComplete())
                 }
             })
             .catch(error => alert(error))

@@ -7,6 +7,7 @@ const workoutCreationUrl = `${ip}/api/v1/workouts`
 const workoutNameUpdateUrl = `${ip}/api/v1/workouts/`
 const swapWorkoutExerciseUrl = `${ip}/api/v1/swap_workout_exercise`
 const deleteWorkoutUrl = `${ip}/api/v1/workouts/`
+const workoutCompletedUrl = `${ip}/api/v1/complete_workout`
 
 function removeWorkout(data) { return { type: REMOVE_WORKOUT, payload: data } }
 
@@ -68,6 +69,7 @@ function createNewWorkout(currentExercises, workoutQuestionResponses, currentUse
                     dispatch(loadingComplete())
                 } else {
                     alert(data.message)
+                    dispatch(loadingComplete())
                 }
             })
             .catch(error => alert(error))
@@ -141,4 +143,35 @@ function deleteWorkout(workoutId) {
     }
 }
 
-export { submitWorkoutQuestionnaire, setExerciseStat, deleteWorkout, swapWorkoutExercise, createNewWorkout, changeWorkoutName, setNextPotentialExercise }
+function submitCompletedWorkout(currentUserId, workoutId, workoutExercises) {
+  return dispatch => {
+    const completedWorkoutConfigObj = {
+      method: "POST",
+      headers: fetchHeaders,
+      body: JSON.stringify(
+        { 
+        workout: { 
+          id: workoutId, 
+          user: {
+             id: currentUserId 
+            }, 
+          exercises: workoutExercises } 
+        })
+    }
+  dispatch(loading())
+  fetch(workoutCompletedUrl, completedWorkoutConfigObj)
+    .then(resp => resp.json())
+    .then(data => {
+      if (!data.error) {
+        console.log(data.message)
+        dispatch(loadingComplete())
+      } else {
+        alert(data.message)
+        dispatch(loadingComplete())
+      }
+    })
+    .catch(error => alert(error))
+  }
+}
+
+export { submitWorkoutQuestionnaire, submitCompletedWorkout, setExerciseStat, deleteWorkout, swapWorkoutExercise, createNewWorkout, changeWorkoutName, setNextPotentialExercise }

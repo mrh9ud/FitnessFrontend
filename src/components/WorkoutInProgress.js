@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import { List, Button, Divider } from 'react-native-paper'
 import { connect } from 'react-redux'
-import { FlatList, View, StyleSheet, ScrollView } from 'react-native'
+import { FlatList, View, StyleSheet, ScrollView, Alert } from 'react-native'
 import { keyExtractor } from '../helpers/Functions'
 import ExerciseForm from '../forms/exercises/ExerciseForm'
-import { swapWorkoutExercise } from '../redux/actions/workouts/actionCreators'
+import { swapWorkoutExercise, submitCompletedWorkout } from '../redux/actions/workouts/actionCreators'
 
-const WorkoutInProgress = ({ navigation, workouts, route, swapWorkoutExercise }) => {
+const WorkoutInProgress = ({ navigation, loading, currentUser, submitCompletedWorkout, workouts, route, swapWorkoutExercise }) => {
 
   useEffect(() => {
     navigation.setOptions({ headerTitle: workout.name })
@@ -31,6 +31,8 @@ const WorkoutInProgress = ({ navigation, workouts, route, swapWorkoutExercise })
         <Button
           mode="inline"
           onPress={() => swapWorkoutExercise(workout.id, item.id)}
+          loading={loading.loading}
+          disabled={loading.loading}
           >Swap
         </Button>
       </View>
@@ -39,23 +41,48 @@ const WorkoutInProgress = ({ navigation, workouts, route, swapWorkoutExercise })
     )
   }
 
+  const validateFieldValues = () => {
+    let noStatExercises = []
+    workout.exercises.forEach(exercise => {
+      if (!exercise.stats)
+        noStatExercises.push(exercise.name)
+    })
+    if (noStatExercises.length > 0) {
+      Alert.alert(
+        "Warning: Exercises with no information",
+        `Submit workout without info. for ${noStatExercises.join(', ')}?`,
+        [
+          {
+            text: "Cancel",
+            style: 'cancel'
+          },
+          { text: "Confirm", onPress: () => {
+            submitCompletedWorkout(currentUser.id, workout.id, workout.exercises)
+          }}
+        ],
+        { cancelable: false }
+      )
+    }
+    submitCompletedWorkout(currentUser.id, workout.id, workout.exercises)
+  }
+
   return (
     <>
     {
     workout
     ?
-    <>
-    <FlatList 
-      data={workout.exercises}
-      keyExtractor={keyExtractor}
-      renderItem={item => renderExercises(item)}
-    />
-    <Button
-      mode="outlined"
-      onPress={() => console.log("workout completed")}
-      >Workout Completed
-    </Button>
-    </>
+    <ScrollView>
+      <FlatList 
+        data={workout.exercises}
+        keyExtractor={keyExtractor}
+        renderItem={item => renderExercises(item)}
+      />
+      <Button
+        mode="outlined"
+        onPress={() => validateFieldValues()}
+        >Workout Completed
+      </Button>
+    </ScrollView>
     :
     null
     }
@@ -69,10 +96,11 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = store => ({ workouts: store.workouts })
+const mapStateToProps = store => ({ workouts: store.workouts, loading: store.loading, currentUser: store.currentUser })
 const mapDispatchToProps = dispatch => { 
   return { 
-    swapWorkoutExercise: (workoutId, exerciseId) => dispatch(swapWorkoutExercise(workoutId, exerciseId)) 
+    swapWorkoutExercise: (workoutId, exerciseId) => dispatch(swapWorkoutExercise(workoutId, exerciseId)),
+    submitCompletedWorkout: (currentUserId, workoutId, workoutExercises) => dispatch(submitCompletedWorkout(currentUserId, workoutId, workoutExercises))
   }
 }
 

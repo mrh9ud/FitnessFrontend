@@ -12,7 +12,7 @@ const WorkoutScreen = ({ route, workouts, navigation }) => {
 
   return (
     <ScrollView>
-      <Title>{workout.name ? workout.name : "Created before Workout name required"}</Title>
+      <Title>{workout.name}</Title>
       <Text>Difficulty: {workout.difficulty}</Text>
       <Text>Duration: {workout.duration}</Text>
       <Text>Focus: {workoutFocus(workout)}</Text>

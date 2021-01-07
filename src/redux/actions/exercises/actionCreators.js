@@ -44,8 +44,8 @@ function createOwnWorkout(exercises, currentUser, workoutName) {
           dispatch(clearAllPotentialExercises)
           dispatch(loadingComplete())
         } else {
-          dispatch(loadingComplete())
           alert(data.message)
+          dispatch(loadingComplete())
         }
       })
       .catch(() => alert("Error Creating Workout"))
