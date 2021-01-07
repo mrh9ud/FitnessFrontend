@@ -5,6 +5,7 @@ import MyWorkoutNavigator from "./MyWorkoutNavigator";
 import StatisticsNavigator from "./StatisticsNavigator";
 import SettingsNavigator from "./SettingsNavigator";
 import DrawerContent from "../../components/DrawerContent";
+import TabNavigator from "./TabNavigator";
 
 const MainNavigator = ({ navigation }) => {
  const Drawer = createDrawerNavigator()
@@ -26,6 +27,9 @@ const MainNavigator = ({ navigation }) => {
       <Drawer.Screen name="Settings"
                      component={SettingsNavigator}
                      initialParams={{rootNavigation: navigation}}
+      />
+      <Drawer.Screen name="Tab Test"
+                     component={TabNavigator}
       />
     </Drawer.Navigator>
   )

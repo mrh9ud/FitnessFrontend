@@ -31,6 +31,9 @@ const DrawerContent = ({ props, rootNavigation }) => {
           props.navigation.navigate("Settings")
           resetStackHistory("Settings")
         }}/>
+        <Drawer.Item label="Test Page" onPress={() => {
+          props.navigation.navigate("Tab Test")
+        }}/>
       </Drawer.Section>
       <DrawerItem label="Logout" onPress={() => rootNavigation.navigate("Auth", { screen: "Login" })} />
     </DrawerContentScrollView>
