@@ -2,6 +2,8 @@ import React from 'react'
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { Drawer } from 'react-native-paper'
 import { CommonActions } from "@react-navigation/native"
+import { logOutUser } from "../redux/actions/users/actionCreators";
+import { connect } from 'react-redux'
 
 const DrawerContent = ({ props, rootNavigation }) => {
   const resetStackHistory = (name) => {
@@ -32,10 +34,16 @@ const DrawerContent = ({ props, rootNavigation }) => {
           resetStackHistory("Settings")
         }}/>
       </Drawer.Section>
-      <DrawerItem label="Logout" onPress={() => rootNavigation.navigate("Auth", { screen: "Login" })} />
+      <DrawerItem label="Logout" onPress={() => {
+        logOutUser()
+        rootNavigation.navigate("Auth", { screen: "Login" })
+      }} />
     </DrawerContentScrollView>
   )
 }
 
+const mapDispatchToProps = dispatch => ({
+  logOutUser: () => dispatch(logOutUser())
+})
 
-export default DrawerContent
+export default connect(null, mapDispatchToProps)(DrawerContent)
