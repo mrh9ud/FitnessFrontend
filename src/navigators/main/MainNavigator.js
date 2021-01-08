@@ -5,7 +5,7 @@ import MyWorkoutNavigator from "./MyWorkoutNavigator";
 import StatisticsNavigator from "./StatisticsNavigator";
 import SettingsNavigator from "./SettingsNavigator";
 import DrawerContent from "../../components/DrawerContent";
-import TabNavigator from "./TabNavigator";
+import WorkoutCompletionNavigator from "./WorkoutCompletionNavigator";
 
 const MainNavigator = ({ navigation }) => {
  const Drawer = createDrawerNavigator()

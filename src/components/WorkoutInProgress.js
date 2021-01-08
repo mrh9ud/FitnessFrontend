@@ -58,19 +58,17 @@ const WorkoutInProgress = ({ navigation, loading, currentUser, submitCompletedWo
           },
           { text: "Confirm", onPress: () => {
             submitCompletedWorkout(currentUser.id, workout.id, workout.exercises)
+            navigation.navigate("My Workout")
           }}
         ],
         { cancelable: false }
       )
     }
     submitCompletedWorkout(currentUser.id, workout.id, workout.exercises)
+    navigation.navigate("My Workout")
   }
 
   return (
-    <>
-    {
-    workout
-    ?
     <ScrollView>
       <FlatList 
         data={workout.exercises}
@@ -83,10 +81,6 @@ const WorkoutInProgress = ({ navigation, loading, currentUser, submitCompletedWo
         >Workout Completed
       </Button>
     </ScrollView>
-    :
-    null
-    }
-    </>
   )
 }
 

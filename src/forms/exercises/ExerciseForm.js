@@ -44,7 +44,7 @@ const ExerciseForm = ({ exercise, workoutId }) => {
     return (
       <View style={styles.inline}>
         {renderSetNumChanger()}
-        {numOfSets.map(setNum => <WeightTimeForm timed={true} setted={true} key={setNum} setNum={setNum} workoutId={workoutId} exerciseId={exercise.id} />)}
+        {numOfSets.map(setNum => <WeightTimeForm key={setNum} timed={true} setted={true} setNum={setNum} workoutId={workoutId} exerciseId={exercise.id} />)}
       </View>
     )
   } else if (weighted && setted) {
@@ -64,7 +64,7 @@ const ExerciseForm = ({ exercise, workoutId }) => {
       return (
         <View style={styles.inline}>
           {renderSetNumChanger()}
-          {numOfSets.map(setNum => <WeightTimeForm setNum={setNum} setted={true} workoutId={workoutId} exerciseId={exercise.id} />)}
+          {numOfSets.map(setNum => <WeightTimeForm key={setNum} setNum={setNum} setted={true} workoutId={workoutId} exerciseId={exercise.id} />)}
         </View>
       )
     }

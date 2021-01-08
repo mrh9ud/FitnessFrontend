@@ -13,7 +13,7 @@ const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, subm
         <ScrollView>
           <Title>Current Generated Workout</Title>
           {workoutPending.current_exercises.map((exercise, index) => <PotentialExercise
-            index={index}
+            key={index}
             exercise={exercise} />)
           }
           <View style={styles.button}>
@@ -28,7 +28,7 @@ const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, subm
               mode="contained"
               onPress={() => {
                 createNewWorkout(workoutPending.current_exercises, workoutQuestionResponses, currentUser)
-                navigation.navigate("Workout Loading")
+                navigation.navigate("My Workouts", { screen: "Workout" })
               }}
               >Accept
             </Button>

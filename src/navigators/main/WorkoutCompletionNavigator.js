@@ -5,7 +5,7 @@ import CompletedWorkoutScreen from "../../screens/main/CompletedWorkoutScreen";
 
 const Tab = createMaterialTopTabNavigator();
 
-const TabNavigator = () => {
+const WorkoutCompletionNavigator = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen name="Current" component={UncompletedWorkoutScreen} />
@@ -14,4 +14,4 @@ const TabNavigator = () => {
   )
 }
 
-export default TabNavigator
+export default WorkoutCompletionNavigator

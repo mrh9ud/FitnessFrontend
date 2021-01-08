@@ -154,7 +154,7 @@ function submitCompletedWorkout(currentUserId, workoutId, workoutExercises) {
           id: workoutId, 
           user: {
              id: currentUserId 
-            }, 
+            },
           exercises: workoutExercises } 
         })
     }
@@ -163,7 +163,7 @@ function submitCompletedWorkout(currentUserId, workoutId, workoutExercises) {
     .then(resp => resp.json())
     .then(data => {
       if (!data.error) {
-        console.log(data.message)
+        dispatch(removeWorkout(workoutId))
         dispatch(loadingComplete())
       } else {
         alert(data.message)

@@ -5,10 +5,9 @@ import { Title, Text, Button } from 'react-native-paper'
 import { ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 
-const WorkoutScreen = ({ route, workouts, navigation }) => {
+const WorkoutScreen = ({ workouts, navigation }) => {
 
-  const { workoutId } = route.params
-  const workout = workouts.find(workout => workout.id === workoutId)
+  const workout = workouts[workouts.length - 1]
 
   return (
     <ScrollView>
