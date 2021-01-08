@@ -17,7 +17,7 @@ const MyWorkoutNavigator = ({ route, navigation }) => {
           drawerNavigation={navigation}
           rootNavigation={rootNavigation} />}}
     >
-      <Stack.Screen name='My Workout' component={WorkoutCompletionNavigator} />
+      <Stack.Screen name='My Workouts' component={WorkoutCompletionNavigator} />
       <Stack.Screen name='Workout' component={WorkoutScreen} />
       <Stack.Screen name='Edit Workout' component={EditWorkoutForm} />
       <Stack.Screen 

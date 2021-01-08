@@ -24,8 +24,6 @@ const StatisticsScreen = ({ setMenuOptions }) => {
   )
 }
 
-const mapDispatchToProps = dispatch => ({
-  setMenuOptions: data => dispatch(setMenuOptions(data))
-})
+const mapDispatchToProps = dispatch => ({ setMenuOptions: data => dispatch(setMenuOptions(data)) })
 
 export default connect(null, mapDispatchToProps)(StatisticsScreen)

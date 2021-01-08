@@ -40,7 +40,7 @@ const NavBar = ({ props, drawerNavigation, rootNavigation, logOutUser, menuOptio
               color="white" />
           }>
 
-          {menuOptions.map(option => <Menu.Item onPress={() => option.execFunc()} title={option.title} />)}
+          {menuOptions.map(option => <Menu.Item onPress={() => option.execFunc()} key={Math.random()} title={option.title} />)}
 
           <Menu.Item onPress={() => {
             logOutUser()

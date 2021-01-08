@@ -1,6 +1,7 @@
 import { ADD_WORKOUT, SET_NEXT_POTENTIAL_EXERCISE, SET_EXERCISE_STAT, REMOVE_WORKOUT, SWAP_EXERCISE, UPDATE_WORKOUT_NAME, LOADING_COMPLETE, LOADING, CREATE_POTENTIAL_WORKOUT, CLEAR_WORKOUT_QUESTION_RESPONSES, CLEAR_POTENTIAL_WORKOUT, SET_WORKOUT_QUESTION_RESPONSES } from '../actionType'
 import { ip } from '../../../helpers/ipPort'
 import { loading, loadingComplete, fetchHeaders } from '../../../helpers/Functions'
+import * as RootNavigation from '../../../navigators/main/RootNavigation'
 
 const potentialWorkoutCreationUrl = `${ip}/api/v1/generate_potential_workout`
 const workoutCreationUrl = `${ip}/api/v1/workouts`
@@ -66,6 +67,7 @@ function createNewWorkout(currentExercises, workoutQuestionResponses, currentUse
                     dispatch(clearPotentialWorkout())
                     dispatch(clearWorkoutQuestionResponses())
                     dispatch(addWorkoutToUser(data))
+                    RootNavigation.navigate("My Workouts", { screen: "Workout", params: { workoutId: data.id } })
                     dispatch(loadingComplete())
                 } else {
                     alert(data.message)
@@ -143,7 +145,7 @@ function deleteWorkout(workoutId) {
     }
 }
 
-function submitCompletedWorkout(currentUserId, workoutId, workoutExercises) {
+function submitCompletedWorkout(workoutId, workoutExercises) {
   return dispatch => {
     const completedWorkoutConfigObj = {
       method: "POST",
@@ -152,9 +154,6 @@ function submitCompletedWorkout(currentUserId, workoutId, workoutExercises) {
         { 
         workout: { 
           id: workoutId, 
-          user: {
-             id: currentUserId 
-            },
           exercises: workoutExercises } 
         })
     }
@@ -164,6 +163,7 @@ function submitCompletedWorkout(currentUserId, workoutId, workoutExercises) {
     .then(data => {
       if (!data.error) {
         dispatch(removeWorkout(workoutId))
+        RootNavigation.navigate("My Workouts")
         dispatch(loadingComplete())
       } else {
         alert(data.message)

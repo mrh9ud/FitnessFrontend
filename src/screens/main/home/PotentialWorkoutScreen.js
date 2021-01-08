@@ -5,7 +5,7 @@ import { Title, Button } from 'react-native-paper'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import { submitWorkoutQuestionnaire, createNewWorkout } from '../../../redux/actions/workouts/actionCreators'
 
-const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, submitWorkoutQuestionnaire, currentUser, createNewWorkout, navigation }) => {
+const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, submitWorkoutQuestionnaire, workouts, currentUser, createNewWorkout, navigation }) => {
 
   const renderExercises = () => {
     if (workoutPending.current_exercises) {
@@ -26,10 +26,7 @@ const PotentialWorkoutScreen = ({ workoutPending, workoutQuestionResponses, subm
             </Button>
             <Button
               mode="contained"
-              onPress={() => {
-                createNewWorkout(workoutPending.current_exercises, workoutQuestionResponses, currentUser)
-                navigation.navigate("My Workouts", { screen: "Workout" })
-              }}
+              onPress={() => createNewWorkout(workoutPending.current_exercises, workoutQuestionResponses, currentUser)}
               >Accept
             </Button>
           </View>
@@ -53,7 +50,8 @@ const styles= StyleSheet.create({
 const mapStateToProps = store => ({ 
   workoutPending: store.workoutPending, 
   workoutQuestionResponses: store.workoutQuestionResponses,
-  currentUser: store.currentUser
+  currentUser: store.currentUser,
+  workouts: store.workouts
 })
 const mapDispatchToProps = dispatch => { 
   return { 

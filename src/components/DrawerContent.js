@@ -1,35 +1,28 @@
 import React from 'react'
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { Drawer } from 'react-native-paper'
-import { CommonActions } from "@react-navigation/native"
+import { resetStackHistory } from '../helpers/Functions'
 
 const DrawerContent = ({ props, rootNavigation }) => {
-  const resetStackHistory = (name) => {
-    props.navigation.dispatch({
-      ...CommonActions.reset({
-        index: 0,
-        routes: [{ name }]
-      })
-    });
-  }
+  const { navigation } = props
   return (
     <DrawerContentScrollView>
       <Drawer.Section>
         <Drawer.Item label="Home" icon="home" onPress={() => {
-        props.navigation.navigate("Home")
-        resetStackHistory("Home")
+          navigation.navigate("Home")
+          resetStackHistory("Home", navigation)
       }}/>
         <Drawer.Item label="My Workouts" icon="weight" onPress={() => {
-          props.navigation.navigate("My Workouts")
-          resetStackHistory("My Workouts")
+          navigation.navigate("My Workouts")
+          resetStackHistory("My Workouts", navigation)
         }}/>
         <Drawer.Item label="Stats" icon="chart-bar" onPress={() => {
-          props.navigation.navigate("Stats")
-          resetStackHistory("Stats")
+          navigation.navigate("Stats")
+          resetStackHistory("Stats", navigation)
         }}/>
         <Drawer.Item label="Settings" icon="settings" onPress={() => {
-          props.navigation.navigate("Settings")
-          resetStackHistory("Settings")
+          navigation.navigate("Settings")
+          resetStackHistory("Settings", navigation)
         }}/>
       </Drawer.Section>
       <DrawerItem label="Logout" onPress={() => rootNavigation.navigate("Auth", { screen: "Login" })} />

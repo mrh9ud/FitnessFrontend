@@ -6,7 +6,7 @@ import { keyExtractor } from '../helpers/Functions'
 import ExerciseForm from '../forms/exercises/ExerciseForm'
 import { swapWorkoutExercise, submitCompletedWorkout } from '../redux/actions/workouts/actionCreators'
 
-const WorkoutInProgress = ({ navigation, loading, currentUser, submitCompletedWorkout, workouts, route, swapWorkoutExercise }) => {
+const WorkoutInProgress = ({ navigation, loading, submitCompletedWorkout, workouts, route, swapWorkoutExercise }) => {
 
   useEffect(() => {
     navigation.setOptions({ headerTitle: workout.name })
@@ -57,19 +57,20 @@ const WorkoutInProgress = ({ navigation, loading, currentUser, submitCompletedWo
             style: 'cancel'
           },
           { text: "Confirm", onPress: () => {
-            submitCompletedWorkout(currentUser.id, workout.id, workout.exercises)
-            navigation.navigate("My Workout")
+            submitCompletedWorkout(workout.id, workout.exercises)
           }}
         ],
         { cancelable: false }
       )
-    }
-    submitCompletedWorkout(currentUser.id, workout.id, workout.exercises)
-    navigation.navigate("My Workout")
+    } else
+      submitCompletedWorkout(workout.id, workout.exercises)
   }
 
   return (
     <ScrollView>
+      {workout
+      ?
+      <>
       <FlatList 
         data={workout.exercises}
         keyExtractor={keyExtractor}
@@ -80,6 +81,9 @@ const WorkoutInProgress = ({ navigation, loading, currentUser, submitCompletedWo
         onPress={() => validateFieldValues()}
         >Workout Completed
       </Button>
+      </>
+      :
+      null}
     </ScrollView>
   )
 }
@@ -90,11 +94,11 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = store => ({ workouts: store.workouts, loading: store.loading, currentUser: store.currentUser })
+const mapStateToProps = store => ({ workouts: store.workouts, loading: store.loading })
 const mapDispatchToProps = dispatch => { 
   return { 
     swapWorkoutExercise: (workoutId, exerciseId) => dispatch(swapWorkoutExercise(workoutId, exerciseId)),
-    submitCompletedWorkout: (currentUserId, workoutId, workoutExercises) => dispatch(submitCompletedWorkout(currentUserId, workoutId, workoutExercises))
+    submitCompletedWorkout: (workoutId, workoutExercises) => dispatch(submitCompletedWorkout(workoutId, workoutExercises))
   }
 }
 

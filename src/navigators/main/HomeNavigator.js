@@ -5,6 +5,7 @@ import NavBar from "../NavBar";
 import WorkoutQuestionForm from '../../forms/workouts/WorkoutQuestionForm'
 import PotentialWorkoutScreen from '../../screens/main/home/PotentialWorkoutScreen'
 import WorkoutCreationForm from '../../forms/workouts/WorkoutCreationForm'
+import WorkoutScreen from '../../containers/WorkoutScreen';
 
 const Stack = createStackNavigator()
 

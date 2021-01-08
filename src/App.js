@@ -4,6 +4,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import store from './redux/store'
 import { NavigationContainer } from "@react-navigation/native";
+import { navigationRef } from './navigators/main/RootNavigation'
 import SwitchNavigator from "./navigators/auth/SwitchNavigator";
 import { LogBox } from "react-native";
 
@@ -17,7 +18,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <PaperProvider>
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           <SwitchNavigator/>
         </NavigationContainer>
       </PaperProvider>

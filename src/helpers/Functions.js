@@ -1,4 +1,5 @@
 import { LOADING, LOADING_COMPLETE } from '../redux/actions/actionType'
+import { CommonActions } from "@react-navigation/native"
 
 const focusHelper = (workout) => {
   let focus = []
@@ -38,6 +39,15 @@ const workoutFocus = workout => {
   return "Cardio"
 }
 
+const resetStackHistory = (name, navigation) => {
+  navigation.dispatch({
+    ...CommonActions.reset({
+      index: 0,
+      routes: [{ name }]
+    })
+  });
+}
+
 const keyExtractor = item => item.id.toString()
 
 const includesPotentialExercise = (potentialExercises, exerciseId) => potentialExercises.some(potentialExercise => potentialExercise.id === exerciseId ? true : false)
@@ -54,4 +64,4 @@ const exerciseDifficulty = [{id: 1, name: 'beginner'}, {id: 2, name: 'intermedia
 
 const muscleGroupArray = [{id: 1, name: 'back'}, {id: 2, name: 'shoulders'}, {id: 3, name: 'chest'}, {id: 4, name: 'waist'}, {id: 5, name: 'legs'}, {id: 6, name: 'arms'}, {id: 7, name: "hips"}]
 
-export { focusHelper, workoutFocus, keyExtractor, includesPotentialExercise, sanitizeFocus, loading, loadingComplete, exerciseFocus, exerciseDifficulty, muscleGroupArray, fetchHeaders }
+export { focusHelper, resetStackHistory, workoutFocus, keyExtractor, includesPotentialExercise, sanitizeFocus, loading, loadingComplete, exerciseFocus, exerciseDifficulty, muscleGroupArray, fetchHeaders }

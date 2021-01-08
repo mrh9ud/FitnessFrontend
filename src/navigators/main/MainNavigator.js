@@ -5,7 +5,6 @@ import MyWorkoutNavigator from "./MyWorkoutNavigator";
 import StatisticsNavigator from "./StatisticsNavigator";
 import SettingsNavigator from "./SettingsNavigator";
 import DrawerContent from "../../components/DrawerContent";
-import WorkoutCompletionNavigator from "./WorkoutCompletionNavigator";
 
 const MainNavigator = ({ navigation }) => {
  const Drawer = createDrawerNavigator()
@@ -31,6 +30,5 @@ const MainNavigator = ({ navigation }) => {
     </Drawer.Navigator>
   )
 }
-
 
 export default MainNavigator
